@@ -15,14 +15,21 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, ClassBVCDelegate {
 
+    @IBOutlet weak var updateText: UILabel!
+    
+    var firebaseLink = FirebaseLink()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        FirebaseLink().authAndGetFirebase() //  needs a completion handler
-        
+        firebaseLink.delegate = self
+        firebaseLink.authAndGetFirebase()
     }
     
-
+    func changeUImessage(message: String) {
+        print("MESSAGE FROM DELAGATE: \(message)");
+        updateText.text = message
+    }
 }
 

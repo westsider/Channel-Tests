@@ -10,7 +10,16 @@ import Foundation
 import UIKit
 import Firebase
 
+//MARK: step 1 Add Protocol here
+protocol ClassBVCDelegate: class {
+    func changeUImessage(message:String)
+}
+
+
 class FirebaseLink {
+    
+    //MARK: step 2 Create a delegate property here, don't forget to make it weak!
+    weak var delegate: ClassBVCDelegate?
     
     var ref: DatabaseReference!
     
@@ -30,14 +39,14 @@ class FirebaseLink {
             
             if error == nil {
                 self.userEmail = (user?.email!)!
-                print("\nSigned into Firebase as: \(self.userEmail)\n")
+                self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)l")
                 self.fetchData(debug: true, dataComplete: { (finished) in
                     if finished {
-                        print("finishedgetting data from firebase");
+                        self.delegate?.changeUImessage(message: "finished getting data from firebase")
                     }
                 })
             } else {
-                print(error ?? "something went wrong getting error")
+                self.delegate?.changeUImessage(message: error.debugDescription )
             }
         }
     }
@@ -45,20 +54,18 @@ class FirebaseLink {
      func fetchData(debug: Bool, dataComplete: @escaping (Bool) -> Void) {
         
         ref.observe(DataEventType.value, with: { (snapshot) in
-            print("getting snapshot");
             if snapshot.childrenCount > 0 {
-
+                self.delegate?.changeUImessage(message: "requesting data from firebase")
                 for items in snapshot.children.allObjects as! [DataSnapshot] {
                     
                     // get all other values ticker ect
                     if let data    = items.value as? [String: AnyObject] {
                         self.parseFrom(data: data)
                     } else {
-                        print("failed to unwrap data!");
+                        self.delegate?.changeUImessage(message: "failed to unwrap data!")
                     }
                 }
-                print("got snapshot");
-                dataComplete(true) // i put this after the network call and the real write
+                dataComplete(true)
             }
         })
     }
@@ -71,7 +78,7 @@ class FirebaseLink {
         guard let date    = data["date"] as? String else { print("date fail"); return }
         guard let profit     = data["profit"] as? Double else { print("profit fail"); return }
  
-        print("Ticker \(ticker) \tDate: \(date) \tProfit: \(profit)");
+        print("Ticker \(ticker) \tDate: \(date) \tProfit: \(profit) \tCost: \(cost) \t%win: \(winPct) \tROI: \(roi)");
 
     }
 }
