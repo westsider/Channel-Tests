@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D03A3BC20489EE200786C47 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D03A3BB20489EE200786C47 /* AppDelegate.swift */; };
-		0D03A3BE20489EE200786C47 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D03A3BD20489EE200786C47 /* ViewController.swift */; };
+		0D03A3BE20489EE200786C47 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D03A3BD20489EE200786C47 /* MainViewController.swift */; };
 		0D03A3C120489EE200786C47 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D03A3BF20489EE200786C47 /* Main.storyboard */; };
 		0D03A3C420489EE200786C47 /* Channel_Tests.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D03A3C220489EE200786C47 /* Channel_Tests.xcdatamodeld */; };
 		0D03A3C620489EE200786C47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D03A3C520489EE200786C47 /* Assets.xcassets */; };
@@ -18,7 +18,7 @@
 /* Begin PBXFileReference section */
 		0D03A3B820489EE200786C47 /* Channel Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Channel Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D03A3BB20489EE200786C47 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0D03A3BD20489EE200786C47 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0D03A3BD20489EE200786C47 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0D03A3C020489EE200786C47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0D03A3C320489EE200786C47 /* Channel_Tests.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Channel_Tests.xcdatamodel; sourceTree = "<group>"; };
 		0D03A3C520489EE200786C47 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,13 +56,13 @@
 		0D03A3BA20489EE200786C47 /* Channel Tests */ = {
 			isa = PBXGroup;
 			children = (
-				0D03A3BB20489EE200786C47 /* AppDelegate.swift */,
-				0D03A3BD20489EE200786C47 /* ViewController.swift */,
 				0D03A3BF20489EE200786C47 /* Main.storyboard */,
+				0D03A3BD20489EE200786C47 /* MainViewController.swift */,
 				0D03A3C520489EE200786C47 /* Assets.xcassets */,
 				0D03A3C720489EE200786C47 /* LaunchScreen.storyboard */,
 				0D03A3CA20489EE200786C47 /* Info.plist */,
 				0D03A3C220489EE200786C47 /* Channel_Tests.xcdatamodeld */,
+				0D03A3BB20489EE200786C47 /* AppDelegate.swift */,
 			);
 			path = "Channel Tests";
 			sourceTree = "<group>";
@@ -139,7 +139,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D03A3BE20489EE200786C47 /* ViewController.swift in Sources */,
+				0D03A3BE20489EE200786C47 /* MainViewController.swift in Sources */,
 				0D03A3BC20489EE200786C47 /* AppDelegate.swift in Sources */,
 				0D03A3C420489EE200786C47 /* Channel_Tests.xcdatamodeld in Sources */,
 			);
