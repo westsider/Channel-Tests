@@ -5,9 +5,10 @@
 //  Created by Warren Hansen on 3/1/18.
 //  Copyright © 2018 Warren Hansen. All rights reserved.
 //
-//  [ ] Login firebase pods: firebase, realm
-//  [ ] request json
-//  [ ] parse json
+//  [X] Login firebase pods: firebase, realm
+//  [X] request json
+//  [X] parse json
+//  [ ] use RxSwift to update UI
 //  [ ] convert string to date
 //  [ ] save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
 //  [ ] market condition

@@ -51,12 +51,27 @@ class FirebaseLink {
                 for items in snapshot.children.allObjects as! [DataSnapshot] {
                     
                     // get all other values ticker ect
-                    let data    = items.value as? [String: AnyObject]
-                    debugPrint(data!);
+                    if let data    = items.value as? [String: AnyObject] {
+                        self.parseFrom(data: data)
+                    } else {
+                        print("failed to unwrap data!");
+                    }
                 }
                 print("got snapshot");
                 dataComplete(true) // i put this after the network call and the real write
             }
         })
+    }
+    
+    func parseFrom(data: [String: AnyObject] ) {
+        guard let ticker:String  = data["ticker"] as? String else { print("ticker fail"); return }
+        guard let cost    = data["cost"] as? Double else { print("cost fail"); return }
+        guard let winPct = data["winPct"] as? Double else { print("winPct fail"); return }
+        guard let roi    = data["roi"] as? Double else { print("roi fail"); return }
+        guard let date    = data["date"] as? String else { print("date fail"); return }
+        guard let profit     = data["profit"] as? Double else { print("profit fail"); return }
+ 
+        print("Ticker \(ticker) \tDate: \(date) \tProfit: \(profit)");
+
     }
 }
