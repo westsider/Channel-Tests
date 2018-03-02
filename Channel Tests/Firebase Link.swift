@@ -75,10 +75,11 @@ class FirebaseLink {
         guard let cost    = data["cost"] as? Double else { print("cost fail"); return }
         guard let winPct = data["winPct"] as? Double else { print("winPct fail"); return }
         guard let roi    = data["roi"] as? Double else { print("roi fail"); return }
-        guard let date    = data["date"] as? String else { print("date fail"); return }
+        guard let dateStr    = data["date"] as? String else { print("dateStr fail"); return }
+        guard let date = Utilities().convertToDateFromNT(string: dateStr, debug: false) else { print("date has failed"); return }
         guard let profit     = data["profit"] as? Double else { print("profit fail"); return }
  
-        print("Ticker \(ticker) \tDate: \(date) \tProfit: \(profit) \tCost: \(cost) \t%win: \(winPct) \tROI: \(roi)");
-
+        print("\(ticker) \t\(dateStr) \tProfit: \(profit) \tCost: \(cost) \t%win: \(winPct) \tROI: \(roi)\t\(String(describing: date))");
+        //
     }
 }

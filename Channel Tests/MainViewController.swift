@@ -8,7 +8,7 @@
 //  [X] Login firebase pods: firebase, realm
 //  [X] request json
 //  [X] parse json
-//  [ ] use RxSwift to update UI
+//  [X] use protocol to update UI
 //  [ ] convert string to date
 //  [ ] save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
 //  [ ] market condition
