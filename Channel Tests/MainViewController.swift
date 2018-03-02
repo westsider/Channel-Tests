@@ -10,8 +10,7 @@
 //  [X] parse json
 //  [X] use protocol to update UI
 //  [X] convert string to date
-//  [ ] force NT to delete files first, can I fix completion handler count?
-//  [ ] save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
+//  [X] save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
 //  [ ] market condition
 
 import UIKit
@@ -25,7 +24,8 @@ class MainViewController: UIViewController, ClassBVCDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         firebaseLink.delegate = self
-        firebaseLink.authAndGetFirebase()
+        //firebaseLink.authAndGetFirebase()
+        WklyStats().getWeeklyStatsFromRealm()
     }
     
     func changeUImessage(message: String) {

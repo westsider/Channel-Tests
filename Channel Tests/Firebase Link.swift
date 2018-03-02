@@ -57,6 +57,7 @@ class FirebaseLink {
     
     func fetchData(debug: Bool, dataComplete: @escaping (Bool) -> Void) {
         
+        WklyStats().clearWeekly()
         ref.observe(DataEventType.value, with: { (snapshot) in
             if snapshot.childrenCount > 0 {
                 self.delegate?.changeUImessage(message: "requesting data from firebase")
@@ -104,5 +105,8 @@ class FirebaseLink {
         
         print("\(ticker) \t\(dateStr) \tProfit: \(profit) \tCost: \(cost) \t%win: \(winPct) \tROI: \(roi)\t\(String(describing: date))\t\(String(describing: dateEx))");
         self.fileCount += 1
+        
+        //save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
+        WklyStats().updateCumulativeProfit(date: dateEx, entryDate: date, ticker: ticker, profit: profit, cost: cost, maxCost: 0.0)
     }
 }

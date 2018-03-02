@@ -19,6 +19,15 @@ class WklyStats: Object {
     @objc dynamic var taskID    = NSUUID().uuidString
     @objc dynamic var ticker    = ""
 
+    func clearWeekly() {
+        let realm = try! Realm()
+        let weekly = realm.objects(WklyStats.self)
+        try! realm.write {
+            realm.delete(weekly)
+        }
+        print("\nRealm \tWklyStats \tCleared!\n")
+    }
+    
     func updateCumulativeProfit(date: Date, entryDate:Date, ticker:String, profit: Double, cost:Double, maxCost:Double) {
       
         if date <= Date() {
@@ -42,6 +51,8 @@ class WklyStats: Object {
         let sortedByDate = weeklyStats.sorted(byKeyPath: "date", ascending: true)
         var cumulatveSum:Double = 0.0
         
+        print("Weekly Stats from Realm")
+        print("date \tticker\tprofit\tcapReq\tcumulative")
         if sortedByDate.count >  1 {
             let results = sortedByDate
             for each in results {
