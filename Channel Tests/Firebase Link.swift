@@ -38,19 +38,18 @@ class FirebaseLink {
         let password = "123456"
         
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-            
-            if error == nil {
-                self.userEmail = (user?.email!)!
-                self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)l")
-                self.fetchData(debug: true, dataComplete: { (finished) in
-                    if finished {
-                        DispatchQueue.main.async {
+            DispatchQueue.global(qos: .userInitiated).async {
+                if error == nil {
+                    self.userEmail = (user?.email!)!
+                    self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)l")
+                    self.fetchData(debug: false, dataComplete: { (finished) in
+                        if finished {
                             self.delegate?.changeUImessage(message: "finished getting data from firebase")
                         }
-                    }
-                })
-            } else {
-                self.delegate?.changeUImessage(message: error.debugDescription )
+                    })
+                } else {
+                    self.delegate?.changeUImessage(message: error.debugDescription )
+                }
             }
         }
     }
@@ -64,24 +63,20 @@ class FirebaseLink {
                 let allItems = snapshot.children.allObjects as! [DataSnapshot]
                 //print("all items count \(allItems.count)")
                 for items in snapshot.children.allObjects as! [DataSnapshot] {
-                   
-                    DispatchQueue.global(qos: .userInitiated).async {
-                        // get all other values ticker ect
-                        if let data    = items.value as? [String: AnyObject] {
-                            
-                            self.parseFrom(data: data, debug: false)
-                        } else {
-                            self.delegate?.changeUImessage(message: "failed to unwrap data!")
-                        }
+                    
+                    // get all other values ticker ect
+                    if let data    = items.value as? [String: AnyObject] {
+                        
+                        self.parseFrom(data: data, debug: false)
+                    } else {
+                        self.delegate?.changeUImessage(message: "failed to unwrap data!")
                     }
-                     //print(allItems.count, self.fileCount )
+                    
+                    print(allItems.count, self.fileCount )
                 }
-               
                 if self.fileCount == allItems.count {
                     dataComplete(true)
-                    DispatchQueue.main.async {
-                        self.delegate?.changeUImessage(message: "completed new data from firebase")
-                    }
+                    self.delegate?.changeUImessage(message: "new data from firebase")
                 }
             }
         })
@@ -89,9 +84,8 @@ class FirebaseLink {
     
     func parseFrom(data: [String: AnyObject], debug: Bool ) {
         guard let ticker:String  = data["ticker"] as? String else { print("ticker fail"); return }
-        DispatchQueue.main.async {
-            self.delegate?.changeUImessage(message: "new data found for \(ticker)")
-        }
+        
+        self.delegate?.changeUImessage(message: "new data for \(ticker)")
         guard let cost    = data["cost"] as? Double else { print("cost fail"); return }
         guard let winPct = data["winPct"] as? Double else { print("winPct fail"); return }
         guard let roi    = data["roi"] as? Double else { print("roi fail"); return }
@@ -102,11 +96,11 @@ class FirebaseLink {
         guard let dateEx = Utilities().convertToDateFromNT(string: dateStrEx, debug: false) else { print("date has failed"); return }
         
         guard let profit     = data["profit"] as? Double else { print("profit fail"); return }
-        
-        print("\(ticker) \t\(dateStr) \tProfit: \(profit) \tCost: \(cost) \t%win: \(winPct) \tROI: \(roi)\t\(String(describing: date))\t\(String(describing: dateEx))");
+        if debug {
+            print("\(ticker) \t\(dateStr) \tProfit: \(profit) \tCost: \(cost) \t%win: \(winPct) \tROI: \(roi)\t\(String(describing: date))\t\(String(describing: dateEx))"); }
         self.fileCount += 1
         
         //save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
-        WklyStats().updateCumulativeProfit(date: dateEx, entryDate: date, ticker: ticker, profit: profit, cost: cost, maxCost: 0.0)
+        //WklyStats().updateCumulativeProfit(date: dateEx, entryDate: date, ticker: ticker, profit: profit, cost: cost, maxCost: 0.0)
     }
 }
