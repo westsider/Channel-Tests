@@ -29,6 +29,8 @@ class FirebaseLink {
     
     var currentShortEntryPrice:Double = 0.0
     
+    var fileCount:Int = 0
+    
     func authAndGetFirebase() {
         
         ref = Database.database().reference()//.child(currentChild) //.child("Table1")
@@ -42,7 +44,9 @@ class FirebaseLink {
                 self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)l")
                 self.fetchData(debug: true, dataComplete: { (finished) in
                     if finished {
-                        self.delegate?.changeUImessage(message: "finished getting data from firebase")
+                        DispatchQueue.main.async {
+                            self.delegate?.changeUImessage(message: "finished getting data from firebase")
+                        }
                     }
                 })
             } else {
@@ -51,35 +55,54 @@ class FirebaseLink {
         }
     }
     
-     func fetchData(debug: Bool, dataComplete: @escaping (Bool) -> Void) {
+    func fetchData(debug: Bool, dataComplete: @escaping (Bool) -> Void) {
         
         ref.observe(DataEventType.value, with: { (snapshot) in
             if snapshot.childrenCount > 0 {
                 self.delegate?.changeUImessage(message: "requesting data from firebase")
+                let allItems = snapshot.children.allObjects as! [DataSnapshot]
+                //print("all items count \(allItems.count)")
                 for items in snapshot.children.allObjects as! [DataSnapshot] {
-                    
-                    // get all other values ticker ect
-                    if let data    = items.value as? [String: AnyObject] {
-                        self.parseFrom(data: data)
-                    } else {
-                        self.delegate?.changeUImessage(message: "failed to unwrap data!")
+                   
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        // get all other values ticker ect
+                        if let data    = items.value as? [String: AnyObject] {
+                            
+                            self.parseFrom(data: data, debug: false)
+                        } else {
+                            self.delegate?.changeUImessage(message: "failed to unwrap data!")
+                        }
+                    }
+                     //print(allItems.count, self.fileCount )
+                }
+               
+                if self.fileCount == allItems.count {
+                    dataComplete(true)
+                    DispatchQueue.main.async {
+                        self.delegate?.changeUImessage(message: "completed new data from firebase")
                     }
                 }
-                dataComplete(true)
             }
         })
     }
     
-    func parseFrom(data: [String: AnyObject] ) {
+    func parseFrom(data: [String: AnyObject], debug: Bool ) {
         guard let ticker:String  = data["ticker"] as? String else { print("ticker fail"); return }
+        DispatchQueue.main.async {
+            self.delegate?.changeUImessage(message: "new data found for \(ticker)")
+        }
         guard let cost    = data["cost"] as? Double else { print("cost fail"); return }
         guard let winPct = data["winPct"] as? Double else { print("winPct fail"); return }
         guard let roi    = data["roi"] as? Double else { print("roi fail"); return }
-        guard let dateStr    = data["date"] as? String else { print("dateStr fail"); return }
+        guard let dateStr    = data["entryDate"] as? String else { print("dateStr fail"); return }
         guard let date = Utilities().convertToDateFromNT(string: dateStr, debug: false) else { print("date has failed"); return }
+        
+        guard let dateStrEx    = data["exitDate"] as? String else { print("ExitdateStr fail"); return }
+        guard let dateEx = Utilities().convertToDateFromNT(string: dateStrEx, debug: false) else { print("date has failed"); return }
+        
         guard let profit     = data["profit"] as? Double else { print("profit fail"); return }
- 
-        print("\(ticker) \t\(dateStr) \tProfit: \(profit) \tCost: \(cost) \t%win: \(winPct) \tROI: \(roi)\t\(String(describing: date))");
-        //
+        
+        print("\(ticker) \t\(dateStr) \tProfit: \(profit) \tCost: \(cost) \t%win: \(winPct) \tROI: \(roi)\t\(String(describing: date))\t\(String(describing: dateEx))");
+        self.fileCount += 1
     }
 }

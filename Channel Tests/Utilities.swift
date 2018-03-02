@@ -48,4 +48,14 @@ class Utilities {
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter.string(from: date)
     }
+    
+    func dollarStr(largeNumber:Double )->String {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        return numberFormatter.string(from: NSNumber(value:Int(largeNumber)))!
+    }
+    
+    func decimalStr(input:Double, Decimals:Int)->String {
+        return String(format: "%.\(Decimals)f", input)
+    }
 }

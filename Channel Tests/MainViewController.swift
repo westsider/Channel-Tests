@@ -9,7 +9,8 @@
 //  [X] request json
 //  [X] parse json
 //  [X] use protocol to update UI
-//  [ ] convert string to date
+//  [X] convert string to date
+//  [ ] force NT to delete files first, can I fix completion handler count?
 //  [ ] save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
 //  [ ] market condition
 
@@ -29,7 +30,9 @@ class MainViewController: UIViewController, ClassBVCDelegate {
     
     func changeUImessage(message: String) {
         print("MESSAGE FROM DELAGATE: \(message)");
-        updateText.text = message
+        DispatchQueue.main.async {
+            self.updateText.text = message
+        }
     }
 }
 
