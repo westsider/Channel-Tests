@@ -31,7 +31,7 @@ class FirebaseLink {
     
     var fileCount:Int = 0
     
-    func authAndGetFirebase() {
+    func authAndGetFirebase( dataComplete: @escaping (Bool) -> Void) {
         
         ref = Database.database().reference()//.child(currentChild) //.child("Table1")
         let email = "whansen1@mac.com"
@@ -45,6 +45,7 @@ class FirebaseLink {
                     self.fetchData(debug: false, dataComplete: { (finished) in
                         if finished {
                             self.delegate?.changeUImessage(message: "finished getting data from firebase")
+                            dataComplete(true)
                         }
                     })
                 } else {
@@ -61,7 +62,6 @@ class FirebaseLink {
             if snapshot.childrenCount > 0 {
                 self.delegate?.changeUImessage(message: "requesting data from firebase")
                 let allItems = snapshot.children.allObjects as! [DataSnapshot]
-                //print("all items count \(allItems.count)")
                 for items in snapshot.children.allObjects as! [DataSnapshot] {
                     
                     // get all other values ticker ect
@@ -72,7 +72,7 @@ class FirebaseLink {
                         self.delegate?.changeUImessage(message: "failed to unwrap data!")
                     }
                     
-                    print(allItems.count, self.fileCount )
+                    if debug { print(allItems.count, self.fileCount ) }
                 }
                 if self.fileCount == allItems.count {
                     dataComplete(true)
@@ -101,6 +101,6 @@ class FirebaseLink {
         self.fileCount += 1
         
         //save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
-        //WklyStats().updateCumulativeProfit(date: dateEx, entryDate: date, ticker: ticker, profit: profit, cost: cost, maxCost: 0.0)
+        WklyStats().updateCumulativeProfit(date: dateEx, entryDate: date, ticker: ticker, profit: profit, cost: cost, maxCost: 0.0)
     }
 }

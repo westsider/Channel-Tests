@@ -24,8 +24,11 @@ class MainViewController: UIViewController, ClassBVCDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         firebaseLink.delegate = self
-        firebaseLink.authAndGetFirebase()
-        //WklyStats().getWeeklyStatsFromRealm()
+        firebaseLink.authAndGetFirebase { (finished) in
+            if finished {
+                WklyStats().getWeeklyStatsFromRealm()
+            }
+        }
     }
     
     func changeUImessage(message: String) {
