@@ -18,7 +18,8 @@ class WklyStats: Object {
     @objc dynamic var maxCost   = 0.00
     @objc dynamic var taskID    = NSUUID().uuidString
     @objc dynamic var ticker    = ""
-
+    @objc dynamic var stars    = 0
+    
     func clearWeekly() {
         let realm = try! Realm()
         let weekly = realm.objects(WklyStats.self)
