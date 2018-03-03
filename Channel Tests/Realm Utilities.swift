@@ -50,6 +50,30 @@ class RealmUtil {
         return oneSymbol
     }
     
+    func getHistory(forTicker:String, before:Date) -> (avgProfit:Double, avgPF:Double, avgROI:Double) {
+        
+        var answer:(avgProfit:Double, avgPF:Double, avgROI:Double) = (-1.0, -1.0, -1.0)
+        let earlierDate = RealmUtil().sortTicker(ticker: forTicker, before: before, debug: false)
+        let profitA: [Double] = earlierDate.map { (profit: WklyStats) in
+            return profit.profit
+        }
+        
+        let pfA: [Double] = earlierDate.map { (profitFactor: WklyStats) in
+            return profitFactor.profitFactor
+        }
+        
+        let roiA: [Double] = earlierDate.map { (roi: WklyStats) in
+            return roi.roi
+        }
+        
+        answer.avgProfit = profitA.avg()
+        answer.avgPF = pfA.avg()
+        answer.avgROI = roiA.avg()
+        print("Average Profit = \(answer.avgProfit) average pf = \(answer.avgPF) average roi = \(answer.avgROI)")
+        
+        return answer
+    }
+    
     func setCumProfit(ticker:String) {
         
         let realm = try! Realm()
