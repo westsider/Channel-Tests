@@ -50,7 +50,7 @@ class RealmUtil {
         return oneSymbol
     }
     
-    func getHistory(forTicker:String, before:Date) -> (avgProfit:Double, avgPF:Double, avgROI:Double) {
+    func getHistory(forTicker:String, before:Date, debug:Bool) -> (avgProfit:Double, avgPF:Double, avgROI:Double) {
         
         var answer:(avgProfit:Double, avgPF:Double, avgROI:Double) = (-1.0, -1.0, -1.0)
         let earlierDate = RealmUtil().sortTicker(ticker: forTicker, before: before, debug: false)
@@ -69,7 +69,7 @@ class RealmUtil {
         answer.avgProfit = profitA.avg()
         answer.avgPF = pfA.avg()
         answer.avgROI = roiA.avg()
-        print("Average Profit = \(answer.avgProfit) average pf = \(answer.avgPF) average roi = \(answer.avgROI)")
+        if debug { print("Average Profit = \(answer.avgProfit) average pf = \(answer.avgPF) average roi = \(answer.avgROI)") }
         
         return answer
     }

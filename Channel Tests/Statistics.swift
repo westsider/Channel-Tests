@@ -64,15 +64,31 @@ class Statistics {
         let avgPF = pf.last  //pf / tradeCount
         
         print("\nStandard BackTest\nProfit: $\(Utilities().dollarStr(largeNumber: cumProfit)) \t \(String(format: "%.1f", winPct))% Win \t PF: \(String(format: "%.1f", avgPF!)) \t ROI: \(String(format: "%.1f", roi)) \t \(tradeCount) trades\n")
-        runFilteredBackTest()
+        runFilteredBackTest(debug: false)
     }
-    
-    // [ ] clean up and refactor
+
     // [ ] 20 max positions
     // [ ] add chart
     // [ ] use steppers on main UI for profit, winPct, pf, roi
+    /*
+     Standard BackTest
+     Profit: $60,555      61.7% Win      PF: 2.2      ROI: 20.6      4835.0 trades
+     
+     Profit          -1999  ----  -99 <<< 15 [0] >>> 129 ---- 4999
+     Win  %          0  ----  41 <<< 60 [60] >>> 78 ---- 93
+     P Fctr          0  ----  -1 <<< 2 [1] >>> 7 ---- 48
+     ROI             -100.00  ----  -4.237 <<< 0.524 [1.240] >>> 5.285 ---- 250.000
+     
+     pastTrades.avgProfit > ( 1 )
+     && eachTrade.winPct > ( 59 )
+     && pastTrades.avgPF > ( 0.3 )
+     && pastTrades.avgROI > (0.001)
+     
+     Optimized BackTest
+     Profit: $77,462      70.2% Win      PF: 2.2      ROI: 26.517      3180.0 trades
+     */
     
-    func runFilteredBackTest() {
+    func runFilteredBackTest(debug:Bool) {
         
         var cumProfit:Double = 0.0
         var winCount:Double = 0.0
@@ -85,15 +101,14 @@ class Statistics {
         
         for eachTrade in allTradesSortedBtDate {
            
-            let pastTrades = RealmUtil().getHistory(forTicker: eachTrade.ticker, before: eachTrade.date!) // else {
+            let pastTrades = RealmUtil().getHistory(forTicker: eachTrade.ticker, before: eachTrade.date!, debug: false) // else {
           
-            if pastTrades.avgProfit > ( 1)
-                
-                && eachTrade.winPct > ( 57 ) //- winPctResults.std )
-                && pastTrades.avgPF > ( 0 ) // didnt help
-                && pastTrades.avgROI > (0.001) //- roiResults.std )
+            if pastTrades.avgProfit > ( 1 )
+                && eachTrade.winPct > ( 59 )
+                && pastTrades.avgPF > ( 0.3 )
+                && pastTrades.avgROI > (0.001)
             {
-                print("\t Adding \(eachTrade.ticker) \(eachTrade.profit) because \(pastTrades.avgProfit) > \(0 )")
+                if debug { print("\t Adding \(eachTrade.ticker) \(eachTrade.profit) because \(pastTrades.avgProfit) > \(0 )") }
                 cumProfit += eachTrade.profit
                 if eachTrade.profit >= 0 {
                     winCount += 1
@@ -104,7 +119,7 @@ class Statistics {
                 tradeCount += 1
                 roi.append(eachTrade.profit / eachTrade.cost)
             } else {
-                print("\t Skip \(eachTrade.profit)")
+                if debug { print("\t Skip \(eachTrade.profit)") }
             }
         }
         let winPct = (winCount / tradeCount) * 100
