@@ -17,6 +17,8 @@
 		0D12032E2048B17F00AA421B /* Firebase Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D12032D2048B17F00AA421B /* Firebase Link.swift */; };
 		0D4F51B82048E936002E2F93 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B72048E936002E2F93 /* Utilities.swift */; };
 		0D4F51BA2048EE43002E2F93 /* Weekly Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */; };
+		0D9353382049D2C500BBF9B2 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9353372049D2C500BBF9B2 /* Statistics.swift */; };
+		0D93533A2049D3A700BBF9B2 /* Realm Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */; };
 		1AC907B1C2BA357938E54DA8 /* Pods_Channel_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC4F167B53AAEE7E869F13E /* Pods_Channel_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +35,8 @@
 		0D12032D2048B17F00AA421B /* Firebase Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase Link.swift"; sourceTree = "<group>"; };
 		0D4F51B72048E936002E2F93 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekly Stats.swift"; sourceTree = "<group>"; };
+		0D9353372049D2C500BBF9B2 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm Utilities.swift"; sourceTree = "<group>"; };
 		3DC4F167B53AAEE7E869F13E /* Pods_Channel_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Channel_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6844FBE5B7ED0FFB2817DD47 /* Pods-Channel Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Channel Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Channel Tests/Pods-Channel Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		9B50A7CFBB30971CA343F69F /* Pods-Channel Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Channel Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Channel Tests/Pods-Channel Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -75,7 +79,9 @@
 				0D03A3BD20489EE200786C47 /* MainViewController.swift */,
 				0D12032D2048B17F00AA421B /* Firebase Link.swift */,
 				0D4F51B72048E936002E2F93 /* Utilities.swift */,
+				0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */,
 				0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */,
+				0D9353372049D2C500BBF9B2 /* Statistics.swift */,
 				0D03A3C520489EE200786C47 /* Assets.xcassets */,
 				0D03A3C720489EE200786C47 /* LaunchScreen.storyboard */,
 				0D03A3CA20489EE200786C47 /* Info.plist */,
@@ -254,7 +260,9 @@
 				0D03A3BC20489EE200786C47 /* AppDelegate.swift in Sources */,
 				0D4F51BA2048EE43002E2F93 /* Weekly Stats.swift in Sources */,
 				0D4F51B82048E936002E2F93 /* Utilities.swift in Sources */,
+				0D93533A2049D3A700BBF9B2 /* Realm Utilities.swift in Sources */,
 				0D03A3C420489EE200786C47 /* Channel_Tests.xcdatamodeld in Sources */,
+				0D9353382049D2C500BBF9B2 /* Statistics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

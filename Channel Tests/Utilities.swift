@@ -11,6 +11,8 @@ import UIKit
 import AVFoundation
 
 class Utilities {
+    
+    //MARK: - Date util
     let formatter = DateFormatter()
     let today = Date()
     
@@ -34,7 +36,6 @@ class Utilities {
             if ( debug ) { print("Convertion to Date HAS FAILED!!!\n") }
             return nil
         }
-        
     }
     
     func convertToStringFrom(date: Date)-> String {
@@ -49,6 +50,7 @@ class Utilities {
         return formatter.string(from: date)
     }
     
+    //MARK: - Dollar util
     func dollarStr(largeNumber:Double )->String {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = NumberFormatter.Style.decimal

@@ -15,7 +15,6 @@ protocol ClassBVCDelegate: class {
     func changeUImessage(message:String)
 }
 
-
 class FirebaseLink {
     
     //MARK: step 2 Create a delegate property here, don't forget to make it weak!
@@ -87,20 +86,28 @@ class FirebaseLink {
         
         self.delegate?.changeUImessage(message: "new data for \(ticker)")
         guard let cost    = data["cost"] as? Double else { print("cost fail"); return }
-        guard let winPct = data["winPct"] as? Double else { print("winPct fail"); return }
+        guard var winPct = data["winPct"] as? Double else { print("winPct fail"); return }
         guard let roi    = data["roi"] as? Double else { print("roi fail"); return }
         guard let dateStr    = data["entryDate"] as? String else { print("dateStr fail"); return }
         guard let date = Utilities().convertToDateFromNT(string: dateStr, debug: false) else { print("date has failed"); return }
-        
         guard let dateStrEx    = data["exitDate"] as? String else { print("ExitdateStr fail"); return }
         guard let dateEx = Utilities().convertToDateFromNT(string: dateStrEx, debug: false) else { print("date has failed"); return }
-        
         guard let profit     = data["profit"] as? Double else { print("profit fail"); return }
+        guard var profitFactor = data["profitFactor"] as? Double else { print("profitFactor has failed"); return }
+        
+        // normalise the early trades
+        if profitFactor > 50 {
+            profitFactor = 1
+        }
+        
+        if winPct == 100 {
+            winPct = 60.0
+        }
         if debug {
             print("\(ticker) \t\(dateStr) \tProfit: \(profit) \tCost: \(cost) \t%win: \(winPct) \tROI: \(roi)\t\(String(describing: date))\t\(String(describing: dateEx))"); }
         self.fileCount += 1
         
         //save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
-        WklyStats().updateCumulativeProfit(date: dateEx, entryDate: date, ticker: ticker, profit: profit, cost: cost, maxCost: 0.0)
+        WklyStats().updateCumulativeProfit(date: dateEx, entryDate: date, ticker: ticker, profit: profit, winPct: winPct, roi: roi, profitFactor: profitFactor, cost: cost, maxCost: 0.0)
     }
 }

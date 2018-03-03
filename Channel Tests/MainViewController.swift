@@ -26,7 +26,16 @@ class MainViewController: UIViewController, ClassBVCDelegate {
         firebaseLink.delegate = self
         firebaseLink.authAndGetFirebase { (finished) in
             if finished {
-                WklyStats().getWeeklyStatsFromRealm()
+                //WklyStats().getWeeklyStatsFromRealm()
+                let _ = RealmUtil().sortOneTicker(ticker: "CSCO", debug: true)
+                Statistics().getDistribution()
+                
+//                RealmUtil().setCumProfitForAllTickers(dataComplete: { (finished) in
+//                    if finished {
+//                        print("finished setting cum profit")
+//                        StarRating().setStars(minWinPct: 65.0, minROI: 0.001, minPF: 1.00, minCumProfit: 20)
+//                    }
+//                })
             }
         }
     }
