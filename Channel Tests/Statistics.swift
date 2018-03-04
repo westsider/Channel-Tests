@@ -39,7 +39,7 @@ class Statistics {
         print("---------------------------------------------------------------------------------------------\n")
     }
     
-    func standardBackTest(debug: Bool) {
+    func standardBackTest(debug: Bool) -> [(date:Date, cost:Double, profit:Double, pos: Int)]  {
         
         let dateArray = WklyStats().allEntriesExitsDates(debug: false)
         var portfolio:[String] = []
@@ -102,9 +102,10 @@ class Statistics {
         print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost!)) Cost")
         print("---------------------------------------------------------------------------------------------\n")
         print("")
+        return chartArray
     }
     
-    func optimizedBackTest(debug: Bool) {
+    func optimizedBackTest(debug: Bool) -> [(date:Date, cost:Double, profit:Double, pos: Int)]  {
         
         let dateArray = WklyStats().allEntriesExitsDates(debug: false)
         var portfolio:[String] = []
@@ -169,6 +170,7 @@ class Statistics {
         print("\n\t\t\t\t\t\t\t\tOptimized BackTest")
         print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
         print("---------------------------------------------------------------------------------------------\n")
+        return chartArray
     }
     
 }
