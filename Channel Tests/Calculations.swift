@@ -11,12 +11,12 @@ import  RealmSwift
 class Calculations {
     
     func graphicStats(result:(max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double), type:String) {
-        print("\n\(type) \t\t \(Int(result.min))  ----  \(Int(result.avg - result.std)) <<< \(Int(result.avg)) [\(Int(result.mode))] >>> \(Int(result.avg + result.std)) ---- \(Int(result.max))\n")
+        print("\n\t\(type) \t\t \(Int(result.min))  ----  \(Int(result.avg - result.std)) <<< \(Int(result.avg)) [\(Int(result.mode))] >>> \(Int(result.avg + result.std)) ---- \(Int(result.max))\n")
     }
     
     func graphicStatsFloat(result:(max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double), type:String) {
         
-        print("\n\(type) \t\t \(String(format: "%.2f", (result.min * 100)))  ----  \(String(format: "%.3f", (result.avg - result.std) * 100)) <<< \(String(format: "%.3f", (result.avg * 100))) [\(String(format: "%.3f", (result.mode * 100)))] >>> \(String(format: "%.3f", (result.avg + result.std) * 100)) ---- \(String(format: "%.3f", (result.max * 100)))\n")
+        print("\n\t\(type) \t\t \(String(format: "%.2f", (result.min * 100)))  ----  \(String(format: "%.3f", (result.avg - result.std) * 100)) <<< \(String(format: "%.3f", (result.avg * 100))) [\(String(format: "%.3f", (result.mode * 100)))] >>> \(String(format: "%.3f", (result.avg + result.std) * 100)) ---- \(String(format: "%.3f", (result.max * 100)))\n")
     }
     
     func calcProfit(allTrades: Results<WklyStats> ) -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {

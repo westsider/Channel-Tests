@@ -42,7 +42,6 @@ class WklyStats: Object {
         thisWeek.date = date
         thisWeek.ticker = ticker
         thisWeek.profit = profit
-        
         thisWeek.winPct = winPct
         thisWeek.roi = roi
         thisWeek.profitFactor = profitFactor
@@ -85,5 +84,55 @@ class WklyStats: Object {
         return costDict
     }
     
+    func allEntriesExitsDates(debug:Bool) -> [Date] {
+        
+        let realm = try! Realm()
+        var answer:[Date] = []
+        let allFiles = realm.objects(WklyStats.self).sorted(byKeyPath: "date", ascending: true)
+        
+        let entry: [Date] = allFiles.map { (entryDate: WklyStats) in
+            return entryDate.entryDate!
+        }
+        
+        let exit: [Date] = allFiles.map { (date: WklyStats) in
+            return date.date!
+        }
+        
+        let bothArrays = entry + exit
+        answer = bothArrays.orderedSet
+        answer.sort()
+        
+        if debug {
+            for date in answer {
+                print(Utilities().convertToStringNoTimeFrom(date: date))
+            }
+        }
+        return answer
+    }
+    
+    func allEntriesFor(today:Date) -> Results<WklyStats> {
+        let realm = try! Realm()
+        return  realm.objects(WklyStats.self).filter("entryDate == %@", today)
+    }
+    
+    func allExitsFor(today:Date) -> Results<WklyStats> {
+        let realm = try! Realm()
+        return  realm.objects(WklyStats.self).filter("date == %@", today)
+    }
+    
     
 }
+
+extension Array where Element: Hashable {
+    var orderedSet: Array  {
+        var set = Set<Element>()
+        return filter { set.insert($0).inserted }
+    }
+}
+
+
+
+
+
+
+

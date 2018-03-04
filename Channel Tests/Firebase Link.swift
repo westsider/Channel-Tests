@@ -30,6 +30,20 @@ class FirebaseLink {
     
     var fileCount:Int = 0
     
+    func authOnly() {
+        ref = Database.database().reference()//.child(currentChild) //.child("Table1")
+        let email = "whansen1@mac.com"
+        let password = "123456"
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            if error == nil {
+                self.userEmail = (user?.email!)!
+                self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)l")
+            } else {
+                self.delegate?.changeUImessage(message: error.debugDescription )
+            }
+        }
+    }
+    
     func authAndGetFirebase( dataComplete: @escaping (Bool) -> Void) {
         
         ref = Database.database().reference()//.child(currentChild) //.child("Table1")
@@ -41,7 +55,7 @@ class FirebaseLink {
                 if error == nil {
                     self.userEmail = (user?.email!)!
                     self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)l")
-                    self.fetchData(debug: false, dataComplete: { (finished) in
+                    self.fetchData(debug: true, dataComplete: { (finished) in
                         if finished {
                             self.delegate?.changeUImessage(message: "finished getting data from firebase")
                             dataComplete(true)

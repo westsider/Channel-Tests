@@ -24,110 +24,152 @@ class Statistics {
     // multiply roi * 100 to display human readable in UI
     
     func getDistribution() {
-
+        
+        print("\n\n\t\t\t\t\t\t\t\tStatistical Distribution")
+        print("---------------------------------------------------------------------------------------------")
+        
         profitResults = Calculations().calcProfit(allTrades: allTradesSortedBtDate)
         Calculations().graphicStats(result: profitResults, type: "Profit")
         winPctResults = Calculations().calcWinPct(allTrades: allTradesSortedBtDate)
         Calculations().graphicStats(result: winPctResults, type: "Win  %")
         pfResults = Calculations().calcPF(allTrades: allTradesSortedBtDate)
-        Calculations().graphicStats(result: pfResults, type: "P Fctr")
+        Calculations().graphicStatsFloat(result: pfResults, type: "P Fctr")
         roiResults = Calculations().calcROI(allTrades: allTradesSortedBtDate)
         Calculations().graphicStatsFloat(result: roiResults, type: "ROI   ")
-        runBackTestAllTrades()
+        print("---------------------------------------------------------------------------------------------\n")
     }
     
-    func runBackTestAllTrades() {
+    func standardBackTest(debug: Bool) {
         
-        var cumProfit:Double = 0.0
-        var winCount:Double = 0.0
-        var tradeCount:Double = 0.0
-        var pf:[Double] = []
-        var roi:Double = 0.0
-        
-        for eachTrade in allTradesSortedBtDate {
-            
-            let earlierDate = RealmUtil().sortTicker(ticker: eachTrade.ticker, before: eachTrade.date!, debug: false)
-            
-            if earlierDate.count > 0 {
-
-            cumProfit += eachTrade.profit
-            if eachTrade.profit >= 0 {
-                winCount += 1
-            }
-            tradeCount += 1
-            pf.append(eachTrade.profitFactor) //+= eachTrade.profitFactor // this is cumulative
-            roi += eachTrade.roi
-            }
-        }
-        
-        let winPct = (winCount / tradeCount) * 100
-        let avgPF = pf.last  //pf / tradeCount
-        
-        print("\nStandard BackTest\nProfit: $\(Utilities().dollarStr(largeNumber: cumProfit)) \t \(String(format: "%.1f", winPct))% Win \t PF: \(String(format: "%.1f", avgPF!)) \t ROI: \(String(format: "%.1f", roi)) \t \(tradeCount) trades\n")
-        runFilteredBackTest(debug: false)
-    }
-
-    // [ ] 20 max positions
-    // [ ] add chart
-    // [ ] use steppers on main UI for profit, winPct, pf, roi
-    /*
-     Standard BackTest
-     Profit: $60,555      61.7% Win      PF: 2.2      ROI: 20.6      4835.0 trades
-     
-     Profit          -1999  ----  -99 <<< 15 [0] >>> 129 ---- 4999
-     Win  %          0  ----  41 <<< 60 [60] >>> 78 ---- 93
-     P Fctr          0  ----  -1 <<< 2 [1] >>> 7 ---- 48
-     ROI             -100.00  ----  -4.237 <<< 0.524 [1.240] >>> 5.285 ---- 250.000
-     
-     pastTrades.avgProfit > ( 1 )
-     && eachTrade.winPct > ( 59 )
-     && pastTrades.avgPF > ( 0.3 )
-     && pastTrades.avgROI > (0.001)
-     
-     Optimized BackTest
-     Profit: $77,462      70.2% Win      PF: 2.2      ROI: 26.517      3180.0 trades
-     */
-    
-    func runFilteredBackTest(debug:Bool) {
-        
-        var cumProfit:Double = 0.0
+        let dateArray = WklyStats().allEntriesExitsDates(debug: false)
+        var portfolio:[String] = []
+        var chartArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
+        var todaysCost:Double = 0.0
         var winCount:Double = 0.0
         var tradeCount:Double = 0.0
         var winningTrades:[Double] = []
         var losingTrades:[Double] = []
         var roi:[Double] = []
         
-        //MARK: - Limit to 20 positions
-        
-        for eachTrade in allTradesSortedBtDate {
-           
-            let pastTrades = RealmUtil().getHistory(forTicker: eachTrade.ticker, before: eachTrade.date!, debug: false) // else {
-          
-            if pastTrades.avgProfit > ( 1 )
-                && eachTrade.winPct > ( 59 )
-                && pastTrades.avgPF > ( 0.3 )
-                && pastTrades.avgROI > (0.001)
-            {
-                if debug { print("\t Adding \(eachTrade.ticker) \(eachTrade.profit) because \(pastTrades.avgProfit) > \(0 )") }
-                cumProfit += eachTrade.profit
-                if eachTrade.profit >= 0 {
-                    winCount += 1
-                    winningTrades.append(eachTrade.profit)
-                } else {
-                    losingTrades.append(eachTrade.profit)
+        for eachDay in dateArray {
+            
+            var todaysProfit:Double = 0.0
+            
+            for eachEntry in WklyStats().allEntriesFor(today: eachDay) {
+                if portfolio.count < 20 {
+                    portfolio.append(eachEntry.ticker)
+                    todaysCost += eachEntry.cost
+                    tradeCount += 1
                 }
-                tradeCount += 1
-                roi.append(eachTrade.profit / eachTrade.cost)
-            } else {
-                if debug { print("\t Skip \(eachTrade.profit)") }
+            }
+            
+            for eachExit in WklyStats().allExitsFor(today: eachDay) {
+                if portfolio.contains(eachExit.ticker ) {
+                    todaysProfit += eachExit.profit
+                    todaysCost -= eachExit.cost
+                    let portfolioTrimmed = portfolio.filter{$0 != eachExit.ticker}
+                    portfolio = portfolioTrimmed
+                    if eachExit.profit > 0 {
+                        winCount += 1
+                        winningTrades.append(eachExit.profit)
+                    } else {
+                        losingTrades.append(eachExit.profit)
+                    }
+                    roi.append(eachExit.profit / eachExit.cost)
+                }
+            }
+            chartArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
+        }
+        
+        if debug {
+            print("\nStandard BackTest:")
+            for each in chartArray {
+                print("\(Utilities().convertToStringNoTimeFrom(date: each.date)) \t \(each.pos) \t cost: $\(Utilities().dollarStr(largeNumber: each.cost)) \t profit: $\(Utilities().dollarStr(largeNumber: each.profit))")
             }
         }
+        let arrayOfProfit: [Double] = chartArray.map { (profit: (date:Date, cost:Double, profit:Double, pos:Int)) in
+            return profit.profit
+        }
+        let arrayOfCost: [Double] = chartArray.map { (cost: (date:Date, cost:Double, profit:Double, pos:Int)) in
+            return cost.cost
+        }
+        let sumCost = arrayOfCost.max()
+        let sum = arrayOfProfit.reduce(0, +)
         let winPct = (winCount / tradeCount) * 100
         let profitFactor = ( winningTrades.sum() / losingTrades.sum() ) * -1
         let avgRoi = roi.sum()
+        print("\n\t\t\t\t\t\t\t\tStandard BackTest")
+        print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost!)) Cost")
+        print("---------------------------------------------------------------------------------------------\n")
+        print("")
+    }
+    
+    func optimizedBackTest(debug: Bool) {
         
-        print("\nOptimized BackTest\nProfit: $\(Utilities().dollarStr(largeNumber: cumProfit)) \t \(String(format: "%.1f", winPct))% Win \t PF: \(String(format: "%.1f", profitFactor)) \t ROI: \(String(format: "%.3f", avgRoi)) \t \(tradeCount) trades\n")
-    }   
+        let dateArray = WklyStats().allEntriesExitsDates(debug: false)
+        var portfolio:[String] = []
+        var chartArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
+        var todaysCost:Double = 0.0
+        var winCount:Double = 0.0
+        var tradeCount:Double = 0.0
+        var winningTrades:[Double] = []
+        var losingTrades:[Double] = []
+        var roi:[Double] = []
+        
+        for eachDay in dateArray {
+            
+            var todaysProfit:Double = 0.0
+            
+            for eachEntry in WklyStats().allEntriesFor(today: eachDay) {
+                if portfolio.count < 20 {
+                    // if system is posative
+                    if RealmUtil().systemPositive(eachEntry: eachEntry) {
+                        portfolio.append(eachEntry.ticker)
+                        todaysCost += eachEntry.cost
+                        tradeCount += 1
+                    }
+                }
+            }
+            
+            for eachExit in WklyStats().allExitsFor(today: eachDay) {
+                if portfolio.contains(eachExit.ticker ) {
+                    todaysProfit += eachExit.profit
+                    todaysCost -= eachExit.cost
+                    let portfolioTrimmed = portfolio.filter{$0 != eachExit.ticker}
+                    portfolio = portfolioTrimmed
+                    if eachExit.profit > 0 {
+                        winCount += 1
+                        winningTrades.append(eachExit.profit)
+                    } else {
+                        losingTrades.append(eachExit.profit)
+                    }
+                    roi.append(eachExit.profit / eachExit.cost)
+                }
+            }
+            chartArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
+        }
+        
+        if debug {
+            print("\nOptimized BackTest:")
+            for each in chartArray {
+                print("\(Utilities().convertToStringNoTimeFrom(date: each.date)) \t \(each.pos) \t cost: $\(Utilities().dollarStr(largeNumber: each.cost)) \t profit: $\(Utilities().dollarStr(largeNumber: each.profit))")
+            }
+        }
+        let arrayOfProfit: [Double] = chartArray.map { (profit: (date:Date, cost:Double, profit:Double, pos:Int)) in
+            return profit.profit
+        }
+        let arrayOfCost: [Double] = chartArray.map { (cost: (date:Date, cost:Double, profit:Double, pos:Int)) in
+            return cost.cost
+        }
+        let sumCost = arrayOfCost.max()! / 2
+        let sum = arrayOfProfit.reduce(0, +)
+        let winPct = (winCount / tradeCount) * 100
+        let profitFactor = ( winningTrades.sum() / losingTrades.sum() ) * -1
+        let avgRoi = ( sum / sumCost ) * 100
+        print("\n\t\t\t\t\t\t\t\tOptimized BackTest")
+        print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
+        print("---------------------------------------------------------------------------------------------\n")
+    }
     
 }
 

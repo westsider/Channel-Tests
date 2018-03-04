@@ -98,5 +98,24 @@ class RealmUtil {
         }
         dataComplete(true)
     }
+    /*
+         Optimized BackTest
+         ---------------------------------------------------------------------------------------------
+         68.9% Win     PF: 1.91     ROI: 12.74%    Profit $41,916     2,306 Trades     $66,222 Cost
+         ---------------------------------------------------------------------------------------------
+         */
     
+    func systemPositive(eachEntry: WklyStats) -> Bool {
+        var answer:Bool = false
+        let pastTrades = RealmUtil().getHistory(forTicker: eachEntry.ticker, before: eachEntry.date!, debug: false)
+        
+        if pastTrades.avgProfit > ( -73 )
+            && eachEntry.winPct > ( 59 )
+            && pastTrades.avgPF > ( 0 )
+            //&& pastTrades.avgROI > (-1.0)
+        {
+            answer = true
+        }
+        return answer
+    }
 }
