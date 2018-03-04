@@ -49,6 +49,7 @@ class StatsViewController: UIViewController {
         addAxis(BarsToShow: maxBarsOnChart)
         addModifiers()
         topChartDataSeries(surface: sciChartView1, xID: axisX1Id, yID: axisY1Id)
+        topChartStdSeries(surface: sciChartView1, xID: axisX1Id, yID: axisY1Id)
         bottomChartDataSeries(surface: sciChartView2, xID: axisX2Id, yID: axisY2Id)
     }
     
@@ -67,6 +68,22 @@ class StatsViewController: UIViewController {
         surface.renderableSeries.add(topChartRenderSeries)
     }
     
+    //MARK: - Profit Series befor optimization
+    fileprivate func topChartStdSeries(surface:SCIChartSurface, xID:String, yID:String)  {
+        let smaDataSeries:SCIXyDataSeries = SCIXyDataSeries(xType: .dateTime, yType: .double)
+        for ( things) in stdBacktest {
+            smaDataSeries.appendX(SCIGeneric(things.date), y: SCIGeneric(things.profit))
+        }
+        
+        let renderSeries:SCIFastLineRenderableSeries = SCIFastLineRenderableSeries()
+        renderSeries.dataSeries = smaDataSeries
+        renderSeries.strokeStyle = SCISolidPenStyle(color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), withThickness: 0.7)
+        renderSeries.style.isDigitalLine = false
+        renderSeries.hitTestProvider().hitTestMode = .verticalInterpolate
+        renderSeries.xAxisId = xID
+        renderSeries.yAxisId = yID
+        surface.renderableSeries.add(renderSeries)
+    }
     //MARK: - Cost Data Series
     fileprivate func bottomChartDataSeries(surface:SCIChartSurface, xID:String, yID:String)  {
         let cumulativeCost = SCIXyDataSeries(xType: .dateTime, yType: .double)

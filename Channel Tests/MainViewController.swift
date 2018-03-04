@@ -16,13 +16,15 @@
      ---------------------------------------------------------------------------------------------
      */
 
-// [ ] make array for chart
-// [ ] make chart
-// [ ] add pre / post optimization to chart
-// [ ] add cost to chart
+
+// [X] add pre optimization to chart
+// [ ] put spy in the top chart
+// [ ] add stats to main vc
 // [ ] display % capital used
-// [ ] add stats to chart
-// [ ] print tickers that pass optimization
+// [ ] print tickers that pass ticker to mail
+// [ ] completion handler for data fetch and processing
+// [ ] use operation to thread http://iosbrain.com/blog/2018/03/04/concurrency-in-ios-introduction-to-the-abstract-operation-class-and-using-its-blockoperation-subclass-to-run-tasks-in-parallel/
+
 
 import UIKit
 
@@ -37,7 +39,7 @@ class MainViewController: UIViewController, ClassBVCDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         firebaseLink.delegate = self
-            
+        
 //        firebaseLink.authAndGetFirebase { (finished) in
 //            if finished {
 //                //WklyStats().getWeeklyStatsFromRealm()

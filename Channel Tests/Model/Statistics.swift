@@ -45,6 +45,7 @@ class Statistics {
         var portfolio:[String] = []
         var statsArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
         var chartArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
+        var cumulativeProfit:Double = 0.0
         var todaysCost:Double = 0.0
         var winCount:Double = 0.0
         var tradeCount:Double = 0.0
@@ -77,9 +78,11 @@ class Statistics {
                         losingTrades.append(eachExit.profit)
                     }
                     roi.append(eachExit.profit / eachExit.cost)
+                    cumulativeProfit += eachExit.profit
                 }
             }
             statsArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
+            chartArray.append((date: eachDay, cost: todaysCost, profit: cumulativeProfit, pos: portfolio.count))
         }
         
         if debug {
@@ -103,7 +106,7 @@ class Statistics {
         print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost!)) Cost")
         print("---------------------------------------------------------------------------------------------\n")
         print("")
-        return statsArray
+        return chartArray
     }
     
     func optimizedBackTest(debug: Bool) -> [(date:Date, cost:Double, profit:Double, pos: Int)]  {
