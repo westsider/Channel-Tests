@@ -87,13 +87,7 @@
 				0D03A3BF20489EE200786C47 /* Main.storyboard */,
 				0D03A3BD20489EE200786C47 /* MainViewController.swift */,
 				0D3568B1204BB422008654C2 /* StatsViewController.swift */,
-				0D12032D2048B17F00AA421B /* Firebase Link.swift */,
-				0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */,
-				0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */,
-				0D9353372049D2C500BBF9B2 /* Statistics.swift */,
-				0D4F51B72048E936002E2F93 /* Utilities.swift */,
-				0D93533D204A55EC00BBF9B2 /* Calculations.swift */,
-				0D93533B204A54F500BBF9B2 /* Extentions.swift */,
+				0D3568B5204BC17D008654C2 /* Model */,
 				0D03A3C520489EE200786C47 /* Assets.xcassets */,
 				0D03A3C720489EE200786C47 /* LaunchScreen.storyboard */,
 				0D03A3CA20489EE200786C47 /* Info.plist */,
@@ -102,6 +96,20 @@
 				0D03A3BB20489EE200786C47 /* AppDelegate.swift */,
 			);
 			path = "Channel Tests";
+			sourceTree = "<group>";
+		};
+		0D3568B5204BC17D008654C2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0D12032D2048B17F00AA421B /* Firebase Link.swift */,
+				0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */,
+				0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */,
+				0D9353372049D2C500BBF9B2 /* Statistics.swift */,
+				0D4F51B72048E936002E2F93 /* Utilities.swift */,
+				0D93533D204A55EC00BBF9B2 /* Calculations.swift */,
+				0D93533B204A54F500BBF9B2 /* Extentions.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A24CEF5A24CC9303BD085F62 /* Pods */ = {

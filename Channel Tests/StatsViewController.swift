@@ -20,7 +20,7 @@ class StatsViewController: UIViewController {
     var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     
-    let maxBarsOnChart:Int = 850
+    let maxBarsOnChart:Int = 1100
     var rangeStart:Int = 0
     let axisY1Id:String = "Y1"
     let axisX1Id:String = "X1"
@@ -56,7 +56,7 @@ class StatsViewController: UIViewController {
     fileprivate func topChartDataSeries(surface:SCIChartSurface, xID:String, yID:String) {
         let cumulativeProfit = SCIXyDataSeries(xType: .dateTime, yType: .double)
         cumulativeProfit.acceptUnsortedData = true
-        for things in stdBacktest {
+        for things in optBacktest {
             cumulativeProfit.appendX(SCIGeneric(things.date), y: SCIGeneric(things.profit))
         }
         let topChartRenderSeries = SCIFastLineRenderableSeries()
@@ -71,7 +71,7 @@ class StatsViewController: UIViewController {
     fileprivate func bottomChartDataSeries(surface:SCIChartSurface, xID:String, yID:String)  {
         let cumulativeCost = SCIXyDataSeries(xType: .dateTime, yType: .double)
         cumulativeCost.acceptUnsortedData = true
-        for things in stdBacktest {
+        for things in optBacktest {
             cumulativeCost.appendX(SCIGeneric(things.date), y: SCIGeneric(things.cost))
         }
         let bottomChartRenderSeries = SCIFastColumnRenderableSeries()

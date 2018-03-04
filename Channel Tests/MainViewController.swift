@@ -37,14 +37,14 @@ class MainViewController: UIViewController, ClassBVCDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         firebaseLink.delegate = self
-
+            
 //        firebaseLink.authAndGetFirebase { (finished) in
 //            if finished {
 //                //WklyStats().getWeeklyStatsFromRealm()
 //                //let _ = RealmUtil().sortOneTicker(ticker: "CSCO", debug: true)
 //                Statistics().getDistribution()
-//                Statistics().standardBackTest(debug: false)
-//                Statistics().optimizedBackTest(debug: true)
+//                self.stdBacktest = Statistics().standardBackTest(debug: false)
+//                self.optBacktest = Statistics().optimizedBackTest(debug: false)
 ////                RealmUtil().setCumProfitForAllTickers(dataComplete: { (finished) in
 ////                    if finished {
 ////                        print("finished setting cum profit")

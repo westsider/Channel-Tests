@@ -43,6 +43,7 @@ class Statistics {
         
         let dateArray = WklyStats().allEntriesExitsDates(debug: false)
         var portfolio:[String] = []
+        var statsArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
         var chartArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
         var todaysCost:Double = 0.0
         var winCount:Double = 0.0
@@ -78,19 +79,19 @@ class Statistics {
                     roi.append(eachExit.profit / eachExit.cost)
                 }
             }
-            chartArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
+            statsArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
         }
         
         if debug {
             print("\nStandard BackTest:")
-            for each in chartArray {
+            for each in statsArray {
                 print("\(Utilities().convertToStringNoTimeFrom(date: each.date)) \t \(each.pos) \t cost: $\(Utilities().dollarStr(largeNumber: each.cost)) \t profit: $\(Utilities().dollarStr(largeNumber: each.profit))")
             }
         }
-        let arrayOfProfit: [Double] = chartArray.map { (profit: (date:Date, cost:Double, profit:Double, pos:Int)) in
+        let arrayOfProfit: [Double] = statsArray.map { (profit: (date:Date, cost:Double, profit:Double, pos:Int)) in
             return profit.profit
         }
-        let arrayOfCost: [Double] = chartArray.map { (cost: (date:Date, cost:Double, profit:Double, pos:Int)) in
+        let arrayOfCost: [Double] = statsArray.map { (cost: (date:Date, cost:Double, profit:Double, pos:Int)) in
             return cost.cost
         }
         let sumCost = arrayOfCost.max()
@@ -102,14 +103,16 @@ class Statistics {
         print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost!)) Cost")
         print("---------------------------------------------------------------------------------------------\n")
         print("")
-        return chartArray
+        return statsArray
     }
     
     func optimizedBackTest(debug: Bool) -> [(date:Date, cost:Double, profit:Double, pos: Int)]  {
         
         let dateArray = WklyStats().allEntriesExitsDates(debug: false)
         var portfolio:[String] = []
+        var statsArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
         var chartArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
+        var cumulativeProfit:Double = 0.0
         var todaysCost:Double = 0.0
         var winCount:Double = 0.0
         var tradeCount:Double = 0.0
@@ -145,21 +148,23 @@ class Statistics {
                         losingTrades.append(eachExit.profit)
                     }
                     roi.append(eachExit.profit / eachExit.cost)
+                    cumulativeProfit += eachExit.profit
                 }
             }
-            chartArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
+            statsArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
+            chartArray.append((date: eachDay, cost: todaysCost, profit: cumulativeProfit, pos: portfolio.count))
         }
         
         if debug {
             print("\nOptimized BackTest:")
-            for each in chartArray {
+            for each in statsArray {
                 print("\(Utilities().convertToStringNoTimeFrom(date: each.date)) \t \(each.pos) \t cost: $\(Utilities().dollarStr(largeNumber: each.cost)) \t profit: $\(Utilities().dollarStr(largeNumber: each.profit))")
             }
         }
-        let arrayOfProfit: [Double] = chartArray.map { (profit: (date:Date, cost:Double, profit:Double, pos:Int)) in
+        let arrayOfProfit: [Double] = statsArray.map { (profit: (date:Date, cost:Double, profit:Double, pos:Int)) in
             return profit.profit
         }
-        let arrayOfCost: [Double] = chartArray.map { (cost: (date:Date, cost:Double, profit:Double, pos:Int)) in
+        let arrayOfCost: [Double] = statsArray.map { (cost: (date:Date, cost:Double, profit:Double, pos:Int)) in
             return cost.cost
         }
         let sumCost = arrayOfCost.max()! / 2
