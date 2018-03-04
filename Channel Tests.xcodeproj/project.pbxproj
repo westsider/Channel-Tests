@@ -15,6 +15,8 @@
 		0D03A3C920489EE200786C47 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D03A3C720489EE200786C47 /* LaunchScreen.storyboard */; };
 		0D12032C2048B11F00AA421B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D12032B2048B11F00AA421B /* GoogleService-Info.plist */; };
 		0D12032E2048B17F00AA421B /* Firebase Link.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D12032D2048B17F00AA421B /* Firebase Link.swift */; };
+		0D3568B2204BB422008654C2 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3568B1204BB422008654C2 /* StatsViewController.swift */; };
+		0D3568B4204BBC71008654C2 /* SCIGenericWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3568B3204BBC71008654C2 /* SCIGenericWrapper.swift */; };
 		0D4F51B82048E936002E2F93 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B72048E936002E2F93 /* Utilities.swift */; };
 		0D4F51BA2048EE43002E2F93 /* Weekly Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */; };
 		0D9353382049D2C500BBF9B2 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9353372049D2C500BBF9B2 /* Statistics.swift */; };
@@ -35,6 +37,8 @@
 		0D03A3CA20489EE200786C47 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D12032B2048B11F00AA421B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D12032D2048B17F00AA421B /* Firebase Link.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Firebase Link.swift"; sourceTree = "<group>"; };
+		0D3568B1204BB422008654C2 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		0D3568B3204BBC71008654C2 /* SCIGenericWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCIGenericWrapper.swift; sourceTree = "<group>"; };
 		0D4F51B72048E936002E2F93 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekly Stats.swift"; sourceTree = "<group>"; };
 		0D9353372049D2C500BBF9B2 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
@@ -61,6 +65,7 @@
 		0D03A3AF20489EE200786C47 = {
 			isa = PBXGroup;
 			children = (
+				0D3568B3204BBC71008654C2 /* SCIGenericWrapper.swift */,
 				0D03A3BA20489EE200786C47 /* Channel Tests */,
 				0D03A3B920489EE200786C47 /* Products */,
 				A24CEF5A24CC9303BD085F62 /* Pods */,
@@ -81,6 +86,7 @@
 			children = (
 				0D03A3BF20489EE200786C47 /* Main.storyboard */,
 				0D03A3BD20489EE200786C47 /* MainViewController.swift */,
+				0D3568B1204BB422008654C2 /* StatsViewController.swift */,
 				0D12032D2048B17F00AA421B /* Firebase Link.swift */,
 				0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */,
 				0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */,
@@ -261,7 +267,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D3568B4204BBC71008654C2 /* SCIGenericWrapper.swift in Sources */,
 				0D03A3BE20489EE200786C47 /* MainViewController.swift in Sources */,
+				0D3568B2204BB422008654C2 /* StatsViewController.swift in Sources */,
 				0D12032E2048B17F00AA421B /* Firebase Link.swift in Sources */,
 				0D03A3BC20489EE200786C47 /* AppDelegate.swift in Sources */,
 				0D93533E204A55EC00BBF9B2 /* Calculations.swift in Sources */,

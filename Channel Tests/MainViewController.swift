@@ -37,6 +37,7 @@ class MainViewController: UIViewController, ClassBVCDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         firebaseLink.delegate = self
+
 //        firebaseLink.authAndGetFirebase { (finished) in
 //            if finished {
 //                //WklyStats().getWeeklyStatsFromRealm()
@@ -65,11 +66,23 @@ class MainViewController: UIViewController, ClassBVCDelegate {
         }
     }
     
+    @IBAction func statsButtonAction(_ sender: UIButton) {
+        segueToStats()
+    }
+    
+    
     func changeUImessage(message: String) {
         print("MESSAGE FROM DELAGATE: \(message)");
         DispatchQueue.main.async {
             self.updateText.text = message
         }
+    }
+    
+    private func segueToStats() {
+        let myVC:StatsViewController = storyboard?.instantiateViewController(withIdentifier: "StatsVC") as! StatsViewController
+        myVC.stdBacktest = stdBacktest
+        myVC.optBacktest = optBacktest
+        navigationController?.pushViewController(myVC, animated: true)
     }
 }
 
