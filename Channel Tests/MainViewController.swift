@@ -40,26 +40,49 @@ class MainViewController: UIViewController, ClassBVCDelegate {
         super.viewDidLoad()
         firebaseLink.delegate = self
         
-//        firebaseLink.authAndGetFirebase { (finished) in
-//            if finished {
-//                //WklyStats().getWeeklyStatsFromRealm()
-//                //let _ = RealmUtil().sortOneTicker(ticker: "CSCO", debug: true)
-//                Statistics().getDistribution()
-//                self.stdBacktest = Statistics().standardBackTest(debug: false)
-//                self.optBacktest = Statistics().optimizedBackTest(debug: false)
-////                RealmUtil().setCumProfitForAllTickers(dataComplete: { (finished) in
-////                    if finished {
-////                        print("finished setting cum profit")
-////                        StarRating().setStars(minWinPct: 65.0, minROI: 0.001, minPF: 1.00, minCumProfit: 20)
-////                    }
-////                })
-//            }
-//        }
+        
+        
+        getSPYData()
+//        let dateToConvert  = "2017-12-19"
+//        let _ = Utilities().convertToDateFrom(string: dateToConvert, debug: true)
+        
+//        let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: true)
+//        print("Spy Dates counr \(spyPrices.count)")
+        
+    }
+    
+    func getSPYData() {
+        Alpha().standardNetworkCall(ticker: "SPY", compact: true, debug: true) { (finished) in
+            if finished {
+                let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: true)
+                print("Spy Dates count \(spyPrices.count)")
+            }
+        }
+    }
+    
+    func readFirebase() {
         firebaseLink.authOnly()
         Statistics().getDistribution()
         stdBacktest = Statistics().standardBackTest(debug: false)
         optBacktest = Statistics().optimizedBackTest(debug: false)
         print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
+        
+    }
+    func getFirebaseDataAndSpyData() {
+        firebaseLink.authAndGetFirebase { (finished) in
+            if finished {
+                Statistics().getDistribution()
+                self.stdBacktest = Statistics().standardBackTest(debug: false)
+                self.optBacktest = Statistics().optimizedBackTest(debug: false)
+                print("std count \(self.stdBacktest.count) opt coint \(self.optBacktest.count)")
+                Alpha().standardNetworkCall(ticker: "SPY", compact: true, debug: true) { (finished) in
+                    if finished {
+                        let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: true)
+                        print("Spy Dates counr \(spyPrices.count)")
+                    }
+                }
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

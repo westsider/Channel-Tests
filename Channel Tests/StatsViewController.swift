@@ -19,6 +19,7 @@ class StatsViewController: UIViewController {
 
     var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
+    var spyCloses:[(date:Date, close:Double)] = []
     
     let maxBarsOnChart:Int = 1100
     var rangeStart:Int = 0

@@ -60,4 +60,30 @@ class Utilities {
     func decimalStr(input:Double, Decimals:Int)->String {
         return String(format: "%.\(Decimals)f", input)
     }
+    
+    func getUser()-> (user:String, password:String) {
+        var user = ""
+        var password = ""
+        if  let myUser = UserDefaults.standard.object(forKey: "user")   {
+            user = myUser as! String
+        } else {
+            print("No User Set")
+        }
+        if  let myPassWord = UserDefaults.standard.object(forKey: "password")  {
+            password = myPassWord as! String
+        } else {
+            print("No Password Set")
+        }
+        return (user:user, password:password)
+    }
+    
+    func playAlertSound() {
+        let systemSoundId: SystemSoundID = 1106 // connect to power // 1052 tube bell //1016 tweet
+        AudioServicesPlaySystemSound(systemSoundId)
+    }
+    
+    func playErrorSound() {
+        let systemSoundId: SystemSoundID = 1052 // connect to power // 1052 tube bell //1016 tweet
+        AudioServicesPlaySystemSound(systemSoundId)
+    }
 }
