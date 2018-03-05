@@ -9,49 +9,41 @@
 import Foundation
 
 class Process {
-    
-    class func httpStatus(service:String, httpStatus: Int, ticker:String ) {
-        print("\nstatus code: \(httpStatus)")
-        // process result
+
+    class func httpStatus(service:String, httpStatus: Int, ticker:String ) -> String {
+        
+        weak var delegate: FirebaseDelegate?
+        var message = "status code: \(httpStatus)"
         
         switch httpStatus {
         case 200:
-            print("Server: OK – Everything worked as expected\n")
+            message += " Server: OK – Everything worked as expected"
         case 401:
-            print("\n------------------------------------------------------------------\n")
-            print("Server: Unauthorized – Your User/Password API Keys are incorrect")
-            print("\n------------------------------------------------------------------\n")
+            message += " Server: Unauthorized – Your User/Password API Keys are incorrect"
             Utilities().playErrorSound()
         case 403:
-            print("\n------------------------------------------------------------------\n")
-            print("Server: You are not subscribed to the data feed requested for \(ticker)")
-            print("\n------------------------------------------------------------------\n")
+            message += " Server: You are not subscribed to the data feed requested for \(ticker)"
             Utilities().playErrorSound()
         case 404:
-            print("\n------------------------------------------------------------------\n")
-            print("Server: Not Found – The end point requested is not available for \(ticker)")
-            print("\n------------------------------------------------------------------\n")
+            message += " Server: Not Found – The end point requested is not available for \(ticker)"
             Utilities().playErrorSound()
         case 429:
-            print("\n------------------------------------------------------------------\n")
-            print("Server: Too Many Requests – You have hit a limit. See Limits for \(ticker)")
-            print("\n------------------------------------------------------------------\n")
+            message += " Server: Too Many Requests – You have hit a limit. See Limits for \(ticker)"
             Utilities().playErrorSound()
         case 500:
-            print("\n-------------------------------------------------------------------------------\n")
-            print("Server: Internal Server Error – We had a problem with our server. Try again later for \(ticker).")
-            print("\n------------------------------------------------------------------------------\n")
+            message += " Server: Internal Server Error – We had a problem. Try again later for \(ticker)."
             Utilities().playErrorSound()
         case 503:
-            print("\n----------------------------------------------------------------------------------------------------------\n")
-            print("Server: Service Unavailable – You may have hit your throttle limit or \(service) may be experiencing difficulties. No data returned for \(ticker)")
-            print("\n----------------------------------------------------------------------------------------------------------\n")
+            message += " Server: Unavailable – throttle limit or \(service) may be experiencing difficulties."
             Utilities().playErrorSound()
         default:
-            print("\n------------------------------------------------------------------\n")
-            print("Server didn't handshake")
-            print("\n------------------------------------------------------------------\n")
+            message += " Server didn't handshake"
             Utilities().playErrorSound()
         }
+        delegate?.changeUImessage(message: message)
+        print("\n------------------------------------------------------------------\n")
+        print(message)
+        print("\n------------------------------------------------------------------\n")
+        return message
     }
 }

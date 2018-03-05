@@ -11,14 +11,14 @@ import UIKit
 import Firebase
 
 //MARK: step 1 Add Protocol here
-protocol ClassBVCDelegate: class {
+protocol FirebaseDelegate: class {
     func changeUImessage(message:String)
 }
 
 class FirebaseLink {
     
     //MARK: step 2 Create a delegate property here, don't forget to make it weak!
-    weak var delegate: ClassBVCDelegate?
+    weak var delegate: FirebaseDelegate?
     
     var ref: DatabaseReference!
     

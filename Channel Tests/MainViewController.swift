@@ -28,36 +28,27 @@
 
 import UIKit
 
-class MainViewController: UIViewController, ClassBVCDelegate {
+class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
 
     @IBOutlet weak var updateText: UILabel!
     
     var firebaseLink = FirebaseLink()
+    var alphaLink = Alpha()
     var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         firebaseLink.delegate = self
-        
-        
-        
-        getSPYData()
-//        let dateToConvert  = "2017-12-19"
-//        let _ = Utilities().convertToDateFrom(string: dateToConvert, debug: true)
-        
-//        let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: true)
-//        print("Spy Dates counr \(spyPrices.count)")
-        
+        alphaLink.delegate = self
     }
     
-    func getSPYData() {
-        Alpha().standardNetworkCall(ticker: "SPY", compact: true, debug: true) { (finished) in
-            if finished {
-                let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: true)
-                print("Spy Dates count \(spyPrices.count)")
-            }
-        }
+    override func viewDidAppear(_ animated: Bool) {
+
+        //MARK: TODO - if last update wasn't today then get new compact data
+        //MARK: TODO - if realm is empty, get full data set
+        //alphaLink.getDataData(forTicker: "SPY", compact: true, debug: false)
+        //readFirebase()
     }
     
     func readFirebase() {
@@ -68,6 +59,7 @@ class MainViewController: UIViewController, ClassBVCDelegate {
         print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
         
     }
+    
     func getFirebaseDataAndSpyData() {
         firebaseLink.authAndGetFirebase { (finished) in
             if finished {
@@ -85,11 +77,7 @@ class MainViewController: UIViewController, ClassBVCDelegate {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if optBacktest.count == stdBacktest.count {
-            changeUImessage(message: "Both arrays match in size. trasition to charts ok/")
-        }
-    }
+
     
     @IBAction func statsButtonAction(_ sender: UIButton) {
         segueToStats()
@@ -97,7 +85,14 @@ class MainViewController: UIViewController, ClassBVCDelegate {
     
     
     func changeUImessage(message: String) {
-        print("MESSAGE FROM DELAGATE: \(message)");
+        print("MESSAGE FROM Firebase: \(message)");
+        DispatchQueue.main.async {
+            self.updateText.text = message
+        }
+    }
+    
+    func changeUImessageAlpha(message:String) {
+        print("MESSAGE FROM Alpha: \(message)");
         DispatchQueue.main.async {
             self.updateText.text = message
         }

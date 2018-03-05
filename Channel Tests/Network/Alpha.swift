@@ -9,14 +9,33 @@
 import Foundation
 import SwiftyJSON
 
+protocol AlphaDelegate: class {
+    func changeUImessageAlpha(message:String)
+}
+
 class Alpha {
     
     var downloadErrors: Array<String> = []
     
+    weak var delegate: AlphaDelegate?
+
+    
+    func getDataData(forTicker:String, compact:Bool, debug:Bool) {
+        standardNetworkCall(ticker: forTicker, compact: compact, debug: debug) { (finished) in
+            if finished {
+                let spyPrices = Prices().sortOneTicker(ticker: forTicker, debug: debug)
+                print("Spy Dates count \(spyPrices.count)")
+                self.delegate?.changeUImessageAlpha(message: "\(forTicker) Dates count \(spyPrices.count) in databse")
+            }
+        }
+    }
+    
     func standardNetworkCall(ticker: String, compact:Bool, debug: Bool, completion: @escaping (Bool) -> Void) {
+        
         
         Prices().deleteOld()
         print("Requesting remote data for \(ticker)")
+        delegate?.changeUImessageAlpha(message: "Requesting alpha data for \(ticker)")
         let alphaApiKey = UserDefaults.standard.object(forKey: "alphaApiKey") as! String
         var additionalData = ""
 
@@ -37,12 +56,13 @@ class Alpha {
             if ( debug ) { print(json) }
             if let httpStatus = response as? HTTPURLResponse {
                 
-                Process.httpStatus(service: "alph avantage", httpStatus: httpStatus.statusCode, ticker: ticker)
+                let message = Process.httpStatus(service: "alph avantage", httpStatus: httpStatus.statusCode, ticker: ticker)
                 if httpStatus.statusCode != 200 {
                     self.downloadErrors.append("Error getting \(ticker): Code \(httpStatus.statusCode)")
                 }
+                self.delegate?.changeUImessageAlpha(message: message)
             }
-            
+            //MARK: TODO - unwrap all
             let metadata = json["Meta Data"] as JSON
             let lastRefreshed = metadata["3. Last Refreshed"]
             let symbol = metadata["2. Symbol"]
@@ -64,7 +84,8 @@ class Alpha {
                 Prices().createNew(ticker: symbol.stringValue, lastRefreshed: lastRefreshed.stringValue, dateString: dateSeries, open: open.doubleValue, high: high.doubleValue, low: low.doubleValue, close: close.doubleValue, vol: volume.doubleValue)
                 
             }
-            print("\(ticker) data request complete")
+            print("Requesting alpha data for \(ticker)")
+            self.delegate?.changeUImessageAlpha(message: "Requesting alpha data for \(ticker)")
             completion(true)
         }
         task.resume()
