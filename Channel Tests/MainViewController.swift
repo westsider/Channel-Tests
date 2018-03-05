@@ -32,7 +32,9 @@ import UIKit
 
 class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
 
-    @IBOutlet weak var updateText: UILabel!
+    @IBOutlet weak var mainText: UITextView!
+    
+    @IBOutlet weak var activity: UIActivityIndicatorView!
     
     var firebaseLink = FirebaseLink()
     var alphaLink = Alpha()
@@ -49,6 +51,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         
         alphaLink.checkRealmDatabase() //Prices().deleteOld()
         //getFirebaseData() // this should be a button with a completion handler "Get New Data From Firebase"
+        mainText.text = "here is some text"
         getStatsFromRealm()
     }
     
@@ -66,6 +69,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     
     func getFirebaseData() {
         // add activity
+        activitIsNow(on: true)
         DispatchQueue.global(qos: .background).async {
             self.firebaseLink.authAndGetFirebase { (finished) in
                 if finished {
@@ -75,8 +79,20 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         }
     }
     
+    func activitIsNow(on:Bool) {
+        DispatchQueue.main.async {
+            if on {
+                self.activity.startAnimating()
+            } else {
+                self.activity.stopAnimating()
+            }
+        }
+    }
+    
     func backtestWithFilters() {
         // add activity
+        activitIsNow(on: true)
+        activity.color = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         DispatchQueue.global(qos: .background).async {
             Statistics().getDistribution { (finished) in
                 if finished {
@@ -91,6 +107,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
                                     print("----------------------------------------------------> OPT backtest finished!")
                                     self.changeUImessage(message: "OPT backtest finished")
                                     self.getStatsFromRealm()
+                                    self.activitIsNow(on: false)
                                 }
                             })
                         }
@@ -102,6 +119,11 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     }
     
 
+    @IBAction func getNewDataAction(_ sender: Any) {
+        getFirebaseData()
+    }
+    
+    
     @IBAction func statsButtonAction(_ sender: UIButton) {
         segueToStats()
     }
@@ -109,14 +131,14 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     func changeUImessage(message: String) {
         print("\nMESSAGE FROM Firebase: \(message)");
         DispatchQueue.main.async {
-            self.updateText.text = message
+            self.mainText.text = message
         }
     }
     
     func changeUImessageAlpha(message:String) {
         print("\nMESSAGE FROM Alpha: \(message)");
         DispatchQueue.main.async {
-            self.updateText.text = message
+            self.mainText.text = message
         }
     }
     

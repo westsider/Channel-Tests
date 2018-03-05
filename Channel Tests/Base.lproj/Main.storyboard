@@ -9,11 +9,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="PingFang.ttc">
-            <string>PingFangHK-Regular</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -23,46 +18,69 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="r4A-Mh-qnU">
-                                <rect key="frame" x="8" y="72" width="359" height="587"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="starting up..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="r9o-w7-F0f">
-                                        <rect key="frame" x="8" y="0.0" width="343" height="293.5"/>
-                                        <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.97680455450000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="792-Hb-NtE">
-                                        <rect key="frame" x="8" y="293.5" width="343" height="293.5"/>
-                                        <color key="backgroundColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Stats Chart">
-                                            <color key="titleColor" red="0.55634254220000001" green="0.97934550050000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="statsButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rc5-H3-n8u"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xqX-8a-vtr">
+                                <rect key="frame" x="16" y="67" width="343" height="532"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="r9o-w7-F0f" firstAttribute="leading" secondItem="r4A-Mh-qnU" secondAttribute="leading" constant="8" id="9Ac-sb-vGs"/>
-                                    <constraint firstAttribute="trailing" secondItem="r9o-w7-F0f" secondAttribute="trailing" constant="8" id="BzF-V9-7gk"/>
-                                    <constraint firstItem="792-Hb-NtE" firstAttribute="leading" secondItem="r4A-Mh-qnU" secondAttribute="leading" constant="8" id="KQ5-RV-8y7"/>
-                                    <constraint firstAttribute="trailing" secondItem="792-Hb-NtE" secondAttribute="trailing" constant="8" id="pSA-To-XIL"/>
+                                    <constraint firstAttribute="height" constant="532" id="VSS-JP-C2d"/>
                                 </constraints>
-                            </stackView>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="gTN-9Y-dkK">
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
+                                <color key="color" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRV-cm-Hmw">
+                                <rect key="frame" x="192" y="617" width="150" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="HKo-7j-7YK"/>
+                                    <constraint firstAttribute="width" constant="150" id="nkk-7y-pK8"/>
+                                </constraints>
+                                <state key="normal" title="Get New Data">
+                                    <color key="titleColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="getNewDataAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="71i-Ju-rIr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="792-Hb-NtE">
+                                <rect key="frame" x="27" y="617" width="150" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="JqU-2g-M9O"/>
+                                    <constraint firstAttribute="height" constant="30" id="fsK-Cv-kIv"/>
+                                </constraints>
+                                <state key="normal" title="Stats Chart">
+                                    <color key="titleColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="statsButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rc5-H3-n8u"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="r4A-Mh-qnU" secondAttribute="trailing" constant="8" id="9eT-QO-cHf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="r4A-Mh-qnU" secondAttribute="bottom" constant="8" id="cl8-Kx-Pbf"/>
-                            <constraint firstItem="r4A-Mh-qnU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="ekz-7o-hgJ"/>
-                            <constraint firstItem="r4A-Mh-qnU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="m29-7I-QGg"/>
+                            <constraint firstItem="gTN-9Y-dkK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="90a-q5-RBi"/>
+                            <constraint firstItem="xqX-8a-vtr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="3" id="AlR-17-KPD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="792-Hb-NtE" secondAttribute="bottom" constant="20" id="RRU-JZ-2jk"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZRV-cm-Hmw" secondAttribute="trailing" constant="33" id="iyF-BW-26f"/>
+                            <constraint firstItem="792-Hb-NtE" firstAttribute="top" secondItem="xqX-8a-vtr" secondAttribute="bottom" constant="18" id="jFa-S1-GXH"/>
+                            <constraint firstItem="792-Hb-NtE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="27" id="nZr-RB-uWA"/>
+                            <constraint firstItem="xqX-8a-vtr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="pjS-Ux-OZv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xqX-8a-vtr" secondAttribute="trailing" constant="16" id="qw0-qt-BbI"/>
+                            <constraint firstItem="ZRV-cm-Hmw" firstAttribute="top" secondItem="xqX-8a-vtr" secondAttribute="bottom" constant="18" id="seW-85-lVB"/>
+                            <constraint firstItem="gTN-9Y-dkK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v8G-Ro-ool"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ZRV-cm-Hmw" secondAttribute="bottom" constant="20" id="xcx-PX-jiO"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="bwA-H5-5dd"/>
                     <connections>
-                        <outlet property="updateText" destination="r9o-w7-F0f" id="gSw-Sb-fDt"/>
+                        <outlet property="activity" destination="gTN-9Y-dkK" id="QcD-9X-UDp"/>
+                        <outlet property="mainText" destination="xqX-8a-vtr" id="33U-5j-Tr7"/>
                         <segue destination="s4I-02-N0E" kind="presentation" identifier="mainToStatsVC" id="VUM-ZQ-fAR"/>
                     </connections>
                 </viewController>
