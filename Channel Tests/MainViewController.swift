@@ -41,27 +41,28 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         super.viewDidLoad()
         firebaseLink.delegate = self
         alphaLink.delegate = self
-        firebaseLink.authOnly()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         
         alphaLink.checkRealmDatabase() //Prices().deleteOld()
-        getFirebaseData()
-
+        //getFirebaseData() // this should be a button with a completion handler "Get New Data From Firebase"
+        readStatsFromRealm() // this stays here at launc with completion handler and UI update, fix this blocks UI
+   
     }
     
     func getFirebaseData() {
         firebaseLink.authAndGetFirebase { (finished) in
             if finished {
-                self.readFirebase()
+                self.readStatsFromRealm()
             }
         }
     }
     
-    func readFirebase() {
-        stdBacktest = Statistics().standardBackTest(debug: false)
-        optBacktest = Statistics().optimizedBackTest(debug: false)
+    func readStatsFromRealm() {
+        
+//        stdBacktest = Statistics().standardBackTest(debug: false, completion: )
+//        optBacktest = Statistics().optimizedBackTest(debug: false)
         Statistics().getDistribution()
         print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
     }

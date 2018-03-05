@@ -23,6 +23,15 @@ class Statistics {
     // auto select Low 0.3 result.avg - result.std)
     // multiply roi * 100 to display human readable in UI
     
+    // completion bool when all 3 have written to realm
+    func readStatsFromRealm() {
+        
+        //let stdBacktest = Statistics().standardBackTest(debug: false)
+//        optBacktest = Statistics().optimizedBackTest(debug: false)
+//        Statistics().getDistribution()
+//        print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
+    }
+    
     func getDistribution() {
         
         print("\n\n\t\t\t\t\t\t\t\tStatistical Distribution")
@@ -39,7 +48,8 @@ class Statistics {
         print("---------------------------------------------------------------------------------------------\n")
     }
     
-    func standardBackTest(debug: Bool) -> [(date:Date, cost:Double, profit:Double, pos: Int)]  {
+    // completion bool when written to realm
+    func standardBackTest(debug: Bool, completion: @escaping (Bool) -> Void) {
         
         let dateArray = WklyStats().allEntriesExitsDates(debug: false)
         var portfolio:[String] = []
@@ -113,7 +123,7 @@ class Statistics {
         } else {
             print("Warning! could not unwrap Standard BackTest")
         }
-        return chartArray
+        // push to realm array of profit / cost, statsreturn chartArray
     }
     
     func optimizedBackTest(debug: Bool) -> [(date:Date, cost:Double, profit:Double, pos: Int)]  {

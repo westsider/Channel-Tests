@@ -19,6 +19,7 @@
 		0D1EBAB0204CB6420092B351 /* Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1EBAAF204CB6420092B351 /* Alpha.swift */; };
 		0D3568B2204BB422008654C2 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3568B1204BB422008654C2 /* StatsViewController.swift */; };
 		0D3568B4204BBC71008654C2 /* SCIGenericWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3568B3204BBC71008654C2 /* SCIGenericWrapper.swift */; };
+		0D46B601204DDBFA0081C21C /* StatsBacktests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D46B600204DDBFA0081C21C /* StatsBacktests.swift */; };
 		0D4F51B82048E936002E2F93 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B72048E936002E2F93 /* Utilities.swift */; };
 		0D4F51BA2048EE43002E2F93 /* Weekly Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */; };
 		0D880AA0204CA0D7008D1F0E /* Intrinio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D880A9F204CA0D7008D1F0E /* Intrinio.swift */; };
@@ -45,6 +46,7 @@
 		0D1EBAAF204CB6420092B351 /* Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alpha.swift; sourceTree = "<group>"; };
 		0D3568B1204BB422008654C2 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		0D3568B3204BBC71008654C2 /* SCIGenericWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCIGenericWrapper.swift; sourceTree = "<group>"; };
+		0D46B600204DDBFA0081C21C /* StatsBacktests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBacktests.swift; sourceTree = "<group>"; };
 		0D4F51B72048E936002E2F93 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekly Stats.swift"; sourceTree = "<group>"; };
 		0D880A9F204CA0D7008D1F0E /* Intrinio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intrinio.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				0D12032D2048B17F00AA421B /* Firebase Link.swift */,
 				0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */,
 				0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */,
+				0D46B600204DDBFA0081C21C /* StatsBacktests.swift */,
 				0D9353372049D2C500BBF9B2 /* Statistics.swift */,
 			);
 			path = Model;
@@ -313,6 +316,7 @@
 				0D93533A2049D3A700BBF9B2 /* Realm Utilities.swift in Sources */,
 				0D03A3C420489EE200786C47 /* Channel_Tests.xcdatamodeld in Sources */,
 				0D880AA0204CA0D7008D1F0E /* Intrinio.swift in Sources */,
+				0D46B601204DDBFA0081C21C /* StatsBacktests.swift in Sources */,
 				0D1EBAB0204CB6420092B351 /* Alpha.swift in Sources */,
 				0D9353382049D2C500BBF9B2 /* Statistics.swift in Sources */,
 				0D93533C204A54F500BBF9B2 /* Extentions.swift in Sources */,

@@ -9,6 +9,8 @@
 import Foundation
 import RealmSwift
 
+
+// these are realm objects representing the portfolio backtest in NT from firebase
 class WklyStats: Object {
     
     @objc dynamic var entryDate:Date?

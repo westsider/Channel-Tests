@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let licencing = UserDefaults.standard.object(forKey: "scichartLicense")  {
             SCIChartSurface.setRuntimeLicenseKey(licencing as! String)
         }
+        FirebaseLink().authOnly() 
         return true
     }
 

@@ -85,7 +85,7 @@ class FirebaseLink {
                         self.delegate?.changeUImessage(message: "failed to unwrap data!")
                     }
                     
-                    if debug { print(allItems.count, self.fileCount ) }
+                    //if debug { print(allItems.count, self.fileCount ) }
                 }
                 if self.fileCount == allItems.count {
                     dataComplete(true)
