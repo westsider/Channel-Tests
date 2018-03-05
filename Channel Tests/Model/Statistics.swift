@@ -24,15 +24,9 @@ class Statistics {
     // multiply roi * 100 to display human readable in UI
     
     // completion bool when all 3 have written to realm
-    func readStatsFromRealm() {
-        
-        //let stdBacktest = Statistics().standardBackTest(debug: false)
-//        optBacktest = Statistics().optimizedBackTest(debug: false)
-//        Statistics().getDistribution()
-//        print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
-    }
+
     
-    func getDistribution() {
+    func getDistribution( completion: @escaping (Bool) -> Void) {
         
         print("\n\n\t\t\t\t\t\t\t\tStatistical Distribution")
         print("---------------------------------------------------------------------------------------------")
@@ -46,6 +40,7 @@ class Statistics {
         roiResults = Calculations().calcROI(allTrades: allTradesSortedBtDate)
         Calculations().graphicStatsFloat(result: roiResults, type: "ROI   ")
         print("---------------------------------------------------------------------------------------------\n")
+        completion(true)
     }
     
     // completion bool when written to realm
@@ -62,6 +57,8 @@ class Statistics {
         var winningTrades:[Double] = []
         var losingTrades:[Double] = []
         var roi:[Double] = []
+        
+        StdBacktest().deleteAll()
         
         for eachDay in dateArray {
             
@@ -93,6 +90,7 @@ class Statistics {
             }
             statsArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
             chartArray.append((date: eachDay, cost: todaysCost, profit: cumulativeProfit, pos: portfolio.count))
+            StdBacktest().saveDataPoints(date: eachDay, profit: cumulativeProfit, cost: todaysCost, pos: portfolio.count)
         }
         
         if debug {
@@ -114,19 +112,22 @@ class Statistics {
             let winPct = ((winCount / tradeCount) * 100)
             let sum = arrayOfProfit.reduce(0, +)
             let profitFactor = (( winningTrades.sum() / losingTrades.sum() ) * -1)
-            let avgRoi = roi.sum()
+            let avgRoi = ( sum / sumCost ) * 100
             print("\n\t\t\t\t\t\t\t\tStandard BackTest")
             print("---------------------------------------------------------------------------------------------")
             print("   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
             print("---------------------------------------------------------------------------------------------\n")
             print("")
+            StatsBacktests().saveDataPoints(group: "STD", winPct: winPct, cumProfit: sum, pf: profitFactor, roi: avgRoi, totalTrades: Int(tradeCount), maxCost: sumCost)
+            
         } else {
             print("Warning! could not unwrap Standard BackTest")
         }
+        completion(true)
         // push to realm array of profit / cost, statsreturn chartArray
     }
     
-    func optimizedBackTest(debug: Bool) -> [(date:Date, cost:Double, profit:Double, pos: Int)]  {
+    func optimizedBackTest(debug: Bool, completion: @escaping (Bool) -> Void) {
         
         let dateArray = WklyStats().allEntriesExitsDates(debug: false)
         var portfolio:[String] = []
@@ -139,6 +140,8 @@ class Statistics {
         var winningTrades:[Double] = []
         var losingTrades:[Double] = []
         var roi:[Double] = []
+        
+        OptBacktest().deleteAll()
         
         for eachDay in dateArray {
             
@@ -173,6 +176,7 @@ class Statistics {
             }
             statsArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
             chartArray.append((date: eachDay, cost: todaysCost, profit: cumulativeProfit, pos: portfolio.count))
+            OptBacktest().saveDataPoints(date: eachDay, profit: cumulativeProfit, cost: todaysCost, pos: portfolio.count)
         }
         
         if debug {
@@ -195,7 +199,9 @@ class Statistics {
         print("\n\t\t\t\t\t\t\t\tOptimized BackTest")
         print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
         print("---------------------------------------------------------------------------------------------\n")
-        return chartArray
+        StatsBacktests().saveDataPoints(group: "OPT", winPct: winPct, cumProfit: sum, pf: profitFactor, roi: avgRoi, totalTrades: Int(tradeCount), maxCost: sumCost)
+        //return chartArray
+        completion(true)
     }
     
 }

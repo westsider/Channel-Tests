@@ -18,13 +18,48 @@ class StatsBacktests: Object {
     @objc dynamic var profitFactor    = 0.00
     @objc dynamic var roi    = 0.00
     @objc dynamic var totalTrades    = 0
-    @objc dynamic var cost      = 0.00
     @objc dynamic var maxCost   = 0.00
     @objc dynamic var taskID    = NSUUID().uuidString
     
     // func to populate
+    func saveDataPoints(group:String, winPct:Double, cumProfit:Double, pf:Double, roi:Double, totalTrades:Int, maxCost:Double) {
+        
+        delete(group: group)
+        let realm = try! Realm()
+        let statsBacktests = StatsBacktests()
+        statsBacktests.group = group
+        statsBacktests.winPct = winPct
+        statsBacktests.cumProfit = cumProfit
+        statsBacktests.profitFactor = pf
+        statsBacktests.roi = roi
+        statsBacktests.totalTrades = totalTrades
+        statsBacktests.maxCost = maxCost
+        try! realm.write {
+            realm.add(statsBacktests)
+        }
+    }
     
-    // func to set UI
+    func delete(group:String) {
+        let realm = try! Realm()
+        let clearIt = realm.objects(StatsBacktests.self).filter("group == %@", group)
+        try! realm.write {
+            realm.delete(clearIt)
+        }
+        print("\nRealm \tStatsBacktests group \(group) \tCleared!\n")
+    }
+    func populateUI(group:String) -> StatsBacktests? {
+        let realm = try! Realm()
+        let allFiles = realm.objects(StatsBacktests.self).filter("group == %@", group).last
+        return allFiles
+    }
+    
+    func check() {
+        let realm = try! Realm()
+        let allFiles = realm.objects(StatsBacktests.self)
+        for uiText in allFiles {
+            print("Win \(uiText.winPct) \tpf \(uiText.profitFactor) \troi \(uiText.roi) \tProfit\(uiText.cumProfit) \ttrades \(uiText.totalTrades) \t cost\(uiText.maxCost)" )
+        }
+    }
 }
 
 // arrays for chart
@@ -36,6 +71,7 @@ class StdBacktest: Object {
     @objc dynamic var taskID    = NSUUID().uuidString
     
     func saveDataPoints(date:Date, profit:Double, cost:Double, pos:Int) {
+        
         let realm = try! Realm()
         let stdBackTest = StdBacktest()
         stdBackTest.date = date
@@ -45,6 +81,15 @@ class StdBacktest: Object {
         try! realm.write {
             realm.add(stdBackTest)
         }
+    }
+    
+    func deleteAll() {
+        let realm = try! Realm()
+        let clearIt = realm.objects(StdBacktest.self)
+        try! realm.write {
+            realm.delete(clearIt)
+        }
+        print("\nRealm \tStdBacktest \tCleared!\n")
     }
     
     // func to populate
@@ -58,7 +103,7 @@ class StdBacktest: Object {
     }
     
     // func to populate
-    func populateCosttChart() -> Zip2Sequence<[Date], [Double]> {
+    func populateCostChart() -> Zip2Sequence<[Date], [Double]> {
         
         let realm = try! Realm()
         let allFiles = realm.objects(StdBacktest.self).sorted(byKeyPath: "date", ascending: true)
@@ -68,6 +113,8 @@ class StdBacktest: Object {
     }
 }
 
+//MARK: - TODO - clear all 3 for new backtest
+
 class OptBacktest: Object {
     @objc dynamic var date:Date?
     @objc dynamic var profit    = 0.00
@@ -76,6 +123,7 @@ class OptBacktest: Object {
     @objc dynamic var taskID    = NSUUID().uuidString
     
     func saveDataPoints(date:Date, profit:Double, cost:Double, pos:Int) {
+        
         let realm = try! Realm()
         let optBacktest = OptBacktest()
         optBacktest.date = date
@@ -85,6 +133,15 @@ class OptBacktest: Object {
         try! realm.write {
             realm.add(optBacktest)
         }
+    }
+    
+    func deleteAll() {
+        let realm = try! Realm()
+        let clearIt = realm.objects(OptBacktest.self)
+        try! realm.write {
+            realm.delete(clearIt)
+        }
+        print("\nRealm \tOptBacktest \tCleared!\n")
     }
     
     // func to populate
@@ -98,7 +155,7 @@ class OptBacktest: Object {
     }
     
     // func to populate
-    func populateCosttChart() -> Zip2Sequence<[Date], [Double]> {
+    func populateCostChart() -> Zip2Sequence<[Date], [Double]> {
         
         let realm = try! Realm()
         let allFiles = realm.objects(OptBacktest.self).sorted(byKeyPath: "date", ascending: true)

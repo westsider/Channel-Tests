@@ -18,6 +18,8 @@
 
 
 // [X] add pre optimization to chart
+// [ ] get stats from realm
+// [ ] button to fetch firebase
 // [ ] put spy in the top chart
 // [ ] add stats to main vc
 // [ ] display % capital used
@@ -47,23 +49,55 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         
         alphaLink.checkRealmDatabase() //Prices().deleteOld()
         //getFirebaseData() // this should be a button with a completion handler "Get New Data From Firebase"
-        readStatsFromRealm() // this stays here at launc with completion handler and UI update, fix this blocks UI
-   
+        getStatsFromRealm()
+    }
+    
+    func getStatsFromRealm() {
+        
+        if let uiText = StatsBacktests().populateUI(group: "STD") {
+            print("\nStandard Backtest:")
+            print("Win \(uiText.winPct) \tpf \(uiText.profitFactor) \troi \(uiText.roi) \tProfit\(uiText.cumProfit) \ttrades \(uiText.totalTrades) \t cost\(uiText.maxCost)" )
+        }
+        if let uiText2 = StatsBacktests().populateUI(group: "OPT") {
+            print("\nOptimized Backtest:")
+            print("Win \(uiText2.winPct) \tpf \(uiText2.profitFactor) \troi \(uiText2.roi) \tProfit\(uiText2.cumProfit) \ttrades \(uiText2.totalTrades) \t cost\(uiText2.maxCost)\n" )
+        }
     }
     
     func getFirebaseData() {
-        firebaseLink.authAndGetFirebase { (finished) in
-            if finished {
-                self.readStatsFromRealm()
+        // add activity
+        DispatchQueue.global(qos: .background).async {
+            self.firebaseLink.authAndGetFirebase { (finished) in
+                if finished {
+                    self.backtestWithFilters()
+                }
             }
         }
     }
     
-    func readStatsFromRealm() {
-        
-//        stdBacktest = Statistics().standardBackTest(debug: false, completion: )
-//        optBacktest = Statistics().optimizedBackTest(debug: false)
-        Statistics().getDistribution()
+    func backtestWithFilters() {
+        // add activity
+        DispatchQueue.global(qos: .background).async {
+            Statistics().getDistribution { (finished) in
+                if finished {
+                    print("----------------------------------------------------> Distribution Complete")
+                    self.changeUImessage(message: "Distribution Complete")
+                    Statistics().standardBackTest(debug: true) { (finished) in
+                        if finished {
+                            print("----------------------------------------------------> STD backtest Finished!")
+                            self.changeUImessage(message: "STD backtest Finished")
+                            Statistics().optimizedBackTest(debug: true, completion: { (finished) in
+                                if finished {
+                                    print("----------------------------------------------------> OPT backtest finished!")
+                                    self.changeUImessage(message: "OPT backtest finished")
+                                    self.getStatsFromRealm()
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+        }
         print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
     }
     
