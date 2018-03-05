@@ -37,7 +37,7 @@ class FirebaseLink {
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if error == nil {
                 self.userEmail = (user?.email!)!
-                self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)l")
+                print("Signed into Firebase as: \(self.userEmail)l")
             } else {
                 self.delegate?.changeUImessage(message: error.debugDescription )
             }

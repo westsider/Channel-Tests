@@ -19,12 +19,22 @@ class Alpha {
     
     weak var delegate: AlphaDelegate?
 
+    func checkRealmDatabase() {
+        let lastUpdateWasToday = Utilities().lastUpdateWasToday(ticker: "SPY", debug: true)
+        if !lastUpdateWasToday {
+            delegate?.changeUImessageAlpha(message: "spy database isn't current")
+            getData(forTicker: "SPY", compact: true, debug: true)
+        } else {
+            let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: false)
+            delegate?.changeUImessageAlpha(message: "spy database is current with \(spyPrices.count) records")
+        }
+    }
     
-    func getDataData(forTicker:String, compact:Bool, debug:Bool) {
+    func getData(forTicker:String, compact:Bool, debug:Bool) {
         standardNetworkCall(ticker: forTicker, compact: compact, debug: debug) { (finished) in
             if finished {
                 let spyPrices = Prices().sortOneTicker(ticker: forTicker, debug: debug)
-                print("Spy Dates count \(spyPrices.count)")
+                print("Spy database has \(spyPrices.count) records")
                 self.delegate?.changeUImessageAlpha(message: "\(forTicker) Dates count \(spyPrices.count) in databse")
             }
         }

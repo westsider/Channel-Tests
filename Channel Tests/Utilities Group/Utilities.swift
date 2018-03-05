@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import AVFoundation
-
+import RealmSwift
 class Utilities {
     
     //MARK: - Date util
@@ -48,6 +48,24 @@ class Utilities {
         formatter.dateFormat = "MM/dd/yy"
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter.string(from: date)
+    }
+    
+    func lastUpdateWasToday(ticker:String, debug: Bool) -> Bool {
+        let calendar = NSCalendar.current
+        var answer:Bool = false
+        let realm = try! Realm()
+        if let lastUpdate = realm.objects(Prices.self).filter("ticker == %@", ticker)
+            .sorted(byKeyPath: "date", ascending: true).last  {
+
+                if let lastDate = lastUpdate.date {
+                    if (calendar.isDateInToday(lastDate)) {
+                        answer =  true
+                        if ( debug ) { print("\ntoday is \(Utilities().convertToStringNoTimeFrom(date: today)) and lastUpdate was \(lastUpdate.dateString)\nit's \(answer) that we are current")
+                    }
+                }
+            }
+        }
+        return answer
     }
     
     //MARK: - Dollar util

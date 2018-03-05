@@ -97,15 +97,22 @@ class Statistics {
         let arrayOfCost: [Double] = statsArray.map { (cost: (date:Date, cost:Double, profit:Double, pos:Int)) in
             return cost.cost
         }
-        let sumCost = arrayOfCost.max()
-        let sum = arrayOfProfit.reduce(0, +)
-        let winPct = (winCount / tradeCount) * 100
-        let profitFactor = ( winningTrades.sum() / losingTrades.sum() ) * -1
-        let avgRoi = roi.sum()
-        print("\n\t\t\t\t\t\t\t\tStandard BackTest")
-        print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost!)) Cost")
-        print("---------------------------------------------------------------------------------------------\n")
-        print("")
+        
+        
+        
+        if let sumCost = arrayOfCost.max() {
+            let winPct = ((winCount / tradeCount) * 100)
+            let sum = arrayOfProfit.reduce(0, +)
+            let profitFactor = (( winningTrades.sum() / losingTrades.sum() ) * -1)
+            let avgRoi = roi.sum()
+            print("\n\t\t\t\t\t\t\t\tStandard BackTest")
+            print("---------------------------------------------------------------------------------------------")
+            print("   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
+            print("---------------------------------------------------------------------------------------------\n")
+            print("")
+        } else {
+            print("Warning! could not unwrap Standard BackTest")
+        }
         return chartArray
     }
     

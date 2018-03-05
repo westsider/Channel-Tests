@@ -41,58 +41,45 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         super.viewDidLoad()
         firebaseLink.delegate = self
         alphaLink.delegate = self
+        firebaseLink.authOnly()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-
-        //MARK: TODO - if last update wasn't today then get new compact data
-        //MARK: TODO - if realm is empty, get full data set
-        //alphaLink.getDataData(forTicker: "SPY", compact: true, debug: false)
-        //readFirebase()
-    }
-    
-    func readFirebase() {
-        firebaseLink.authOnly()
-        Statistics().getDistribution()
-        stdBacktest = Statistics().standardBackTest(debug: false)
-        optBacktest = Statistics().optimizedBackTest(debug: false)
-        print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
         
+        alphaLink.checkRealmDatabase() //Prices().deleteOld()
+        getFirebaseData()
+
     }
     
-    func getFirebaseDataAndSpyData() {
+    func getFirebaseData() {
         firebaseLink.authAndGetFirebase { (finished) in
             if finished {
-                Statistics().getDistribution()
-                self.stdBacktest = Statistics().standardBackTest(debug: false)
-                self.optBacktest = Statistics().optimizedBackTest(debug: false)
-                print("std count \(self.stdBacktest.count) opt coint \(self.optBacktest.count)")
-                Alpha().standardNetworkCall(ticker: "SPY", compact: true, debug: true) { (finished) in
-                    if finished {
-                        let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: true)
-                        print("Spy Dates counr \(spyPrices.count)")
-                    }
-                }
+                self.readFirebase()
             }
         }
     }
     
-
+    func readFirebase() {
+        stdBacktest = Statistics().standardBackTest(debug: false)
+        optBacktest = Statistics().optimizedBackTest(debug: false)
+        Statistics().getDistribution()
+        print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
+    }
     
+
     @IBAction func statsButtonAction(_ sender: UIButton) {
         segueToStats()
     }
     
-    
     func changeUImessage(message: String) {
-        print("MESSAGE FROM Firebase: \(message)");
+        print("\nMESSAGE FROM Firebase: \(message)");
         DispatchQueue.main.async {
             self.updateText.text = message
         }
     }
     
     func changeUImessageAlpha(message:String) {
-        print("MESSAGE FROM Alpha: \(message)");
+        print("\nMESSAGE FROM Alpha: \(message)");
         DispatchQueue.main.async {
             self.updateText.text = message
         }
