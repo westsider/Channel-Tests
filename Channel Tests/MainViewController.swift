@@ -5,16 +5,16 @@
 //  Created by Warren Hansen on 3/1/18.
 //  Copyright © 2018 Warren Hansen. All rights reserved.
 //
-    /*
-     Standard BackTest
-     ---------------------------------------------------------------------------------------------
-     57.6% Win     PF: 1.28     ROI: 6.18%    Profit $20,315     2,857 Trades     $72,728 Cost
-     ---------------------------------------------------------------------------------------------
-     Optimized BackTest
-     ---------------------------------------------------------------------------------------------
-     69.5% Win     PF: 1.86     ROI: 106.90%    Profit $38,821     2,211 Trades     $36,316 Cost
-     ---------------------------------------------------------------------------------------------
-     */
+/*
+ Standard BackTest
+ ---------------------------------------------------------------------------------------------
+ 57.6% Win     PF: 1.28     ROI: 6.18%    Profit $20,315     2,857 Trades     $72,728 Cost
+ ---------------------------------------------------------------------------------------------
+ Optimized BackTest
+ ---------------------------------------------------------------------------------------------
+ 69.5% Win     PF: 1.86     ROI: 106.90%    Profit $38,821     2,211 Trades     $36,316 Cost
+ ---------------------------------------------------------------------------------------------
+ */
 
 
 // [X] add pre optimization to chart
@@ -29,7 +29,7 @@
 import UIKit
 
 class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
-
+    
     @IBOutlet weak var mainText: UITextView!
     
     @IBOutlet weak var activity: UIActivityIndicatorView!
@@ -43,6 +43,9 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         super.viewDidLoad()
         firebaseLink.delegate = self
         alphaLink.delegate = self
+        DispatchQueue.main.async {
+            self.textForUI += SpReturns().showProfitInUI()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,22 +56,27 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         //alphaLink.getData(forTicker: "SPY", compact: false, debug: true) //force get data
         mainText.text = textForUI
         getStatsFromRealm()
-        
     }
     
     func getStatsFromRealm() {
         
         if let uiText = StatsBacktests().populateUI(group: "STD") {
-            textForUI += "\n\nStandard Backtest:\n"
-            textForUI += "\(String(format: "%.1f", uiText.winPct))% win \t\(String(format: "%.2f", uiText.profitFactor)) pf \t\(String(format: "%.1f", uiText.roi))% roi \t$\(Utilities().dollarStr(largeNumber: uiText.cumProfit)) profit \t\(uiText.totalTrades) trades \t $\(Utilities().dollarStr(largeNumber: uiText.maxCost)) required\n"
-            print(textForUI)
+            DispatchQueue.main.async {
+                self.textForUI += "\n\nStandard Backtest:\n"
+                self.textForUI += "\(String(format: "%.1f", uiText.winPct))% win \t\(String(format: "%.2f", uiText.profitFactor)) pf \t\(String(format: "%.1f", uiText.roi))% roi \t$\(Utilities().dollarStr(largeNumber: uiText.cumProfit)) profit \t\(uiText.totalTrades) trades \t $\(Utilities().dollarStr(largeNumber: uiText.maxCost)) required\n"
+                print(self.textForUI)
+            }
         }
         if let uiText2 = StatsBacktests().populateUI(group: "OPT") {
-            textForUI += "\n\nOptimized Backtest:\n"
-            textForUI += "\(String(format: "%.1f", uiText2.winPct))% win \t\(String(format: "%.2f", uiText2.profitFactor)) pf \t\(String(format: "%.1f", uiText2.roi))% roi \t$\(Utilities().dollarStr(largeNumber: uiText2.cumProfit)) profit \t\(uiText2.totalTrades) trades \t $\(Utilities().dollarStr(largeNumber: uiText2.maxCost)) required\n\n"
-            print(textForUI)
+            DispatchQueue.main.async {
+                self.textForUI += "\n\nOptimized Backtest:\n"
+                self.textForUI += "\(String(format: "%.1f", uiText2.winPct))% win \t\(String(format: "%.2f", uiText2.profitFactor)) pf \t\(String(format: "%.1f", uiText2.roi))% roi \t$\(Utilities().dollarStr(largeNumber: uiText2.cumProfit)) profit \t\(uiText2.totalTrades) trades \t $\(Utilities().dollarStr(largeNumber: uiText2.maxCost)) required\n\n"
+                print(self.textForUI)
+            }
         }
-        mainText.text = textForUI
+        DispatchQueue.main.async {
+            self.mainText.text = self.textForUI
+        }
     }
     
     func getFirebaseData() {
@@ -122,7 +130,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
     }
     
-
+    
     @IBAction func getNewDataAction(_ sender: Any) {
         getFirebaseData()
     }

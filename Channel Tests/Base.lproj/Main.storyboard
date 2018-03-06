@@ -38,11 +38,11 @@
                                 <color key="color" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRV-cm-Hmw">
-                                <rect key="frame" x="192" y="617" width="150" height="30"/>
+                                <rect key="frame" x="230" y="617" width="112" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="HKo-7j-7YK"/>
-                                    <constraint firstAttribute="width" constant="150" id="nkk-7y-pK8"/>
+                                    <constraint firstAttribute="width" priority="250" constant="300" id="nkk-7y-pK8"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="17"/>
                                 <state key="normal" title="Get New Data">
@@ -53,10 +53,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="792-Hb-NtE">
-                                <rect key="frame" x="27" y="617" width="150" height="30"/>
+                                <rect key="frame" x="27" y="617" width="91" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="JqU-2g-M9O"/>
+                                    <constraint firstAttribute="width" priority="250" constant="300" id="JqU-2g-M9O"/>
                                     <constraint firstAttribute="height" constant="30" id="fsK-Cv-kIv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="17"/>
@@ -72,7 +72,9 @@
                         <constraints>
                             <constraint firstItem="gTN-9Y-dkK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="90a-q5-RBi"/>
                             <constraint firstItem="xqX-8a-vtr" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="3" id="AlR-17-KPD"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="792-Hb-NtE" secondAttribute="trailing" constant="20" symbolic="YES" id="L1l-e8-2GM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="792-Hb-NtE" secondAttribute="bottom" constant="20" id="RRU-JZ-2jk"/>
+                            <constraint firstItem="ZRV-cm-Hmw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="Rfv-GS-OAc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ZRV-cm-Hmw" secondAttribute="trailing" constant="33" id="iyF-BW-26f"/>
                             <constraint firstItem="792-Hb-NtE" firstAttribute="top" secondItem="xqX-8a-vtr" secondAttribute="bottom" constant="18" id="jFa-S1-GXH"/>
                             <constraint firstItem="792-Hb-NtE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="27" id="nZr-RB-uWA"/>

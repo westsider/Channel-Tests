@@ -50,7 +50,7 @@ class StatsViewController: UIViewController {
         profitOpt = OptBacktest().populateProfitChart()
         profitStd = StdBacktest().populateProfitChart()
         cost =  OptBacktest().populateCostChart()
-        spyChart = Prices().returnChartData(ticker: "SPY", debug: true)
+        spyChart = Prices().matchSpyToBacktestData(ticker: "SPY", debug: false)
         
         for each in spyChart {
             print("SPY Date \(each.date) close \(each.close)")
