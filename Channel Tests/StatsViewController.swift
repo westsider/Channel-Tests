@@ -11,8 +11,6 @@ import SciChart
 
 class StatsViewController: UIViewController {
 
-    @IBOutlet weak var textView: UIView!
-    
     @IBOutlet weak var chartView: UIView!
     
     @IBOutlet weak var columnView: UIView!

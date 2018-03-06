@@ -103,52 +103,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Ni-Nx-Gbh" userLabel="Label View">
-                                <rect key="frame" x="8" y="20" width="359" height="207"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="207" id="eta-AQ-b78"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CeQ-ve-lY2" userLabel="Chart View">
-                                <rect key="frame" x="8" y="230" width="359" height="281"/>
+                                <rect key="frame" x="8" y="28" width="359" height="491"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="281" id="X2I-Pc-RhV"/>
+                                    <constraint firstAttribute="height" constant="491" id="2Br-jl-YgI"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDd-f2-hxe" userLabel="Column View">
-                                <rect key="frame" x="8" y="514" width="359" height="145"/>
+                                <rect key="frame" x="8" y="527" width="359" height="132"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="145" id="rgf-LO-zms"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="SDd-f2-hxe" firstAttribute="leading" secondItem="KUX-BS-rg4" secondAttribute="leading" constant="8" id="01v-b0-dpB"/>
-                            <constraint firstItem="CeQ-ve-lY2" firstAttribute="top" secondItem="1Ni-Nx-Gbh" secondAttribute="bottom" constant="3" id="3O5-86-g0k"/>
-                            <constraint firstItem="KUX-BS-rg4" firstAttribute="trailing" secondItem="1Ni-Nx-Gbh" secondAttribute="trailing" constant="8" id="8nM-Pa-SLo"/>
-                            <constraint firstItem="KUX-BS-rg4" firstAttribute="bottom" secondItem="SDd-f2-hxe" secondAttribute="bottom" constant="8" id="DYH-Ih-H9o"/>
-                            <constraint firstItem="KUX-BS-rg4" firstAttribute="trailing" secondItem="CeQ-ve-lY2" secondAttribute="trailing" constant="8" id="VBO-SQ-7FT"/>
-                            <constraint firstItem="KUX-BS-rg4" firstAttribute="trailing" secondItem="SDd-f2-hxe" secondAttribute="trailing" constant="8" id="YY8-LP-bgX"/>
-                            <constraint firstItem="CeQ-ve-lY2" firstAttribute="leading" secondItem="KUX-BS-rg4" secondAttribute="leading" constant="8" id="Zy5-wV-14N"/>
-                            <constraint firstItem="SDd-f2-hxe" firstAttribute="top" secondItem="CeQ-ve-lY2" secondAttribute="bottom" constant="3" id="aTK-la-GW2"/>
-                            <constraint firstItem="1Ni-Nx-Gbh" firstAttribute="leading" secondItem="KUX-BS-rg4" secondAttribute="leading" constant="8" id="gWh-mC-v74"/>
-                            <constraint firstItem="1Ni-Nx-Gbh" firstAttribute="top" secondItem="KUX-BS-rg4" secondAttribute="top" id="nNP-G5-sYM"/>
+                            <constraint firstItem="SDd-f2-hxe" firstAttribute="top" secondItem="CeQ-ve-lY2" secondAttribute="bottom" constant="8" id="1q8-k8-0lw"/>
+                            <constraint firstItem="SDd-f2-hxe" firstAttribute="leading" secondItem="KUX-BS-rg4" secondAttribute="leading" constant="8" id="DaX-Kr-44B"/>
+                            <constraint firstItem="KUX-BS-rg4" firstAttribute="trailing" secondItem="CeQ-ve-lY2" secondAttribute="trailing" constant="8" id="GLe-7C-my8"/>
+                            <constraint firstItem="KUX-BS-rg4" firstAttribute="trailing" secondItem="SDd-f2-hxe" secondAttribute="trailing" constant="8" id="JBf-Lz-DVe"/>
+                            <constraint firstItem="CeQ-ve-lY2" firstAttribute="leading" secondItem="KUX-BS-rg4" secondAttribute="leading" constant="8" id="an8-nu-SuE"/>
+                            <constraint firstItem="CeQ-ve-lY2" firstAttribute="top" secondItem="KUX-BS-rg4" secondAttribute="top" constant="8" id="mVl-5A-ePY"/>
+                            <constraint firstItem="KUX-BS-rg4" firstAttribute="bottom" secondItem="SDd-f2-hxe" secondAttribute="bottom" constant="8" id="qDC-Sf-pgZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KUX-BS-rg4"/>
                     </view>
                     <connections>
                         <outlet property="chartView" destination="CeQ-ve-lY2" id="emJ-VG-4A0"/>
                         <outlet property="columnView" destination="SDd-f2-hxe" id="kBT-5f-TGB"/>
-                        <outlet property="textView" destination="1Ni-Nx-Gbh" id="NDF-pF-65Z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KVX-7B-dav" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1346" y="125"/>
+            <point key="canvasLocation" x="1344.8" y="124.58770614692655"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7HH-wD-QF4">
