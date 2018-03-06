@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -106,23 +107,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CeQ-ve-lY2" userLabel="Chart View">
-                                <rect key="frame" x="8" y="28" width="359" height="491"/>
+                                <rect key="frame" x="8" y="28" width="359" height="489.5"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="491" id="2Br-jl-YgI"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SDd-f2-hxe" userLabel="Column View">
-                                <rect key="frame" x="8" y="527" width="359" height="132"/>
+                                <rect key="frame" x="8" y="525.5" width="359" height="133.5"/>
                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="SDd-f2-hxe" firstAttribute="top" secondItem="CeQ-ve-lY2" secondAttribute="bottom" constant="8" id="1q8-k8-0lw"/>
+                            <constraint firstItem="SDd-f2-hxe" firstAttribute="height" secondItem="mdQ-Ok-Yfh" secondAttribute="height" multiplier="0.2" priority="751" id="60S-f7-tQG"/>
                             <constraint firstItem="SDd-f2-hxe" firstAttribute="leading" secondItem="KUX-BS-rg4" secondAttribute="leading" constant="8" id="DaX-Kr-44B"/>
                             <constraint firstItem="KUX-BS-rg4" firstAttribute="trailing" secondItem="CeQ-ve-lY2" secondAttribute="trailing" constant="8" id="GLe-7C-my8"/>
                             <constraint firstItem="KUX-BS-rg4" firstAttribute="trailing" secondItem="SDd-f2-hxe" secondAttribute="trailing" constant="8" id="JBf-Lz-DVe"/>
+                            <constraint firstItem="CeQ-ve-lY2" firstAttribute="height" secondItem="mdQ-Ok-Yfh" secondAttribute="height" multiplier="0.8" priority="750" id="ae4-DK-k4W"/>
                             <constraint firstItem="CeQ-ve-lY2" firstAttribute="leading" secondItem="KUX-BS-rg4" secondAttribute="leading" constant="8" id="an8-nu-SuE"/>
                             <constraint firstItem="CeQ-ve-lY2" firstAttribute="top" secondItem="KUX-BS-rg4" secondAttribute="top" constant="8" id="mVl-5A-ePY"/>
                             <constraint firstItem="KUX-BS-rg4" firstAttribute="bottom" secondItem="SDd-f2-hxe" secondAttribute="bottom" constant="8" id="qDC-Sf-pgZ"/>
