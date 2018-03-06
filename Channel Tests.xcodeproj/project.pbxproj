@@ -21,6 +21,7 @@
 		0D3568B4204BBC71008654C2 /* SCIGenericWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3568B3204BBC71008654C2 /* SCIGenericWrapper.swift */; };
 		0D46B601204DDBFA0081C21C /* StatsBacktests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D46B600204DDBFA0081C21C /* StatsBacktests.swift */; };
 		0D46B604204E2AE80081C21C /* SP Returns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D46B603204E2AE80081C21C /* SP Returns.swift */; };
+		0D46B606204E3D8C0081C21C /* Market Hours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D46B605204E3D8C0081C21C /* Market Hours.swift */; };
 		0D4F51B82048E936002E2F93 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B72048E936002E2F93 /* Utilities.swift */; };
 		0D4F51BA2048EE43002E2F93 /* Weekly Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */; };
 		0D880AA0204CA0D7008D1F0E /* Intrinio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D880A9F204CA0D7008D1F0E /* Intrinio.swift */; };
@@ -49,6 +50,7 @@
 		0D3568B3204BBC71008654C2 /* SCIGenericWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCIGenericWrapper.swift; sourceTree = "<group>"; };
 		0D46B600204DDBFA0081C21C /* StatsBacktests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsBacktests.swift; sourceTree = "<group>"; };
 		0D46B603204E2AE80081C21C /* SP Returns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SP Returns.swift"; sourceTree = "<group>"; };
+		0D46B605204E3D8C0081C21C /* Market Hours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Market Hours.swift"; sourceTree = "<group>"; };
 		0D4F51B72048E936002E2F93 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekly Stats.swift"; sourceTree = "<group>"; };
 		0D880A9F204CA0D7008D1F0E /* Intrinio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intrinio.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 			children = (
 				0D03A3BF20489EE200786C47 /* Main.storyboard */,
 				0D03A3BD20489EE200786C47 /* MainViewController.swift */,
+				0D46B605204E3D8C0081C21C /* Market Hours.swift */,
 				0D3568B1204BB422008654C2 /* StatsViewController.swift */,
 				0D3568B5204BC17D008654C2 /* Model */,
 				0D1EBAAD204CA3F40092B351 /* Network */,
@@ -316,6 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D3568B4204BBC71008654C2 /* SCIGenericWrapper.swift in Sources */,
+				0D46B606204E3D8C0081C21C /* Market Hours.swift in Sources */,
 				0D03A3BE20489EE200786C47 /* MainViewController.swift in Sources */,
 				0D1EBAAC204CA3DC0092B351 /* Prices.swift in Sources */,
 				0D3568B2204BB422008654C2 /* StatsViewController.swift in Sources */,

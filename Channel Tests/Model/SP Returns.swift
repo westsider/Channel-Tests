@@ -55,12 +55,12 @@ class SpReturns {
     func showProfitInUI() -> String {
         var message = ""
         let fiveyrSP = SpReturns().calcDatesOnChart(start: 163.54, end: 271.65)
-        message = "\nS&P returned \(String(format: "%.2f", fiveyrSP))% annually for the same years on the chart, "
+        message = "S&P returned \(String(format: "%.2f", fiveyrSP))% annually for the same years on the chart, "
         let profit = SpReturns().calcDatesOnChartProfit(start: 163.54, end: 271.65)
         message += "for a total profit of $\(Utilities().dollarStr(largeNumber: profit))"
         
         let roi = (201 * 163.54 ) / (201 * 271.65 ) * 100
-        message += " \(String(format: "%.2f", roi))% roi\n"
+        message += " \(String(format: "%.2f", roi))% roi\t"
         return message
     }
     

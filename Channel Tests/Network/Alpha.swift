@@ -20,6 +20,7 @@ class Alpha {
     weak var delegate: AlphaDelegate?
 
     func checkRealmDatabase() {
+        //if time < 1300 return
         let lastUpdateWasToday = Utilities().lastUpdateWasToday(ticker: "SPY", debug: true)
         if !lastUpdateWasToday {
             delegate?.changeUImessageAlpha(message: "spy database isn't current")

@@ -5,26 +5,12 @@
 //  Created by Warren Hansen on 3/1/18.
 //  Copyright © 2018 Warren Hansen. All rights reserved.
 //
-/*
- Standard BackTest
- ---------------------------------------------------------------------------------------------
- 57.6% Win     PF: 1.28     ROI: 6.18%    Profit $20,315     2,857 Trades     $72,728 Cost
- ---------------------------------------------------------------------------------------------
- Optimized BackTest
- ---------------------------------------------------------------------------------------------
- 69.5% Win     PF: 1.86     ROI: 106.90%    Profit $38,821     2,211 Trades     $36,316 Cost
- ---------------------------------------------------------------------------------------------
- */
 
-
-// [X] add pre optimization to chart
-// [ ] put spy in the mid chart
-// [ ] add range of stats to main vc
+// [ ] update spy only after market!
+// [ ] send tickers that pass ticker to mail as comma separated txt
 // [ ] add max positions to stats
 // [ ] display % capital used
-// [ ] print tickers that pass ticker to mail
-// [ ] use operation to thread http://iosbrain.com/blog/2018/03/04/concurrency-in-ios-introduction-to-the-abstract-operation-class-and-using-its-blockoperation-subclass-to-run-tasks-in-parallel/
-
+// [ ] add distribution statis -> realm -> main UI
 
 import UIKit
 
@@ -44,6 +30,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         firebaseLink.delegate = self
         alphaLink.delegate = self
         DispatchQueue.main.async {
+            self.textForUI += "\n\(MarketHours().currentTimeText())\t\(MarketHours().isMarketOpen())\t"
             self.textForUI += SpReturns().showProfitInUI()
         }
     }
