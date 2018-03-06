@@ -6,12 +6,14 @@
 //  Copyright © 2018 Warren Hansen. All rights reserved.
 //
 
-// [ ] update spy only after market!
 // [ ] send tickers that pass ticker to mail as comma separated txt
+
+//-------> take a break <--------
 // [ ] add max positions to stats
 // [ ] display % capital used
+// [ ] largest drawdown, extra stats to main UI
 // [ ] add distribution statis -> realm -> main UI
-
+// [ ] limit update spy only after market closes!
 import UIKit
 
 class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {

@@ -100,7 +100,6 @@
 			children = (
 				0D03A3BF20489EE200786C47 /* Main.storyboard */,
 				0D03A3BD20489EE200786C47 /* MainViewController.swift */,
-				0D46B605204E3D8C0081C21C /* Market Hours.swift */,
 				0D3568B1204BB422008654C2 /* StatsViewController.swift */,
 				0D3568B5204BC17D008654C2 /* Model */,
 				0D1EBAAD204CA3F40092B351 /* Network */,
@@ -121,6 +120,7 @@
 				0D880A9F204CA0D7008D1F0E /* Intrinio.swift */,
 				0D1EBAAF204CB6420092B351 /* Alpha.swift */,
 				0D880AA1204CA308008D1F0E /* Process.swift */,
+				0D46B605204E3D8C0081C21C /* Market Hours.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";

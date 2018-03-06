@@ -21,6 +21,10 @@ class Alpha {
 
     func checkRealmDatabase() {
         //if time < 1300 return
+        let answer = MarketHours().isMarketOpen()
+        if answer != "Market Closed" {
+            delegate?.changeUImessageAlpha(message: "Market is open, waiting to update SPY till close")
+            return }
         let lastUpdateWasToday = Utilities().lastUpdateWasToday(ticker: "SPY", debug: true)
         if !lastUpdateWasToday {
             delegate?.changeUImessageAlpha(message: "spy database isn't current")
