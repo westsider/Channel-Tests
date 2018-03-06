@@ -18,13 +18,11 @@
 
 
 // [X] add pre optimization to chart
-// [ ] get stats from realm
-// [ ] button to fetch firebase
-// [ ] put spy in the top chart
-// [ ] add stats to main vc
+// [ ] put spy in the mid chart
+// [ ] add range of stats to main vc
+// [ ] add max positions to stats
 // [ ] display % capital used
 // [ ] print tickers that pass ticker to mail
-// [ ] completion handler for data fetch and processing
 // [ ] use operation to thread http://iosbrain.com/blog/2018/03/04/concurrency-in-ios-introduction-to-the-abstract-operation-class-and-using-its-blockoperation-subclass-to-run-tasks-in-parallel/
 
 
@@ -40,7 +38,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     var alphaLink = Alpha()
     var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
-    
+    var textForUI = "\n"
     override func viewDidLoad() {
         super.viewDidLoad()
         firebaseLink.delegate = self
@@ -49,22 +47,28 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         
+        //MARK: - TODO - large data fails durring marlker hours..
+        //  solve with compact get / replace. must include full data to start...
         alphaLink.checkRealmDatabase() //Prices().deleteOld()
-        //getFirebaseData() // this should be a button with a completion handler "Get New Data From Firebase"
-        mainText.text = "here is some text"
+        //alphaLink.getData(forTicker: "SPY", compact: false, debug: true) //force get data
+        mainText.text = textForUI
         getStatsFromRealm()
+        
     }
     
     func getStatsFromRealm() {
         
         if let uiText = StatsBacktests().populateUI(group: "STD") {
-            print("\nStandard Backtest:")
-            print("Win \(uiText.winPct) \tpf \(uiText.profitFactor) \troi \(uiText.roi) \tProfit\(uiText.cumProfit) \ttrades \(uiText.totalTrades) \t cost\(uiText.maxCost)" )
+            textForUI += "\n\nStandard Backtest:\n"
+            textForUI += "\(String(format: "%.1f", uiText.winPct))% win \t\(String(format: "%.2f", uiText.profitFactor)) pf \t\(String(format: "%.1f", uiText.roi))% roi \t$\(Utilities().dollarStr(largeNumber: uiText.cumProfit)) profit \t\(uiText.totalTrades) trades \t $\(Utilities().dollarStr(largeNumber: uiText.maxCost)) required\n"
+            print(textForUI)
         }
         if let uiText2 = StatsBacktests().populateUI(group: "OPT") {
-            print("\nOptimized Backtest:")
-            print("Win \(uiText2.winPct) \tpf \(uiText2.profitFactor) \troi \(uiText2.roi) \tProfit\(uiText2.cumProfit) \ttrades \(uiText2.totalTrades) \t cost\(uiText2.maxCost)\n" )
+            textForUI += "\n\nOptimized Backtest:\n"
+            textForUI += "\(String(format: "%.1f", uiText2.winPct))% win \t\(String(format: "%.2f", uiText2.profitFactor)) pf \t\(String(format: "%.1f", uiText2.roi))% roi \t$\(Utilities().dollarStr(largeNumber: uiText2.cumProfit)) profit \t\(uiText2.totalTrades) trades \t $\(Utilities().dollarStr(largeNumber: uiText2.maxCost)) required\n\n"
+            print(textForUI)
         }
+        mainText.text = textForUI
     }
     
     func getFirebaseData() {
@@ -131,21 +135,21 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     func changeUImessage(message: String) {
         print("\nMESSAGE FROM Firebase: \(message)");
         DispatchQueue.main.async {
-            self.mainText.text = message
+            self.textForUI += message
+            self.mainText.text = self.textForUI
         }
     }
     
     func changeUImessageAlpha(message:String) {
         print("\nMESSAGE FROM Alpha: \(message)");
         DispatchQueue.main.async {
-            self.mainText.text = message
+            self.textForUI += message
+            self.mainText.text = self.textForUI
         }
     }
     
     private func segueToStats() {
         let myVC:StatsViewController = storyboard?.instantiateViewController(withIdentifier: "StatsVC") as! StatsViewController
-        myVC.stdBacktest = stdBacktest
-        myVC.optBacktest = optBacktest
         navigationController?.pushViewController(myVC, animated: true)
     }
 }

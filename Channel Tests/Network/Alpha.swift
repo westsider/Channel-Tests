@@ -26,7 +26,7 @@ class Alpha {
             getData(forTicker: "SPY", compact: true, debug: true)
         } else {
             let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: false)
-            delegate?.changeUImessageAlpha(message: "spy database is current with \(spyPrices.count) records")
+            delegate?.changeUImessageAlpha(message: "spy database is current with \(Utilities().dollarStr(largeNumber: Double(spyPrices.count))) records")
         }
     }
     

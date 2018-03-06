@@ -17,9 +17,11 @@ class StatsViewController: UIViewController {
     
     @IBOutlet weak var columnView: UIView!
 
-    var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
-    var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var spyCloses:[(date:Date, close:Double)] = []
+    var profitOpt:[(date:Date, profit:Double)] = []
+    var profitStd:[(date:Date, profit:Double)] = []
+    var cost:[(date:Date, cost:Double)] = []
+    var spyChart:[(date:Date, close:Double)]  = []
     
     let maxBarsOnChart:Int = 1100
     var rangeStart:Int = 0
@@ -27,6 +29,7 @@ class StatsViewController: UIViewController {
     let axisX1Id:String = "X1"
     let axisY2Id:String = "Y2"
     let axisX2Id:String = "X2"
+    let axisY3Id:String = "Y3"
     var sciChartView1 = SCIChartSurface()
     var sciChartView2 = SCIChartSurface()
     let rangeSync = SCIAxisRangeSynchronization()
@@ -46,11 +49,20 @@ class StatsViewController: UIViewController {
 
     // MARK: Overrided Functions
     func completeConfiguration() {
+        profitOpt = OptBacktest().populateProfitChart()
+        profitStd = StdBacktest().populateProfitChart()
+        cost =  OptBacktest().populateCostChart()
+        spyChart = Prices().returnChartData(ticker: "SPY", debug: true)
+        
+        for each in spyChart {
+            print("SPY Date \(each.date) close \(each.close)")
+        }
         configureChartSuraface()
         addAxis(BarsToShow: maxBarsOnChart)
         addModifiers()
         topChartDataSeries(surface: sciChartView1, xID: axisX1Id, yID: axisY1Id)
         topChartStdSeries(surface: sciChartView1, xID: axisX1Id, yID: axisY1Id)
+        topChartSpySeries(surface: sciChartView1, xID: axisX1Id, yID: axisY3Id)
         bottomChartDataSeries(surface: sciChartView2, xID: axisX2Id, yID: axisY2Id)
     }
     
@@ -58,7 +70,8 @@ class StatsViewController: UIViewController {
     fileprivate func topChartDataSeries(surface:SCIChartSurface, xID:String, yID:String) {
         let cumulativeProfit = SCIXyDataSeries(xType: .dateTime, yType: .double)
         cumulativeProfit.acceptUnsortedData = true
-        for things in optBacktest {
+        
+        for things in profitOpt {
             cumulativeProfit.appendX(SCIGeneric(things.date), y: SCIGeneric(things.profit))
         }
         let topChartRenderSeries = SCIFastLineRenderableSeries()
@@ -72,7 +85,8 @@ class StatsViewController: UIViewController {
     //MARK: - Profit Series befor optimization
     fileprivate func topChartStdSeries(surface:SCIChartSurface, xID:String, yID:String)  {
         let smaDataSeries:SCIXyDataSeries = SCIXyDataSeries(xType: .dateTime, yType: .double)
-        for ( things) in stdBacktest {
+        
+        for ( things) in profitStd {
             smaDataSeries.appendX(SCIGeneric(things.date), y: SCIGeneric(things.profit))
         }
         
@@ -85,11 +99,31 @@ class StatsViewController: UIViewController {
         renderSeries.yAxisId = yID
         surface.renderableSeries.add(renderSeries)
     }
+    
+    //MARK: - Spy Series
+    fileprivate func topChartSpySeries(surface:SCIChartSurface, xID:String, yID:String)  {
+        let spyDataSeries:SCIXyDataSeries = SCIXyDataSeries(xType: .dateTime, yType: .double)
+        
+        for ( things) in spyChart {
+            spyDataSeries.appendX(SCIGeneric(things.date), y: SCIGeneric(things.close))
+        }
+        
+        let renderSpySeries:SCIFastLineRenderableSeries = SCIFastLineRenderableSeries()
+        renderSpySeries.dataSeries = spyDataSeries
+        renderSpySeries.strokeStyle = SCISolidPenStyle(color: #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1), withThickness: 0.7)
+        renderSpySeries.style.isDigitalLine = false
+        renderSpySeries.hitTestProvider().hitTestMode = .verticalInterpolate
+        renderSpySeries.xAxisId = xID
+        renderSpySeries.yAxisId = yID
+        surface.renderableSeries.add(renderSpySeries)
+    }
+    
     //MARK: - Cost Data Series
     fileprivate func bottomChartDataSeries(surface:SCIChartSurface, xID:String, yID:String)  {
         let cumulativeCost = SCIXyDataSeries(xType: .dateTime, yType: .double)
         cumulativeCost.acceptUnsortedData = true
-        for things in optBacktest {
+        
+        for things in cost {
             cumulativeCost.appendX(SCIGeneric(things.date), y: SCIGeneric(things.cost))
         }
         let bottomChartRenderSeries = SCIFastColumnRenderableSeries()
@@ -98,10 +132,6 @@ class StatsViewController: UIViewController {
         bottomChartRenderSeries.yAxisId = yID
         bottomChartRenderSeries.dataSeries = cumulativeCost
         bottomChartRenderSeries.paletteProvider = ColumnsTripleColorPalette()
-        
-        //        let animation = SCIWaveRenderableSeriesAnimation(duration: 1.5, curveAnimation: SCIAnimationCurveEaseOut)
-        //        animation.start(afterDelay: 0.3)
-        //        bottomChartRenderSeries.addAnimation(animation)
         surface.renderableSeries.add(bottomChartRenderSeries)
     }
     
@@ -124,7 +154,7 @@ class StatsViewController: UIViewController {
         let dateAxisSize:Float = 9.0
         let dollarAxisSize :Float = 12.0
         
-        let totalBars:Int = optBacktest.count
+        let totalBars:Int = profitOpt.count
         rangeStart = totalBars - BarsToShow
         
         let axisX1:SCICategoryDateTimeAxis = SCICategoryDateTimeAxis()
@@ -162,6 +192,15 @@ class StatsViewController: UIViewController {
         axisY2.style.labelStyle.fontSize = dollarAxisSize
         axisY2.autoRange = .always
         sciChartView2.yAxes.add(axisY2)
+        
+        let axisY3:SCINumericAxis = SCINumericAxis()
+        axisY3.axisId = axisY3Id
+        axisY3.growBy = SCIDoubleRange(min: SCIGeneric(0.1), max: SCIGeneric(0.1))
+        axisY3.style.labelStyle.fontName = "Helvetica"
+        axisY3.style.labelStyle.fontSize = dollarAxisSize
+        axisY3.axisAlignment = .left
+        axisY3.autoRange = .always
+        sciChartView1.yAxes.add(axisY3)
     }
     
     fileprivate func addModifiers() {

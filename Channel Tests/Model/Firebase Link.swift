@@ -54,10 +54,10 @@ class FirebaseLink {
             DispatchQueue.global(qos: .userInitiated).async {
                 if error == nil {
                     self.userEmail = (user?.email!)!
-                    self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)l")
+                    self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)")
                     self.fetchData(debug: true, dataComplete: { (finished) in
                         if finished {
-                            self.delegate?.changeUImessage(message: "finished getting data from firebase")
+                            self.delegate?.changeUImessage(message: "Finished getting data from firebase")
                             dataComplete(true)
                         }
                     })

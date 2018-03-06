@@ -93,23 +93,26 @@ class StdBacktest: Object {
     }
     
     // func to populate
-    func populateProfitChart() -> Zip2Sequence<[Date], [Double]> {
+    func populateProfitChart() -> [(date:Date, profit:Double)] {
         
         let realm = try! Realm()
         let allFiles = realm.objects(StdBacktest.self).sorted(byKeyPath: "date", ascending: true)
         let date: [Date] = allFiles.map { (date: StdBacktest) in return date.date! }
         let profit: [Double] = allFiles.map { (profit: StdBacktest) in return profit.profit }
-        return  zip(date, profit)
+        let zipped = Array(zip(date, profit))
+        return  zipped
     }
     
+
     // func to populate
-    func populateCostChart() -> Zip2Sequence<[Date], [Double]> {
+    func populateCostChart() -> [(date:Date, cost:Double)] {
         
         let realm = try! Realm()
         let allFiles = realm.objects(StdBacktest.self).sorted(byKeyPath: "date", ascending: true)
         let date: [Date] = allFiles.map { (date: StdBacktest) in return date.date! }
         let cost: [Double] = allFiles.map { (cost: StdBacktest) in return cost.cost }
-        return  zip(date, cost)
+        let zipped = Array(zip(date, cost))
+        return  zipped
     }
 }
 
@@ -145,22 +148,24 @@ class OptBacktest: Object {
     }
     
     // func to populate
-    func populateProfitChart() -> Zip2Sequence<[Date], [Double]> {
+    func populateProfitChart() -> [(date:Date, profit:Double)] {
         
         let realm = try! Realm()
         let allFiles = realm.objects(OptBacktest.self).sorted(byKeyPath: "date", ascending: true)
         let date: [Date] = allFiles.map { (date: OptBacktest) in return date.date! }
         let profit: [Double] = allFiles.map { (profit: OptBacktest) in return profit.profit }
-        return  zip(date, profit)
+        let zipped = Array(zip(date, profit))
+        return  zipped
     }
     
     // func to populate
-    func populateCostChart() -> Zip2Sequence<[Date], [Double]> {
+    func populateCostChart() ->  [(date:Date, cost:Double)] {
         
         let realm = try! Realm()
         let allFiles = realm.objects(OptBacktest.self).sorted(byKeyPath: "date", ascending: true)
         let date: [Date] = allFiles.map { (date: OptBacktest) in return date.date! }
         let cost: [Double] = allFiles.map { (cost: OptBacktest) in return cost.cost }
-        return  zip(date, cost)
+        let zipped = Array(zip(date, cost))
+        return  zipped
     }
 }

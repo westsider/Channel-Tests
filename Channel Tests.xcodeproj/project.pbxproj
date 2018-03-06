@@ -116,7 +116,6 @@
 				0D880A9F204CA0D7008D1F0E /* Intrinio.swift */,
 				0D1EBAAF204CB6420092B351 /* Alpha.swift */,
 				0D880AA1204CA308008D1F0E /* Process.swift */,
-				0D1EBAAB204CA3DC0092B351 /* Prices.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -136,11 +135,20 @@
 			children = (
 				0D12032D2048B17F00AA421B /* Firebase Link.swift */,
 				0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */,
-				0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */,
-				0D46B600204DDBFA0081C21C /* StatsBacktests.swift */,
 				0D9353372049D2C500BBF9B2 /* Statistics.swift */,
+				0D46B602204E187C0081C21C /* Databases */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0D46B602204E187C0081C21C /* Databases */ = {
+			isa = PBXGroup;
+			children = (
+				0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */,
+				0D46B600204DDBFA0081C21C /* StatsBacktests.swift */,
+				0D1EBAAB204CA3DC0092B351 /* Prices.swift */,
+			);
+			path = Databases;
 			sourceTree = "<group>";
 		};
 		A24CEF5A24CC9303BD085F62 /* Pods */ = {

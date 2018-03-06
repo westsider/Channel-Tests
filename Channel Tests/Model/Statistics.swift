@@ -108,7 +108,8 @@ class Statistics {
         
         
         
-        if let sumCost = arrayOfCost.max() {
+        if var sumCost = arrayOfCost.max() {
+            sumCost = sumCost / 2.0
             let winPct = ((winCount / tradeCount) * 100)
             let sum = arrayOfProfit.reduce(0, +)
             let profitFactor = (( winningTrades.sum() / losingTrades.sum() ) * -1)
