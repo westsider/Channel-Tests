@@ -19,39 +19,35 @@ class Alpha {
     
     weak var delegate: AlphaDelegate?
 
-    func checkRealmDatabase() {
+    // completion hamdler / activity indicator
+    func checkForNewPrices( completion: @escaping (Bool) -> Void) {
         //if time < 1300 return
         let answer = MarketHours().isMarketOpen()
         if answer != "Market Closed" {
             delegate?.changeUImessageAlpha(message: "Market is open, waiting to update SPY till close")
+            completion(true)
             return }
-        let lastUpdateWasToday = Utilities().lastUpdateWasToday(ticker: "SPY", debug: true)
-        if !lastUpdateWasToday {
-            delegate?.changeUImessageAlpha(message: "spy database isn't current")
-            getData(forTicker: "SPY", compact: true, debug: true)
-        } else {
-            let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: false)
-            delegate?.changeUImessageAlpha(message: "spy database is current with \(Utilities().dollarStr(largeNumber: Double(spyPrices.count))) records")
-        }
-    }
-    
-    func getData(forTicker:String, compact:Bool, debug:Bool) {
-        standardNetworkCall(ticker: forTicker, compact: compact, debug: debug) { (finished) in
-            if finished {
-                let spyPrices = Prices().sortOneTicker(ticker: forTicker, debug: debug)
-                print("Spy database has \(spyPrices.count) records")
-                self.delegate?.changeUImessageAlpha(message: "\(forTicker) Dates count \(spyPrices.count) in databse")
+        // otherwise always get new market data for SPY
+        DispatchQueue.global(qos: .background).async {
+            self.standardNetworkCall(ticker: "SPY", compact: true, debug: true) { (finished) in
+                if finished {
+                    completion(true)
+                   // let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: true)
+                   self.delegate?.changeUImessageAlpha(message: " Spy database has been updated")
+                }
             }
         }
     }
     
     func standardNetworkCall(ticker: String, compact:Bool, debug: Bool, completion: @escaping (Bool) -> Void) {
         
-        
         Prices().deleteOld()
-        print("Requesting remote data for \(ticker)")
-        delegate?.changeUImessageAlpha(message: "Requesting alpha data for \(ticker)")
-        let alphaApiKey = UserDefaults.standard.object(forKey: "alphaApiKey") as! String
+        //print("Requesting remote data for \(ticker)")
+        delegate?.changeUImessageAlpha(message: " Requesting alpha data for \(ticker)")
+        guard let alphaApiKey = UserDefaults.standard.object(forKey: "alphaApiKey")  else {
+            Alert.showBasic(title: "Warning", message: "No Api Key for Alpha.")
+            return
+        }
         var additionalData = ""
 
         if !compact {  additionalData = "&outputsize=full"}

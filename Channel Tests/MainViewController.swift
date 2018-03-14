@@ -6,21 +6,22 @@
 //  Copyright © 2018 Warren Hansen. All rights reserved.
 //
 
+// [ ] make apikeys ui
+// [ ] get spy only gets 100 after marker closed
+// [ ] blue spinner after firebase request
 // [ ] send tickers that pass ticker to mail as comma separated txt
-
-//-------> take a break <--------
+// [ ] show effect of market condition
+// [ ] show distribution of profit relative to SPY wPctR
 // [ ] add max positions to stats
 // [ ] display % capital used
 // [ ] largest drawdown, extra stats to main UI
-// [ ] add distribution statis -> realm -> main UI
-// [ ] limit update spy only after market closes!
-// [ ] get alpha and scichart login
+// [ ] add distribution stats -> realm -> main UI
+
 import UIKit
 
 class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     
     @IBOutlet weak var mainText: UITextView!
-    
     @IBOutlet weak var activity: UIActivityIndicatorView!
     
     var firebaseLink = FirebaseLink()
@@ -28,6 +29,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var textForUI = "\n"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         firebaseLink.delegate = self
@@ -39,27 +41,17 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-//        let alphaApiKey = "T8A2PPT26G83RF68"
-//        UserDefaults.standard.set(alphaApiKey, forKey: "alphaApiKey")
-//        
-//        let licencing:String = "<LicenseContract>" +
-//            "<Customer>Swift Sense</Customer>" +
-//            "<OrderId>ABT171115-1656-88135</OrderId>" +
-//            "<LicenseCount>1</LicenseCount>" +
-//            "<IsTrialLicense>false</IsTrialLicense>" +
-//            "<SupportExpires>11/15/2018 00:00:00</SupportExpires>" +
-//            "<ProductCode>SC-IOS-2D-PRO</ProductCode>" +
-//            "<KeyCode>364e0b1c08ae94c831328cb783064a526d8ca335a2cb9de59ca53352ae5ed1f01092defffaafec2fbf9800261297e78b5c6e1dc909af374f2f8db8e7996b06f16d55b7dcb3a4cbe34c386396e5ec55af702b90c19eb821ba267e856d724ba4592b8ab35d9a58114583e7ba7af11d8750530bdb965c0a23be79df43b95cb0e9f4cdc7fe1787a37b09751da452cc8dd62bd5e36304ea5c82c9c54d65a9a43472aa5b066762</KeyCode>" +
-//        "</LicenseContract>"
-//        
-//        UserDefaults.standard.set(licencing, forKey: "scichartLicense")
-        
-        //MARK: - TODO - large data fails durring marlker hours..
-        //  solve with compact get / replace. must include full data to start...
-        alphaLink.checkRealmDatabase() //Prices().deleteOld()
-        //alphaLink.getData(forTicker: "SPY", compact: false, debug: true) //force get data
-        mainText.text = textForUI
-        getStatsFromRealm()
+        activitIsNow(on: true)
+        alphaLink.checkForNewPrices { (finished) in
+            if finished {
+                DispatchQueue.main.async {
+                    print("\nDownload Completed!\n")
+                    self.activitIsNow(on: false)
+                    self.mainText.text = self.textForUI
+                    // self.getStatsFromRealm() // prove we have data in realm
+                }
+            }
+        }
     }
     
     func getStatsFromRealm() {
