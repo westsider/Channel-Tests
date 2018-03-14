@@ -29,7 +29,7 @@ class Alpha {
             return }
         // otherwise always get new market data for SPY
         DispatchQueue.global(qos: .background).async {
-            self.standardNetworkCall(ticker: "SPY", compact: true, debug: true) { (finished) in
+            self.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
                 if finished {
                     completion(true)
                    // let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: true)
@@ -96,7 +96,7 @@ class Alpha {
                 
             }
             print("Requesting alpha data for \(ticker)")
-            self.delegate?.changeUImessageAlpha(message: "Requesting alpha data for \(ticker)")
+            self.delegate?.changeUImessageAlpha(message: " Requesting alpha data for \(ticker)")
             completion(true)
         }
         task.resume()

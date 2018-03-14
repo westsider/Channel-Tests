@@ -13,11 +13,11 @@ class Process {
     class func httpStatus(service:String, httpStatus: Int, ticker:String ) -> String {
         
         weak var delegate: FirebaseDelegate?
-        var message = "status code: \(httpStatus)"
+        var message = " status code: \(httpStatus)"
         
         switch httpStatus {
         case 200:
-            message += " Server: OK – Everything worked as expected"
+            message += " Server: OK – Everything worked as expected "
         case 401:
             message += " Server: Unauthorized – Your User/Password API Keys are incorrect"
             Utilities().playErrorSound()

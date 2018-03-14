@@ -7,8 +7,8 @@
 //
 
 // [ ] make apikeys ui
-// [ ] get spy only gets 100 after marker closed
-// [ ] blue spinner after firebase request
+// [X] get spy only gets 100 after marker closed
+// [ ] realm accessed from wrong thread in backtest opt
 // [ ] send tickers that pass ticker to mail as comma separated txt
 // [ ] show effect of market condition
 // [ ] show distribution of profit relative to SPY wPctR
@@ -48,10 +48,19 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
                     print("\nDownload Completed!\n")
                     self.activitIsNow(on: false)
                     self.mainText.text = self.textForUI
-                    // self.getStatsFromRealm() // prove we have data in realm
+                    //self.getStatsFromRealm() // prove we have data in realm
                 }
             }
         }
+    }
+    
+    @IBAction func getNewDataAction(_ sender: Any) {
+        newBacktest()
+    }
+    
+    
+    @IBAction func statsButtonAction(_ sender: UIButton) {
+        segueToStats()
     }
     
     func getStatsFromRealm() {
@@ -75,7 +84,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         }
     }
     
-    func getFirebaseData() {
+    func newBacktest() {
         // add activity
         activitIsNow(on: true)
         DispatchQueue.global(qos: .background).async {
@@ -99,7 +108,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     
     func backtestWithFilters() {
         // add activity
-        activitIsNow(on: true)
+        //activitIsNow(on: true)
         activity.color = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         DispatchQueue.global(qos: .background).async {
             Statistics().getDistribution { (finished) in
@@ -124,16 +133,6 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
             }
         }
         print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
-    }
-    
-    
-    @IBAction func getNewDataAction(_ sender: Any) {
-        getFirebaseData()
-    }
-    
-    
-    @IBAction func statsButtonAction(_ sender: UIButton) {
-        segueToStats()
     }
     
     func changeUImessage(message: String) {
