@@ -32,13 +32,13 @@ class FirebaseLink {
     
     func authOnly() {
         ref = Database.database().reference()//.child(currentChild) //.child("Table1")
-        let email = "whansen1@mac.com"
-        let password = "123456"
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+        let user = getUserFireBase()
+        Auth.auth().signIn(withEmail: user.user, password: user.password) { (user, error) in
             if error == nil {
                 self.userEmail = (user?.email!)!
                 print("Signed into Firebase as: \(self.userEmail)l")
             } else {
+                 print("\nLogin Firebase Failed\n")
                 self.delegate?.changeUImessage(message: error.debugDescription )
             }
         }
@@ -47,10 +47,9 @@ class FirebaseLink {
     func authAndGetFirebase( dataComplete: @escaping (Bool) -> Void) {
         
         ref = Database.database().reference()//.child(currentChild) //.child("Table1")
-        let email = "whansen1@mac.com"
-        let password = "123456"
+        let user = getUserFireBase()
         
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+        Auth.auth().signIn(withEmail: user.user, password: user.password) { (user, error) in
             DispatchQueue.global(qos: .background).async {
                 if error == nil {
                     self.userEmail = (user?.email!)!
@@ -123,5 +122,21 @@ class FirebaseLink {
         
         //save to realm as WeeklyStats (stringDate, date, profit, cumProfit, winPct, cost, ROI , annualRoi?, ticker, stars)
         WklyStats().updateCumulativeProfit(date: dateEx, entryDate: date, ticker: ticker, profit: profit, winPct: winPct, roi: roi, profitFactor: profitFactor, cost: cost, maxCost: 0.0)
+    }
+    
+    func getUserFireBase()-> (user:String, password:String) {
+        var user = ""
+        var password = ""
+        if  let myUser = UserDefaults.standard.object(forKey: "userFireBase")   {
+            user = myUser as! String
+        } else {
+            print("No User Set")
+        }
+        if  let myPassWord = UserDefaults.standard.object(forKey: "passwordFireBase")  {
+            password = myPassWord as! String
+        } else {
+            print("No Password Set")
+        }
+        return (user:user, password:password)
     }
 }

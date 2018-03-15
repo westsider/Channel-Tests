@@ -86,7 +86,7 @@
                         <outlet property="activity" destination="gTN-9Y-dkK" id="QcD-9X-UDp"/>
                         <outlet property="mainText" destination="xqX-8a-vtr" id="33U-5j-Tr7"/>
                         <segue destination="s4I-02-N0E" kind="presentation" identifier="mainToStatsVC" id="VUM-ZQ-fAR"/>
-                        <segue destination="cj8-pn-owF" kind="presentation" id="c7D-XN-pZa"/>
+                        <segue destination="cj8-pn-owF" kind="presentation" identifier="mainToLogin" id="c7D-XN-pZa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -154,7 +154,7 @@
         <!--Login View Controller-->
         <scene sceneID="gtK-RQ-jwf">
             <objects>
-                <viewController id="cj8-pn-owF" customClass="LoginViewController" customModule="Channel_Tests" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginVC" id="cj8-pn-owF" customClass="LoginViewController" customModule="Channel_Tests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0iI-PU-KOm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -168,7 +168,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="SciChart License Key" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rKC-uM-rtv">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="SciChart License Key" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rKC-uM-rtv">
                                 <rect key="frame" x="20" y="81" width="335" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="0na-FE-JB6"/>
@@ -177,7 +177,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Alpha API Key" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uWh-gi-mDH">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Alpha API Key" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uWh-gi-mDH">
                                 <rect key="frame" x="20" y="122" width="335" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="ZpO-L2-z2v"/>
@@ -186,7 +186,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Firebase Login" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CIl-5M-Dyc">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Firebase Login" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CIl-5M-Dyc">
                                 <rect key="frame" x="20" y="163" width="335" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="4QA-0I-2ff"/>
@@ -195,7 +195,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Firebase Password" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dIF-x9-Alw">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Firebase Password" borderStyle="roundedRect" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dIF-x9-Alw">
                                 <rect key="frame" x="20" y="204" width="335" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="ZPa-VJ-pLp"/>
@@ -248,7 +248,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xjq-d5-lDx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="502" y="788"/>
+            <point key="canvasLocation" x="503" y="897"/>
         </scene>
     </scenes>
 </document>

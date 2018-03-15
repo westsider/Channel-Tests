@@ -35,6 +35,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         super.viewDidLoad()
         firebaseLink.delegate = self
         alphaLink.delegate = self
+        checkPasswords()
         DispatchQueue.main.async {
             self.textForUI += "\n\(MarketHours().currentTimeText())\t\(MarketHours().isMarketOpen())\t"
             self.textForUI += SpReturns().showProfitInUI()
@@ -152,6 +153,14 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         DispatchQueue.main.async {
             self.textForUI += message
             self.mainText.text = self.textForUI
+        }
+    }
+    
+    func checkPasswords() {
+        guard let _ = UserDefaults.standard.object(forKey: "alphaApiKey")  else {
+            let myVC:LoginViewController = storyboard?.instantiateViewController(withIdentifier: "loginVC") as! LoginViewController
+            navigationController?.pushViewController(myVC, animated: true)
+            return
         }
     }
     
