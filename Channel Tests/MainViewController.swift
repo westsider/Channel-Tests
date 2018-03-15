@@ -8,12 +8,13 @@
 
 // [ ] make apikeys ui
 // [X] get spy only gets 100 after marker closed
-// [ ] realm accessed from wrong thread in backtest opt
+// [X] realm accessed from wrong thread in backtest opt
+
 // [ ] send tickers that pass ticker to mail as comma separated txt
+
 // [ ] show effect of market condition
+
 // [ ] show distribution of profit relative to SPY wPctR
-// [ ] add max positions to stats
-// [ ] display % capital used
 // [ ] largest drawdown, extra stats to main UI
 // [ ] add distribution stats -> realm -> main UI
 
@@ -90,6 +91,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         DispatchQueue.global(qos: .background).async {
             self.firebaseLink.authAndGetFirebase { (finished) in
                 if finished {
+                    self.changeUImessage(message: " Firebase Complete")
                     self.backtestWithFilters()
                 }
             }
@@ -114,17 +116,19 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
             Statistics().getDistribution { (finished) in
                 if finished {
                     print("----------------------------------------------------> Distribution Complete")
-                    self.changeUImessage(message: "Distribution Complete")
+                    self.changeUImessage(message: " Distribution Complete")
                     Statistics().standardBackTest(debug: true) { (finished) in
                         if finished {
                             print("----------------------------------------------------> STD backtest Finished!")
-                            self.changeUImessage(message: "STD backtest Finished")
+                            self.changeUImessage(message: " STD backtest Finished")
                             Statistics().optimizedBackTest(debug: true, completion: { (finished) in
                                 if finished {
-                                    print("----------------------------------------------------> OPT backtest finished!")
-                                    self.changeUImessage(message: "OPT backtest finished")
-                                    self.getStatsFromRealm()
-                                    self.activitIsNow(on: false)
+                                    DispatchQueue.main.async {
+                                        print("----------------------------------------------------> OPT backtest finished!")
+                                        self.changeUImessage(message: " OPT backtest finished")
+                                        //self.getStatsFromRealm()
+                                        self.activitIsNow(on: false)
+                                    }
                                 }
                             })
                         }

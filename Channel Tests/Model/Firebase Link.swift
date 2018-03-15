@@ -51,13 +51,13 @@ class FirebaseLink {
         let password = "123456"
         
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
-            DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.global(qos: .background).async {
                 if error == nil {
                     self.userEmail = (user?.email!)!
-                    self.delegate?.changeUImessage(message: "Signed into Firebase as: \(self.userEmail)")
-                    self.fetchData(debug: true, dataComplete: { (finished) in
+                    self.delegate?.changeUImessage(message: " Signed into Firebase as: \(self.userEmail)")
+                    self.fetchData(debug: false, dataComplete: { (finished) in
                         if finished {
-                            self.delegate?.changeUImessage(message: "Finished getting data from firebase")
+                            self.delegate?.changeUImessage(message: " Finished getting data from firebase")
                             dataComplete(true)
                         }
                     })
@@ -73,7 +73,7 @@ class FirebaseLink {
         WklyStats().clearWeekly()
         ref.observe(DataEventType.value, with: { (snapshot) in
             if snapshot.childrenCount > 0 {
-                self.delegate?.changeUImessage(message: "requesting data from firebase")
+                self.delegate?.changeUImessage(message: " requesting data from firebase")
                 let allItems = snapshot.children.allObjects as! [DataSnapshot]
                 for items in snapshot.children.allObjects as! [DataSnapshot] {
                     
@@ -89,7 +89,7 @@ class FirebaseLink {
                 }
                 if self.fileCount == allItems.count {
                     dataComplete(true)
-                    self.delegate?.changeUImessage(message: "new data from firebase")
+                    self.delegate?.changeUImessage(message: " new data from firebase")
                 }
             }
         })
@@ -98,7 +98,7 @@ class FirebaseLink {
     func parseFrom(data: [String: AnyObject], debug: Bool ) {
         guard let ticker:String  = data["ticker"] as? String else { print("ticker fail"); return }
         
-        self.delegate?.changeUImessage(message: "new data for \(ticker)")
+        //self.delegate?.changeUImessage(message: "new data for \(ticker)")
         guard let cost    = data["cost"] as? Double else { print("cost fail"); return }
         guard var winPct = data["winPct"] as? Double else { print("winPct fail"); return }
         guard let roi    = data["roi"] as? Double else { print("roi fail"); return }
