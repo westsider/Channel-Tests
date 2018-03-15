@@ -130,8 +130,10 @@ class Statistics {
     
     func optimizedBackTest(debug: Bool, completion: @escaping (Bool) -> Void) {
         
+        Winners().deleteOld()
         let dateArray = WklyStats().allEntriesExitsDates(debug: false)
         var portfolio:[String] = []
+        //var winnersArray:[(date:Date, ticker:String)] = []
         var statsArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
         var chartArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
         var cumulativeProfit:Double = 0.0
@@ -173,6 +175,10 @@ class Statistics {
                     }
                     roi.append(eachExit.profit / eachExit.cost)
                     cumulativeProfit += eachExit.profit
+                    if let thisDate = eachExit.date {
+                        //winnersArray.append((date: thisDate, ticker: eachExit.ticker))
+                        Winners().createNew(ticker: eachExit.ticker, date: thisDate)
+                    }
                 }
             }
             statsArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
@@ -201,7 +207,9 @@ class Statistics {
         print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
         print("---------------------------------------------------------------------------------------------\n")
         StatsBacktests().saveDataPoints(group: "OPT", winPct: winPct, cumProfit: sum, pf: profitFactor, roi: avgRoi, totalTrades: Int(tradeCount), maxCost: sumCost)
-        //return chartArray
+        print("Winners ----->")
+        //debugPrint(winnersArray)
+        Winners().tickerCSV()
         completion(true)
     }
     

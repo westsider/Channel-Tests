@@ -6,15 +6,14 @@
 //  Copyright © 2018 Warren Hansen. All rights reserved.
 //
 
-// [ ] make apikeys ui
+// [X] make apikeys ui
 // [X] get spy only gets 100 after marker closed
 // [X] realm accessed from wrong thread in backtest opt
 
 // [ ] send tickers that pass ticker to mail as comma separated txt
-
 // [ ] show effect of market condition
-
 // [ ] show distribution of profit relative to SPY wPctR
+
 // [ ] largest drawdown, extra stats to main UI
 // [ ] add distribution stats -> realm -> main UI
 
@@ -35,6 +34,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         super.viewDidLoad()
         firebaseLink.delegate = self
         alphaLink.delegate = self
+        
         checkPasswords()
         DispatchQueue.main.async {
             self.textForUI += "\n\(MarketHours().currentTimeText())\t\(MarketHours().isMarketOpen())\t"

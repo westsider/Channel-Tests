@@ -69,6 +69,14 @@ class Utilities {
         return answer
     }
     
+    func dateFrom(MonthsAgo:Int) -> Date {
+        let monthsToRemove = -MonthsAgo
+        let currentDate = Date()
+        var dateComponent = DateComponents()
+        dateComponent.month = monthsToRemove
+        return Calendar.current.date(byAdding: dateComponent, to: currentDate)!
+    }
+    
     //MARK: - Dollar util
     func dollarStr(largeNumber:Double )->String {
         let numberFormatter = NumberFormatter()
