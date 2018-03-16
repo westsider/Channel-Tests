@@ -141,16 +141,16 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
             Statistics().getDistribution { (finished) in
                 if finished {
                     print("----------------------------------------------------> Distribution Complete")
-                    self.changeUImessage(message: " Distribution Complete")
+                    self.changeUImessage(message: "\nDistribution Complete")
                     Statistics().standardBackTest(debug: true) { (finished) in
                         if finished {
                             print("----------------------------------------------------> STD backtest Finished!")
-                            self.changeUImessage(message: " STD backtest Finished")
+                            self.changeUImessage(message: "\nStandard backtest finished")
                             Statistics().optimizedBackTest(debug: true, completion: { (finished) in
                                 if finished {
                                     DispatchQueue.main.async {
                                         print("----------------------------------------------------> OPT backtest finished!")
-                                        self.changeUImessage(message: " OPT backtest finished")
+                                        self.changeUImessage(message: "\nOptimized backtest finished")
                                         //self.getStatsFromRealm()
                                         self.activitIsNow(on: false)
                                     }
