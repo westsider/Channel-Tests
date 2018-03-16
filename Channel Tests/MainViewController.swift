@@ -10,7 +10,7 @@
 // [X] get spy only gets 100 after marker closed
 // [X] realm accessed from wrong thread in backtest opt
 // [X] send tickers that pass ticker to mail as comma separated txt
-// [ ] share button disabled till backtest has run
+// [X] share button disabled till backtest has run
 // [ ] run new optimization
 // [ ] show effect of market condition
 // [ ] show distribution of profit relative to SPY wPctR

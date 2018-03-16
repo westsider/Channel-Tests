@@ -209,7 +209,7 @@ class Statistics {
         StatsBacktests().saveDataPoints(group: "OPT", winPct: winPct, cumProfit: sum, pf: profitFactor, roi: avgRoi, totalTrades: Int(tradeCount), maxCost: sumCost)
         print("Winners ----->")
         //debugPrint(winnersArray)
-        Winners().tickerCSV()
+        //Winners().tickerCSV()
         completion(true)
     }
     
