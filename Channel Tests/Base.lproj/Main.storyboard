@@ -38,7 +38,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ucN-GC-PS0" userLabel="Button Stack View">
                                 <rect key="frame" x="8" y="620" width="359" height="36"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgg-3f-Ibt">
+                                    <button opaque="NO" alpha="0.5" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgg-3f-Ibt">
                                         <rect key="frame" x="0.0" y="0.0" width="56" height="36"/>
                                         <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Share">
@@ -101,6 +101,7 @@
                     <connections>
                         <outlet property="activity" destination="gTN-9Y-dkK" id="QcD-9X-UDp"/>
                         <outlet property="mainText" destination="xqX-8a-vtr" id="33U-5j-Tr7"/>
+                        <outlet property="sharBttn" destination="Rgg-3f-Ibt" id="tZi-sM-Oe1"/>
                         <segue destination="s4I-02-N0E" kind="presentation" identifier="mainToStatsVC" id="VUM-ZQ-fAR"/>
                         <segue destination="cj8-pn-owF" kind="presentation" identifier="mainToLogin" id="c7D-XN-pZa"/>
                     </connections>

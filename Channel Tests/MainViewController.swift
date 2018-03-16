@@ -9,9 +9,9 @@
 // [X] make apikeys ui
 // [X] get spy only gets 100 after marker closed
 // [X] realm accessed from wrong thread in backtest opt
-
 // [X] send tickers that pass ticker to mail as comma separated txt
 // [ ] share button disabled till backtest has run
+// [ ] run new optimization
 // [ ] show effect of market condition
 // [ ] show distribution of profit relative to SPY wPctR
 
@@ -25,6 +25,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
     
     @IBOutlet weak var mainText: UITextView!
     @IBOutlet weak var activity: UIActivityIndicatorView!
+    @IBOutlet weak var sharBttn: UIButton!
     
     var firebaseLink = FirebaseLink()
     var alphaLink = Alpha()
@@ -42,9 +43,6 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
             self.textForUI += "\n\(MarketHours().currentTimeText())\t\(MarketHours().isMarketOpen())\t"
             self.textForUI += SpReturns().showProfitInUI()
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
         activitIsNow(on: true)
         alphaLink.checkForNewPrices { (finished) in
             if finished {
@@ -56,6 +54,9 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
                 }
             }
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
     }
     
     @IBAction func getNewDataAction(_ sender: Any) {
@@ -153,6 +154,8 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
                                         self.changeUImessage(message: "\nOptimized backtest finished")
                                         //self.getStatsFromRealm()
                                         self.activitIsNow(on: false)
+                                        self.sharBttn.isEnabled = true
+                                        self.sharBttn.alpha = 1.0
                                     }
                                 }
                             })

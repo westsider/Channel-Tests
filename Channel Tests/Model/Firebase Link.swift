@@ -36,7 +36,7 @@ class FirebaseLink {
         Auth.auth().signIn(withEmail: user.user, password: user.password) { (user, error) in
             if error == nil {
                 self.userEmail = (user?.email!)!
-                print("Signed into Firebase as: \(self.userEmail)l")
+                print("\nSigned into Firebase as: \(self.userEmail)l")
             } else {
                  print("\nLogin Firebase Failed\n")
                 self.delegate?.changeUImessage(message: error.debugDescription )
@@ -53,10 +53,10 @@ class FirebaseLink {
             DispatchQueue.global(qos: .background).async {
                 if error == nil {
                     self.userEmail = (user?.email!)!
-                    self.delegate?.changeUImessage(message: " Signed into Firebase as: \(self.userEmail)")
+                    self.delegate?.changeUImessage(message: "\nSigned into Firebase as: \(self.userEmail)")
                     self.fetchData(debug: false, dataComplete: { (finished) in
                         if finished {
-                            self.delegate?.changeUImessage(message: " Finished getting data from firebase")
+                            self.delegate?.changeUImessage(message: "\nFinished getting data from firebase")
                             dataComplete(true)
                         }
                     })
@@ -72,7 +72,7 @@ class FirebaseLink {
         WklyStats().clearWeekly()
         ref.observe(DataEventType.value, with: { (snapshot) in
             if snapshot.childrenCount > 0 {
-                self.delegate?.changeUImessage(message: " requesting data from firebase")
+                self.delegate?.changeUImessage(message: "\nRequesting data from firebase")
                 let allItems = snapshot.children.allObjects as! [DataSnapshot]
                 for items in snapshot.children.allObjects as! [DataSnapshot] {
                     
@@ -88,7 +88,7 @@ class FirebaseLink {
                 }
                 if self.fileCount == allItems.count {
                     dataComplete(true)
-                    self.delegate?.changeUImessage(message: " new data from firebase")
+                    self.delegate?.changeUImessage(message: "\nNew data from firebase")
                 }
             }
         })
