@@ -24,7 +24,7 @@ class Alpha {
         //if time < 1300 return
         let answer = MarketHours().isMarketOpen()
         if answer != "Market Closed" {
-            delegate?.changeUImessageAlpha(message: "Market is open, waiting to update SPY till close")
+            delegate?.changeUImessageAlpha(message: "\nMarket is open, waiting to update SPY till close")
             completion(true)
             return }
         // otherwise always get new market data for SPY
@@ -32,8 +32,8 @@ class Alpha {
             self.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
                 if finished {
                     completion(true)
-                   // let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: true)
-                   self.delegate?.changeUImessageAlpha(message: " Spy database has been updated")
+                   let spyPrices = Prices().sortOneTicker(ticker: "SPY", debug: false)
+                   self.delegate?.changeUImessageAlpha(message: "\nSpy database has been updated and has \(Utilities().dollarStr(largeNumber: Double(spyPrices.count))) days")
                 }
             }
         }
@@ -43,7 +43,7 @@ class Alpha {
         
         Prices().deleteOld()
         //print("Requesting remote data for \(ticker)")
-        delegate?.changeUImessageAlpha(message: " Requesting alpha data for \(ticker)")
+        delegate?.changeUImessageAlpha(message: "\nContacting NYSE")
         guard let alphaApiKey = UserDefaults.standard.object(forKey: "alphaApiKey")  else {
             Alert.showBasic(title: "Warning", message: "No Api Key for Alpha.")
             return
@@ -96,7 +96,7 @@ class Alpha {
                 
             }
             print("Requesting alpha data for \(ticker)")
-            self.delegate?.changeUImessageAlpha(message: " Requesting alpha data for \(ticker)")
+            self.delegate?.changeUImessageAlpha(message: "\nReceived all data for \(ticker)")
             completion(true)
         }
         task.resume()

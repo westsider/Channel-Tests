@@ -13,31 +13,31 @@ class Process {
     class func httpStatus(service:String, httpStatus: Int, ticker:String ) -> String {
         
         weak var delegate: FirebaseDelegate?
-        var message = " status code: \(httpStatus)"
+        var message = "\nstatus code: \(httpStatus)"
         
         switch httpStatus {
         case 200:
-            message += " Server: OK – Everything worked as expected "
+            message += "\nServer: OK – Everything worked as expected "
         case 401:
-            message += " Server: Unauthorized – Your User/Password API Keys are incorrect"
+            message += "\nServer: Unauthorized – Your User/Password API Keys are incorrect"
             Utilities().playErrorSound()
         case 403:
-            message += " Server: You are not subscribed to the data feed requested for \(ticker)"
+            message += "\nServer: You are not subscribed to the data feed requested for \(ticker)"
             Utilities().playErrorSound()
         case 404:
-            message += " Server: Not Found – The end point requested is not available for \(ticker)"
+            message += "\nServer: Not Found – The end point requested is not available for \(ticker)"
             Utilities().playErrorSound()
         case 429:
-            message += " Server: Too Many Requests – You have hit a limit. See Limits for \(ticker)"
+            message += "\nServer: Too Many Requests – You have hit a limit. See Limits for \(ticker)"
             Utilities().playErrorSound()
         case 500:
-            message += " Server: Internal Server Error – We had a problem. Try again later for \(ticker)."
+            message += "\nServer: Internal Server Error – We had a problem. Try again later for \(ticker)."
             Utilities().playErrorSound()
         case 503:
-            message += " Server: Unavailable – throttle limit or \(service) may be experiencing difficulties."
+            message += "\nServer: Unavailable – throttle limit or \(service) may be experiencing difficulties."
             Utilities().playErrorSound()
         default:
-            message += " Server didn't handshake"
+            message += "\nServer didn't handshake"
             Utilities().playErrorSound()
         }
         delegate?.changeUImessage(message: message)

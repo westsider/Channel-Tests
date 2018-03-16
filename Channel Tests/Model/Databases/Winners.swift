@@ -48,13 +48,14 @@ class Winners: Object {
         return sortedByDate
     }
     
-    func tickerCSV() {
+    func tickerCSV()-> String {
         let results = sortTickers(months: 10, debug: false)
         var winners = ""
         for each in results {
             winners += "\(each.ticker), "
         }
         print(winners)
+        return winners
     }
     
 }

@@ -10,16 +10,18 @@
 // [X] get spy only gets 100 after marker closed
 // [X] realm accessed from wrong thread in backtest opt
 
-// [ ] send tickers that pass ticker to mail as comma separated txt
+// [X] send tickers that pass ticker to mail as comma separated txt
+// [ ] share button disabled till backtest has run
 // [ ] show effect of market condition
 // [ ] show distribution of profit relative to SPY wPctR
 
 // [ ] largest drawdown, extra stats to main UI
 // [ ] add distribution stats -> realm -> main UI
-
+import Foundation
 import UIKit
+import MessageUI
 
-class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
+class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var mainText: UITextView!
     @IBOutlet weak var activity: UIActivityIndicatorView!
@@ -28,14 +30,14 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     var alphaLink = Alpha()
     var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
-    var textForUI = "\n"
+    var textForUI = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         firebaseLink.delegate = self
         alphaLink.delegate = self
-        
         checkPasswords()
+        title = "Channel"
         DispatchQueue.main.async {
             self.textForUI += "\n\(MarketHours().currentTimeText())\t\(MarketHours().isMarketOpen())\t"
             self.textForUI += SpReturns().showProfitInUI()
@@ -60,9 +62,32 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
         newBacktest()
     }
     
-    
     @IBAction func statsButtonAction(_ sender: UIButton) {
         segueToStats()
+    }
+    
+    @IBAction func sendTickers(_ sender: Any) {
+        sendEmail()
+    }
+    
+    func sendEmail() {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            let winners = Winners().tickerCSV()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["whansen1@mac.com"])
+            mail.setSubject("Tickers optimized on \(Utilities().convertToStringNoTimeFrom(date: Date()))")
+            mail.setMessageBody(winners, isHTML: false)
+
+            present(mail, animated: true)
+        } else {
+            print("\n---------------------------\n\tMail has failed\n---------------------------\n")
+            Alert.showBasic(title: "Mail Problem", message: "Deliver has failed.")
+        }
+    }
+
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
     
     func getStatsFromRealm() {
@@ -112,7 +137,6 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate {
     func backtestWithFilters() {
         // add activity
         //activitIsNow(on: true)
-        activity.color = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         DispatchQueue.global(qos: .background).async {
             Statistics().getDistribution { (finished) in
                 if finished {
