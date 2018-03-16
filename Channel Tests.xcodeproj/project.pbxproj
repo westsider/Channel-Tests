@@ -33,6 +33,7 @@
 		0D93533A2049D3A700BBF9B2 /* Realm Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */; };
 		0D93533C204A54F500BBF9B2 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D93533B204A54F500BBF9B2 /* Extentions.swift */; };
 		0D93533E204A55EC00BBF9B2 /* Calculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D93533D204A55EC00BBF9B2 /* Calculations.swift */; };
+		0DA644B7205C482300715A70 /* Galaxie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA644B6205C482300715A70 /* Galaxie.swift */; };
 		1AC907B1C2BA357938E54DA8 /* Pods_Channel_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC4F167B53AAEE7E869F13E /* Pods_Channel_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm Utilities.swift"; sourceTree = "<group>"; };
 		0D93533B204A54F500BBF9B2 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		0D93533D204A55EC00BBF9B2 /* Calculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculations.swift; sourceTree = "<group>"; };
+		0DA644B6205C482300715A70 /* Galaxie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Galaxie.swift; sourceTree = "<group>"; };
 		3DC4F167B53AAEE7E869F13E /* Pods_Channel_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Channel_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6844FBE5B7ED0FFB2817DD47 /* Pods-Channel Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Channel Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Channel Tests/Pods-Channel Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		9B50A7CFBB30971CA343F69F /* Pods-Channel Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Channel Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Channel Tests/Pods-Channel Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 		0D1EBAAE204CA5BC0092B351 /* Utilities Group */ = {
 			isa = PBXGroup;
 			children = (
+				0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */,
 				0D4F51B72048E936002E2F93 /* Utilities.swift */,
 				0D1C26872059D41F000B2646 /* Alert.swift */,
 				0D93533D204A55EC00BBF9B2 /* Calculations.swift */,
@@ -147,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				0D12032D2048B17F00AA421B /* Firebase Link.swift */,
-				0D9353392049D3A700BBF9B2 /* Realm Utilities.swift */,
 				0D9353372049D2C500BBF9B2 /* Statistics.swift */,
 				0D46B603204E2AE80081C21C /* SP Returns.swift */,
 				0D46B602204E187C0081C21C /* Databases */,
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */,
+				0DA644B6205C482300715A70 /* Galaxie.swift */,
 				0D46B600204DDBFA0081C21C /* StatsBacktests.swift */,
 				0D1E5CAC205AF7C100CE4049 /* Winners.swift */,
 				0D1EBAAB204CA3DC0092B351 /* Prices.swift */,
@@ -329,6 +332,7 @@
 			files = (
 				0D1C268A205AE03C000B2646 /* LoginViewController.swift in Sources */,
 				0D3568B4204BBC71008654C2 /* SCIGenericWrapper.swift in Sources */,
+				0DA644B7205C482300715A70 /* Galaxie.swift in Sources */,
 				0D46B606204E3D8C0081C21C /* Market Hours.swift in Sources */,
 				0D03A3BE20489EE200786C47 /* MainViewController.swift in Sources */,
 				0D1EBAAC204CA3DC0092B351 /* Prices.swift in Sources */,

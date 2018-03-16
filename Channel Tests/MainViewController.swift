@@ -11,7 +11,8 @@
 // [X] realm accessed from wrong thread in backtest opt
 // [X] send tickers that pass ticker to mail as comma separated txt
 // [X] share button disabled till backtest has run
-// [ ] run new optimization
+// [X] run new optimization
+// [ ] only 42 symbols added
 // [ ] show effect of market condition
 // [ ] show distribution of profit relative to SPY wPctR
 
@@ -54,6 +55,8 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
                 }
             }
         }
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -74,7 +77,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
     func sendEmail() {
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
-            let winners = Winners().tickerCSV()
+            let winners = RealmUtil().optimizedPopulation(debug: true)
             mail.mailComposeDelegate = self
             mail.setToRecipients(["whansen1@mac.com"])
             mail.setSubject("Tickers optimized on \(Utilities().convertToStringNoTimeFrom(date: Date()))")

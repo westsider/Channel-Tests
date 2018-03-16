@@ -37,6 +37,7 @@ class WklyStats: Object {
         print("\nRealm \tWklyStats \tCleared!\n")
     }
     
+
     func updateCumulativeProfit(date: Date, entryDate:Date, ticker:String, profit: Double, winPct: Double, roi: Double, profitFactor: Double, cost:Double, maxCost:Double) {
         
         let realm = try! Realm()
@@ -53,6 +54,11 @@ class WklyStats: Object {
         try! realm.write {
             realm.add(thisWeek)
         }
+    }
+    
+    func getOneTicker(ticker:String) -> Results<WklyStats>? {
+        let realm = try! Realm()
+        return realm.objects(WklyStats.self).filter("ticker == %@", ticker)
     }
     
     func getWeeklyStatsFromRealm() {

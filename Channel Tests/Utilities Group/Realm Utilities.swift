@@ -98,7 +98,7 @@ class RealmUtil {
         }
         dataComplete(true)
     }
-    /*
+        /*
          Optimized BackTest
          ---------------------------------------------------------------------------------------------
          68.9% Win     PF: 1.91     ROI: 12.74%    Profit $41,916     2,306 Trades     $66,222 Cost
@@ -118,4 +118,33 @@ class RealmUtil {
         }
         return answer
     }
+    
+    func optimizedPopulation(debug:Bool) -> String {
+        
+        // WklyStats is a database of all trades.
+        // one ticker all trades,
+        let galaxie = Galaxie().AllNonDuplicated
+        var tickerArray = ""
+        for ticker in galaxie {
+            if let thisTicker = WklyStats().getOneTicker(ticker: ticker) {
+                let profit = Calculations().calcProfit(allTrades: thisTicker)
+                let winPct = Calculations().calcWinPct(allTrades: thisTicker)
+                let pf = Calculations().calcPF(allTrades: thisTicker)
+                
+                if profit.avg > -73 && winPct.avg > 59 && pf.avg > 0 {
+                    tickerArray += "\(ticker), "
+                }
+            }
+        }
+        if debug {
+            print("\n--------> Winning Tickers <------------\n\t\t \(tickerArray.count) tickers found ")
+            debugPrint(tickerArray)
+        }
+        return tickerArray
+    }
+    
+    
+    
+    
+
 }
