@@ -125,6 +125,7 @@ class RealmUtil {
         // one ticker all trades,
         let galaxie = Galaxie().AllNonDuplicated
         var tickerArray = ""
+        var counter = 0
         for ticker in galaxie {
             if let thisTicker = WklyStats().getOneTicker(ticker: ticker) {
                 let profit = Calculations().calcProfit(allTrades: thisTicker)
@@ -133,11 +134,12 @@ class RealmUtil {
                 
                 if profit.avg > -73 && winPct.avg > 59 && pf.avg > 0 {
                     tickerArray += "\(ticker), "
+                    counter += 1
                 }
             }
         }
         if debug {
-            print("\n--------> Winning Tickers <------------\n\t\t \(tickerArray.count) tickers found ")
+            print("\n--------> Winning Tickers <------------\n\t\t \(counter) tickers found ")
             debugPrint(tickerArray)
         }
         return tickerArray

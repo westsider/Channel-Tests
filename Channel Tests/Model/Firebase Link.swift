@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import Firebase
 
-//MARK: step 1 Add Protocol here
 protocol FirebaseDelegate: class {
     func changeUImessage(message:String)
 }

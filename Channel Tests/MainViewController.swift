@@ -12,12 +12,13 @@
 // [X] send tickers that pass ticker to mail as comma separated txt
 // [X] share button disabled till backtest has run
 // [X] run new optimization
-// [ ] only 42 symbols added
+// [X] share sits in outbox on ipad
+// [ ] upgrade server to more cores
 // [ ] show effect of market condition
 // [ ] show distribution of profit relative to SPY wPctR
-
 // [ ] largest drawdown, extra stats to main UI
 // [ ] add distribution stats -> realm -> main UI
+
 import Foundation
 import UIKit
 import MessageUI
@@ -33,6 +34,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
     var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var textForUI = ""
+    //var message = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,8 +57,6 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
                 }
             }
         }
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -75,25 +75,30 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, MFM
     }
     
     func sendEmail() {
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            let winners = RealmUtil().optimizedPopulation(debug: true)
-            mail.mailComposeDelegate = self
-            mail.setToRecipients(["whansen1@mac.com"])
-            mail.setSubject("Tickers optimized on \(Utilities().convertToStringNoTimeFrom(date: Date()))")
-            mail.setMessageBody(winners, isHTML: false)
-
-            present(mail, animated: true)
-        } else {
-            print("\n---------------------------\n\tMail has failed\n---------------------------\n")
-            Alert.showBasic(title: "Mail Problem", message: "Deliver has failed.")
+        let mailComposeViewController = configureMailComposer()
+        if MFMailComposeViewController.canSendMail(){
+            self.present(mailComposeViewController, animated: true, completion: nil)
+        }else{
+            print("Can't send email")
         }
     }
 
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true)
+    func configureMailComposer() -> MFMailComposeViewController {
+        let message = RealmUtil().optimizedPopulation(debug: true)
+        let newData = message.data(using: String.Encoding.utf8) //{
+        let mailComposeVC = MFMailComposeViewController()
+        mailComposeVC.mailComposeDelegate = self
+        mailComposeVC.setToRecipients(["whansen1@mac.com"])
+        mailComposeVC.setSubject(Utilities().convertToStringFrom(date: Date()))
+        mailComposeVC.setMessageBody("Here are the optimized symbols for \(Utilities().convertToStringNoTimeFrom(date: Date()))", isHTML: true)
+        mailComposeVC.addAttachmentData(newData!, mimeType: ".txt", fileName: "OptimizedSymbols")
+        return mailComposeVC
     }
     
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
+
     func getStatsFromRealm() {
         
         if let uiText = StatsBacktests().populateUI(group: "STD") {
