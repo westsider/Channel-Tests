@@ -18,12 +18,19 @@ class Utilities {
     let today = Date()
     
     func convertToDateFrom(string: String, debug: Bool)-> Date {
+        
+        var answer = Date()
         if ( debug ) { print("\ndate from is string: \(string)") }
         let dateS    = string
         formatter.dateFormat = "yyyy/MM/dd"
-        let date:Date = formatter.date(from: dateS)!
-        if ( debug ) { print("Convertion to Date: \(date)\n") }
-        return date
+        if let date:Date = formatter.date(from: dateS) {
+            if ( debug ) { print("Convertion to Date: \(date)\n") }
+            answer = date
+        } else {
+            print("\n\(string) did not unwrap!\n")
+        }
+        
+        return answer
     }
     
     func convertToDateFromNT(string: String, debug: Bool)-> Date? {
