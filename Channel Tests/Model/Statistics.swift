@@ -153,7 +153,9 @@ class Statistics {
             for eachEntry in WklyStats().allEntriesFor(today: eachDay) {
                 if portfolio.count < 20 {
                     // if system is posative
-                    if RealmUtil().systemPositive(eachEntry: eachEntry) {
+                    if RealmUtil().systemPositive(eachEntry: eachEntry)
+                        // if mcVal >= 0
+                        && MarketCondition().mcValue(forToday: eachDay) >= 0  {
                         portfolio.append(eachEntry.ticker)
                         todaysCost += eachEntry.cost
                         tradeCount += 1

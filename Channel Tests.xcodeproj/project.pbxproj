@@ -35,6 +35,7 @@
 		0D93533E204A55EC00BBF9B2 /* Calculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D93533D204A55EC00BBF9B2 /* Calculations.swift */; };
 		0DA644B7205C482300715A70 /* Galaxie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA644B6205C482300715A70 /* Galaxie.swift */; };
 		0DC44C762060327E00C47173 /* SMA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC44C752060327E00C47173 /* SMA.swift */; };
+		0DC44C782060600900C47173 /* Market Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC44C772060600900C47173 /* Market Condition.swift */; };
 		1AC907B1C2BA357938E54DA8 /* Pods_Channel_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC4F167B53AAEE7E869F13E /* Pods_Channel_Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 		0D93533D204A55EC00BBF9B2 /* Calculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculations.swift; sourceTree = "<group>"; };
 		0DA644B6205C482300715A70 /* Galaxie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Galaxie.swift; sourceTree = "<group>"; };
 		0DC44C752060327E00C47173 /* SMA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMA.swift; sourceTree = "<group>"; };
+		0DC44C772060600900C47173 /* Market Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Market Condition.swift"; sourceTree = "<group>"; };
 		3DC4F167B53AAEE7E869F13E /* Pods_Channel_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Channel_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6844FBE5B7ED0FFB2817DD47 /* Pods-Channel Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Channel Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Channel Tests/Pods-Channel Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		9B50A7CFBB30971CA343F69F /* Pods-Channel Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Channel Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Channel Tests/Pods-Channel Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				0D12032D2048B17F00AA421B /* Firebase Link.swift */,
 				0D9353372049D2C500BBF9B2 /* Statistics.swift */,
 				0D46B603204E2AE80081C21C /* SP Returns.swift */,
+				0DC44C772060600900C47173 /* Market Condition.swift */,
 				0D46B602204E187C0081C21C /* Databases */,
 			);
 			path = Model;
@@ -358,6 +361,7 @@
 				0D46B604204E2AE80081C21C /* SP Returns.swift in Sources */,
 				0D880AA0204CA0D7008D1F0E /* Intrinio.swift in Sources */,
 				0D46B601204DDBFA0081C21C /* StatsBacktests.swift in Sources */,
+				0DC44C782060600900C47173 /* Market Condition.swift in Sources */,
 				0D1E5CAD205AF7C100CE4049 /* Winners.swift in Sources */,
 				0D1EBAB0204CB6420092B351 /* Alpha.swift in Sources */,
 				0D9353382049D2C500BBF9B2 /* Statistics.swift in Sources */,

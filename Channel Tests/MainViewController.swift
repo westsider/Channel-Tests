@@ -15,14 +15,7 @@
 // [X] share sits in outbox on ipad
 // [X] upgrade server to 2 cores from $15 - $30
 // [X] Stock market data and charting in swift
-
-// [ ] show improvement of market condition
-//      [X] download sma 200
-//      [X] add to realm
-//      [X] use to filter entries
-//      [ ] create bands
-//      [ ] create bool for market condition in Prices
-//      [ ] add as filter to trades
+// [X] show improvement of market condition
 
 // [ ] show distribution of profit relative to SPY wPctR
 // [ ] largest drawdown, extra stats to main UI
@@ -56,23 +49,20 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
             self.textForUI += "\n\(MarketHours().currentTimeText())\t\(MarketHours().isMarketOpen())\t"
             self.textForUI += SpReturns().showProfitInUI()
         }
-        
-        smaLink.standardNetworkCall(ticker: "SPY", compact: false, debug: true) { (finished) in
+        activitIsNow(on: true)
+        alphaLink.checkForNewPrices { (finished) in
             if finished {
-                print("\nYo! we actually did it!\n")
+                DispatchQueue.main.async {
+                    self.mainText.text = self.textForUI
+                    self.smaLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
+                        if finished {
+                            MarketCondition().addMCtoRealm()
+                            self.activitIsNow(on: false)
+                        }
+                    }
+                }
             }
         }
-//        activitIsNow(on: true)
-//        alphaLink.checkForNewPrices { (finished) in
-//            if finished {
-//                DispatchQueue.main.async {
-//                    print("\nDownload Completed!\n")
-//                    self.activitIsNow(on: false)
-//                    self.mainText.text = self.textForUI
-//                    //self.getStatsFromRealm() // prove we have data in realm
-//                }
-//            }
-//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
