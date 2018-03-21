@@ -123,6 +123,7 @@ class Statistics {
     func optimizedBackTest(debug: Bool, completion: @escaping (Bool) -> Void) {
         
         Winners().deleteOld()
+        WpctrStats().deleteOld()
         let dateArray = WklyStats().allEntriesExitsDates(debug: false)
         var portfolio:[String] = []
         var statsArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
@@ -141,28 +142,14 @@ class Statistics {
         for eachDay in dateArray {
             
             var todaysProfit:Double = 0.0
-            
-            // [ ] show distribution of profit relative to SPY wPctR
-            // [ ] get Entry date wpcrR
-            // [ ] Match entry date trade -> profit
-            // [ ] Array (wpctR, profit)
-            // [ ] plot Y: woctR, plot X: profit
-            /*
-             For each exit
-             Get entrydate
-             Get wpctr, profit-> Array (wpctR, profit)
-            */
-            
             for eachEntry in WklyStats().allEntriesFor(today: eachDay) {
                 if portfolio.count < 20 {
                     // if system is posative
                     if RealmUtil().systemPositive(eachEntry: eachEntry)
-                        // if mcVal >= 0
                         && MarketCondition().mcValue(forToday: eachDay) >= 0  {
                         portfolio.append(eachEntry.ticker)
                         todaysCost += eachEntry.cost
                         tradeCount += 1
-                       // entryWpctR = [eachEntry.ticker: WpctR.wpctrValue(forToday: eachDay)]
                     }
                 }
             }
@@ -191,6 +178,7 @@ class Statistics {
                         if profitLmt > 180 { profitLmt = 180 }
                         if profitLmt < -180 { profitLmt = -180 }
                         arraywpctRresults.append((wpctr:  wpcrValue, profit: profitLmt))
+                        WpctrStats().addToRealm(profit: profitLmt, wpctR: wpcrValue)
                     }
                 }
             }
@@ -221,10 +209,8 @@ class Statistics {
         print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
         print("---------------------------------------------------------------------------------------------\n")
         StatsBacktests().saveDataPoints(group: "OPT", winPct: winPct, cumProfit: sum, pf: profitFactor, roi: avgRoi, totalTrades: Int(tradeCount), maxCost: sumCost)
-        print("wpct(R) ----->")
-        for each in arraywpctRresults {
-            print("$\(each.profit) \t\(each.wpctr) %R")
-        }
+        
+        let _ = WpctrStats().getAllStats(debug: true)
        
         completion(true)
     }
