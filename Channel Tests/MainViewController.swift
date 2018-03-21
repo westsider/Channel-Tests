@@ -62,24 +62,24 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
             self.textForUI += "\n\(MarketHours().currentTimeText())\t\(MarketHours().isMarketOpen())\t"
             self.textForUI += SpReturns().showProfitInUI()
         }
-        activitIsNow(on: true)
-        alphaLink.checkForNewPrices { (finished) in
-            if finished {
-                DispatchQueue.main.async {
-                    self.mainText.text = self.textForUI
-                    self.smaLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
-                        if finished {
-                            MarketCondition().addMCtoRealm()
-                            self.wpctrLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false, completion: { (finished) in
-                                if finished {
-                                    self.activitIsNow(on: false)
-                                }
-                            })
-                        }
-                    }
-                }
-            }
-        }
+//        activitIsNow(on: true)
+//        alphaLink.checkForNewPrices { (finished) in
+//            if finished {
+//                DispatchQueue.main.async {
+//                    self.mainText.text = self.textForUI
+//                    self.smaLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
+//                        if finished {
+//                            MarketCondition().addMCtoRealm()
+//                            self.wpctrLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false, completion: { (finished) in
+//                                if finished {
+//                                    self.activitIsNow(on: false)
+//                                }
+//                            })
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
     
     @IBAction func getNewDataAction(_ sender: Any) {

@@ -35,7 +35,7 @@ class WpctrStats: Object {
     
     func getAllStats(debug:Bool)-> Results<WpctrStats> {
         let realm = try! Realm()
-        let allWpctrStats = realm.objects(WpctrStats.self)
+        let allWpctrStats = realm.objects(WpctrStats.self).sorted(byKeyPath: "profit", ascending: true)
         if debug {
             print("\nwpct(R) ----->")
             for each in allWpctrStats {
