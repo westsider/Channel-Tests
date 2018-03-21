@@ -12,7 +12,6 @@ import SciChart
 class StatsViewController: UIViewController {
 
     @IBOutlet weak var chartView: UIView!
-    
     @IBOutlet weak var columnView: UIView!
 
     var spyCloses:[(date:Date, close:Double)] = []

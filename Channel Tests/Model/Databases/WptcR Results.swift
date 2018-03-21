@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 
 class WpctrStats: Object {
+    
     @objc dynamic var profit   = 0.00
     @objc dynamic var wpctR    = 0.00
     

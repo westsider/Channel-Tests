@@ -82,9 +82,6 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-    }
-    
     @IBAction func getNewDataAction(_ sender: Any) {
         newBacktest()
     }
@@ -96,6 +93,11 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
     @IBAction func sendTickers(_ sender: Any) {
         sendEmail()
     }
+    
+    @IBAction func wpctrAction(_ sender: Any) {
+        segueToWpctR()
+    }
+    
     
     func sendEmail() {
         let mailComposeViewController = configureMailComposer()
@@ -224,6 +226,10 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
     
     private func segueToStats() {
         let myVC:StatsViewController = storyboard?.instantiateViewController(withIdentifier: "StatsVC") as! StatsViewController
+        navigationController?.pushViewController(myVC, animated: true)
+    }
+    private func segueToWpctR() {
+        let myVC:WpctrViewController = storyboard?.instantiateViewController(withIdentifier: "WpctrVC") as! WpctrViewController
         navigationController?.pushViewController(myVC, animated: true)
     }
 }

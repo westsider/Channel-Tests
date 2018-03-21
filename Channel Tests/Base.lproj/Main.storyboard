@@ -39,7 +39,7 @@
                                 <rect key="frame" x="8" y="517" width="359" height="36"/>
                                 <subviews>
                                     <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgg-3f-Ibt">
-                                        <rect key="frame" x="0.0" y="0.0" width="63" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="69.5" height="36"/>
                                         <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="17"/>
                                         <state key="normal" title="Share">
@@ -49,11 +49,21 @@
                                             <action selector="sendTickers:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3lm-X5-asT"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d4j-mj-uAu">
+                                        <rect key="frame" x="77.5" y="0.0" width="86" height="36"/>
+                                        <color key="backgroundColor" red="0.36863011121749878" green="0.36862260103225708" blue="0.36862766742706299" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Wpct(R)">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="wpctrAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xAU-Ij-p5r"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="792-Hb-NtE">
-                                        <rect key="frame" x="71" y="0.0" width="124" height="36"/>
+                                        <rect key="frame" x="171.5" y="0.0" width="61.5" height="36"/>
                                         <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="17"/>
-                                        <state key="normal" title="Stats Chart">
+                                        <state key="normal" title="Stats">
                                             <color key="titleColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
@@ -61,10 +71,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZRV-cm-Hmw">
-                                        <rect key="frame" x="203" y="0.0" width="156" height="36"/>
+                                        <rect key="frame" x="241" y="0.0" width="118" height="36"/>
                                         <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="PingFangHK-Regular" family="PingFang HK" pointSize="17"/>
-                                        <state key="normal" title="New Backtest">
+                                        <state key="normal" title="Backtest">
                                             <color key="titleColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
@@ -105,6 +115,7 @@
                         <outlet property="sharBttn" destination="Rgg-3f-Ibt" id="tZi-sM-Oe1"/>
                         <segue destination="s4I-02-N0E" kind="presentation" identifier="mainToStatsVC" id="VUM-ZQ-fAR"/>
                         <segue destination="cj8-pn-owF" kind="presentation" identifier="mainToLogin" id="c7D-XN-pZa"/>
+                        <segue destination="d7Z-uB-30P" kind="presentation" identifier="mainToWpctr" id="D2A-Ex-OuA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -273,6 +284,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xjq-d5-lDx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="503" y="897"/>
+        </scene>
+        <!--Wpctr View Controller-->
+        <scene sceneID="9B7-EA-Q3b">
+            <objects>
+                <viewController storyboardIdentifier="WpctrVC" id="d7Z-uB-30P" customClass="WpctrViewController" customModule="Channel_Tests" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rIi-HS-pEU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUD-cX-q92">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="bUD-cX-q92" firstAttribute="top" secondItem="rIi-HS-pEU" secondAttribute="top" id="6m3-ez-OEe"/>
+                            <constraint firstItem="bUD-cX-q92" firstAttribute="bottom" secondItem="Esw-Vk-0Fn" secondAttribute="bottom" id="SN3-hL-vYe"/>
+                            <constraint firstItem="bUD-cX-q92" firstAttribute="leading" secondItem="Esw-Vk-0Fn" secondAttribute="leading" id="V6b-W1-ABl"/>
+                            <constraint firstItem="bUD-cX-q92" firstAttribute="trailing" secondItem="Esw-Vk-0Fn" secondAttribute="trailing" id="hpQ-rq-GUg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Esw-Vk-0Fn"/>
+                    </view>
+                    <connections>
+                        <outlet property="chartView" destination="bUD-cX-q92" id="q31-to-gel"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A2i-RV-jPB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1205.5999999999999" y="888.30584707646187"/>
         </scene>
     </scenes>
 </document>

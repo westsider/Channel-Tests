@@ -28,6 +28,7 @@
 		0D4F51B82048E936002E2F93 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B72048E936002E2F93 /* Utilities.swift */; };
 		0D4F51BA2048EE43002E2F93 /* Weekly Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */; };
 		0D86E8FA2063197200A25946 /* WptcR Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D86E8F92063197200A25946 /* WptcR Results.swift */; };
+		0D86E8FC20631EC100A25946 /* WpctrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D86E8FB20631EC100A25946 /* WpctrViewController.swift */; };
 		0D880AA0204CA0D7008D1F0E /* Intrinio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D880A9F204CA0D7008D1F0E /* Intrinio.swift */; };
 		0D880AA2204CA308008D1F0E /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D880AA1204CA308008D1F0E /* Process.swift */; };
 		0D9353382049D2C500BBF9B2 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9353372049D2C500BBF9B2 /* Statistics.swift */; };
@@ -65,6 +66,7 @@
 		0D4F51B72048E936002E2F93 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekly Stats.swift"; sourceTree = "<group>"; };
 		0D86E8F92063197200A25946 /* WptcR Results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WptcR Results.swift"; sourceTree = "<group>"; };
+		0D86E8FB20631EC100A25946 /* WpctrViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WpctrViewController.swift; sourceTree = "<group>"; };
 		0D880A9F204CA0D7008D1F0E /* Intrinio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intrinio.swift; sourceTree = "<group>"; };
 		0D880AA1204CA308008D1F0E /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		0D9353372049D2C500BBF9B2 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				0D03A3BF20489EE200786C47 /* Main.storyboard */,
 				0D03A3BD20489EE200786C47 /* MainViewController.swift */,
 				0D3568B1204BB422008654C2 /* StatsViewController.swift */,
+				0D86E8FB20631EC100A25946 /* WpctrViewController.swift */,
 				0D1C2689205AE03C000B2646 /* LoginViewController.swift */,
 				0D3568B5204BC17D008654C2 /* Model */,
 				0D1EBAAD204CA3F40092B351 /* Network */,
@@ -365,6 +368,7 @@
 				0D93533A2049D3A700BBF9B2 /* Realm Utilities.swift in Sources */,
 				0D03A3C420489EE200786C47 /* Channel_Tests.xcdatamodeld in Sources */,
 				0D46B604204E2AE80081C21C /* SP Returns.swift in Sources */,
+				0D86E8FC20631EC100A25946 /* WpctrViewController.swift in Sources */,
 				0D880AA0204CA0D7008D1F0E /* Intrinio.swift in Sources */,
 				0D46B601204DDBFA0081C21C /* StatsBacktests.swift in Sources */,
 				0DF0A3F02061A8DA00EAA5FF /* wPct R.swift in Sources */,
