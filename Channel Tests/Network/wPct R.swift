@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
 
 protocol WpctrDelegate: class {
     func changeUImessageAlpha(message:String)
@@ -82,5 +83,15 @@ class WpctR {
             completion(true)
         }
         task.resume()
+    }
+    
+    class func wpctrValue(forToday:Date)->Double {
+        
+        var answer = 0.0
+        let realm = try! Realm()
+        if let oneSymbol = realm.objects(Prices.self).filter("ticker == %@", "SPY").filter("date == %@", forToday).last {
+            answer = oneSymbol.wPctR
+        }
+        return answer
     }
 }

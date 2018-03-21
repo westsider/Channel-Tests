@@ -27,6 +27,7 @@
 		0D46B606204E3D8C0081C21C /* Market Hours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D46B605204E3D8C0081C21C /* Market Hours.swift */; };
 		0D4F51B82048E936002E2F93 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B72048E936002E2F93 /* Utilities.swift */; };
 		0D4F51BA2048EE43002E2F93 /* Weekly Stats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */; };
+		0D86E8FA2063197200A25946 /* WptcR Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D86E8F92063197200A25946 /* WptcR Results.swift */; };
 		0D880AA0204CA0D7008D1F0E /* Intrinio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D880A9F204CA0D7008D1F0E /* Intrinio.swift */; };
 		0D880AA2204CA308008D1F0E /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D880AA1204CA308008D1F0E /* Process.swift */; };
 		0D9353382049D2C500BBF9B2 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9353372049D2C500BBF9B2 /* Statistics.swift */; };
@@ -63,6 +64,7 @@
 		0D46B605204E3D8C0081C21C /* Market Hours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Market Hours.swift"; sourceTree = "<group>"; };
 		0D4F51B72048E936002E2F93 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Weekly Stats.swift"; sourceTree = "<group>"; };
+		0D86E8F92063197200A25946 /* WptcR Results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WptcR Results.swift"; sourceTree = "<group>"; };
 		0D880A9F204CA0D7008D1F0E /* Intrinio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intrinio.swift; sourceTree = "<group>"; };
 		0D880AA1204CA308008D1F0E /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		0D9353372049D2C500BBF9B2 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				0D4F51B92048EE43002E2F93 /* Weekly Stats.swift */,
+				0D86E8F92063197200A25946 /* WptcR Results.swift */,
 				0DA644B6205C482300715A70 /* Galaxie.swift */,
 				0D46B600204DDBFA0081C21C /* StatsBacktests.swift */,
 				0D1E5CAC205AF7C100CE4049 /* Winners.swift */,
@@ -372,6 +375,7 @@
 				0D93533C204A54F500BBF9B2 /* Extentions.swift in Sources */,
 				0DC44C762060327E00C47173 /* SMA.swift in Sources */,
 				0D1C26882059D41F000B2646 /* Alert.swift in Sources */,
+				0D86E8FA2063197200A25946 /* WptcR Results.swift in Sources */,
 				0D880AA2204CA308008D1F0E /* Process.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

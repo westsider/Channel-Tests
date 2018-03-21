@@ -9,23 +9,15 @@
 import Foundation
 import RealmSwift
 
+/*  Class to backtest with optimization  */
 class Statistics {
     
     let allTradesSortedBtDate =  RealmUtil().getAllWklyStats(debug: false)
-    
     var profitResults:(max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    // auto select Low = 11 result.avg - result.std)
     var winPctResults:(max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    // auto select Low = 64 result.avg - result.std)
     var pfResults:(max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    // auto select mode = 1
     var roiResults:(max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-    // auto select Low 0.3 result.avg - result.std)
-    // multiply roi * 100 to display human readable in UI
-    
-    // completion bool when all 3 have written to realm
 
-    
     func getDistribution( completion: @escaping (Bool) -> Void) {
         
         print("\n\n\t\t\t\t\t\t\t\tStatistical Distribution")
@@ -133,7 +125,6 @@ class Statistics {
         Winners().deleteOld()
         let dateArray = WklyStats().allEntriesExitsDates(debug: false)
         var portfolio:[String] = []
-        //var winnersArray:[(date:Date, ticker:String)] = []
         var statsArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
         var chartArray:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
         var cumulativeProfit:Double = 0.0
@@ -143,12 +134,24 @@ class Statistics {
         var winningTrades:[Double] = []
         var losingTrades:[Double] = []
         var roi:[Double] = []
+        var arraywpctRresults:[(wpctr:Double, profit:Double)] = []
         
         OptBacktest().deleteAll()
         
         for eachDay in dateArray {
             
             var todaysProfit:Double = 0.0
+            
+            // [ ] show distribution of profit relative to SPY wPctR
+            // [ ] get Entry date wpcrR
+            // [ ] Match entry date trade -> profit
+            // [ ] Array (wpctR, profit)
+            // [ ] plot Y: woctR, plot X: profit
+            /*
+             For each exit
+             Get entrydate
+             Get wpctr, profit-> Array (wpctR, profit)
+            */
             
             for eachEntry in WklyStats().allEntriesFor(today: eachDay) {
                 if portfolio.count < 20 {
@@ -159,6 +162,7 @@ class Statistics {
                         portfolio.append(eachEntry.ticker)
                         todaysCost += eachEntry.cost
                         tradeCount += 1
+                       // entryWpctR = [eachEntry.ticker: WpctR.wpctrValue(forToday: eachDay)]
                     }
                 }
             }
@@ -178,11 +182,19 @@ class Statistics {
                     roi.append(eachExit.profit / eachExit.cost)
                     cumulativeProfit += eachExit.profit
                     if let thisDate = eachExit.date {
-                        //winnersArray.append((date: thisDate, ticker: eachExit.ticker))
                         Winners().createNew(ticker: eachExit.ticker, date: thisDate)
+                    }
+                    
+                    if let myEntryDate = eachExit.entryDate {
+                        let wpcrValue =  WpctR.wpctrValue(forToday: myEntryDate)
+                        var profitLmt = eachExit.profit
+                        if profitLmt > 180 { profitLmt = 180 }
+                        if profitLmt < -180 { profitLmt = -180 }
+                        arraywpctRresults.append((wpctr:  wpcrValue, profit: profitLmt))
                     }
                 }
             }
+
             statsArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
             chartArray.append((date: eachDay, cost: todaysCost, profit: cumulativeProfit, pos: portfolio.count))
             OptBacktest().saveDataPoints(date: eachDay, profit: cumulativeProfit, cost: todaysCost, pos: portfolio.count)
@@ -209,9 +221,11 @@ class Statistics {
         print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
         print("---------------------------------------------------------------------------------------------\n")
         StatsBacktests().saveDataPoints(group: "OPT", winPct: winPct, cumProfit: sum, pf: profitFactor, roi: avgRoi, totalTrades: Int(tradeCount), maxCost: sumCost)
-        print("Winners ----->")
-        //debugPrint(winnersArray)
-        //Winners().tickerCSV()
+        print("wpct(R) ----->")
+        for each in arraywpctRresults {
+            print("$\(each.profit) \t\(each.wpctr) %R")
+        }
+       
         completion(true)
     }
     
