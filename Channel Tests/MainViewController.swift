@@ -18,6 +18,15 @@
 // [X] show improvement of market condition
 
 // [ ] show distribution of profit relative to SPY wPctR
+// [ ] get Entry date wpcrR
+// [ ] Match entry date trade -> profit
+// [ ] Array (wpctR, profit)
+// [ ] plot Y: woctR, plot X: profit
+    /*
+    For each exit
+    Get entrydate
+    Get wpctr, profit-> Array (wpctR, profit)
+     */
 // [ ] largest drawdown, extra stats to main UI
 // [ ] add distribution stats -> realm -> main UI
 
@@ -25,7 +34,7 @@ import Foundation
 import UIKit
 import MessageUI
 
-class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMADelegate, MFMailComposeViewControllerDelegate {
+class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMADelegate, WpctrDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var mainText: UITextView!
     @IBOutlet weak var activity: UIActivityIndicatorView!
@@ -34,6 +43,8 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
     var firebaseLink = FirebaseLink()
     var alphaLink = Alpha()
     var smaLink = SMA()
+    var wpctrLink = WpctR()
+    
     var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var textForUI = ""
@@ -43,6 +54,8 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
         firebaseLink.delegate = self
         alphaLink.delegate = self
         smaLink.delegate = self
+        wpctrLink.delegate = self
+        
         checkPasswords()
         title = "Channel"
         DispatchQueue.main.async {
@@ -57,7 +70,11 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
                     self.smaLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
                         if finished {
                             MarketCondition().addMCtoRealm()
-                            self.activitIsNow(on: false)
+                            self.wpctrLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false, completion: { (finished) in
+                                if finished {
+                                    self.activitIsNow(on: false)
+                                }
+                            })
                         }
                     }
                 }
