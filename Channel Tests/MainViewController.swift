@@ -6,8 +6,7 @@
 //  Copyright © 2018 Warren Hansen. All rights reserved.
 //
 
-// [ ] longest drawdown, largest drawdown LW LL
-// [ ] add distribution stats -> realm -> main UI
+// [ ] add  stats to main UI
 // [ ] auto scroll
 
 import Foundation
@@ -62,26 +61,14 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
         }
     }
     
-    @IBAction func getNewDataAction(_ sender: Any) {
-        newBacktest()
-    }
-    
-    @IBAction func statsButtonAction(_ sender: UIButton) {
-        segueToStats()
-    }
-    
-    @IBAction func sendTickers(_ sender: Any) {
-        sendEmail()
-    }
-    
-    @IBAction func wpctrAction(_ sender: Any) {
-        segueToWpctR()
-    }
-    
+    @IBAction func getNewDataAction(_ sender: Any) { newBacktest() }
+    @IBAction func statsButtonAction(_ sender: UIButton) { segueToStats() }
+    @IBAction func sendTickers(_ sender: Any) { sendEmail() }
+    @IBAction func wpctrAction(_ sender: Any) { segueToWpctR() }
     
     func sendEmail() {
         let mailComposeViewController = configureMailComposer()
-        if MFMailComposeViewController.canSendMail(){
+        if MFMailComposeViewController.canSendMail() {
             self.present(mailComposeViewController, animated: true, completion: nil)
         }else{
             print("Can't send email")
@@ -185,6 +172,8 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
         DispatchQueue.main.async {
             self.textForUI += message
             self.mainText.text = self.textForUI
+            let range = NSMakeRange((self.textForUI as NSString).length - 1, 1);
+            self.mainText.scrollRangeToVisible(range)
         }
     }
     
@@ -193,6 +182,8 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
         DispatchQueue.main.async {
             self.textForUI += message
             self.mainText.text = self.textForUI
+            let range = NSMakeRange((self.textForUI as NSString).length - 1, 1);
+            self.mainText.scrollRangeToVisible(range)
         }
     }
     
