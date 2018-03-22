@@ -38,6 +38,7 @@
 		0DA644B7205C482300715A70 /* Galaxie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA644B6205C482300715A70 /* Galaxie.swift */; };
 		0DC44C762060327E00C47173 /* SMA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC44C752060327E00C47173 /* SMA.swift */; };
 		0DC44C782060600900C47173 /* Market Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC44C772060600900C47173 /* Market Condition.swift */; };
+		0DC4B2C92064072200C97AE7 /* Optimised Backtest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC4B2C82064072200C97AE7 /* Optimised Backtest.swift */; };
 		0DF0A3F02061A8DA00EAA5FF /* wPct R.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF0A3EF2061A8DA00EAA5FF /* wPct R.swift */; };
 		1AC907B1C2BA357938E54DA8 /* Pods_Channel_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DC4F167B53AAEE7E869F13E /* Pods_Channel_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -76,6 +77,7 @@
 		0DA644B6205C482300715A70 /* Galaxie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Galaxie.swift; sourceTree = "<group>"; };
 		0DC44C752060327E00C47173 /* SMA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMA.swift; sourceTree = "<group>"; };
 		0DC44C772060600900C47173 /* Market Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Market Condition.swift"; sourceTree = "<group>"; };
+		0DC4B2C82064072200C97AE7 /* Optimised Backtest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optimised Backtest.swift"; sourceTree = "<group>"; };
 		0DF0A3EF2061A8DA00EAA5FF /* wPct R.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "wPct R.swift"; sourceTree = "<group>"; };
 		3DC4F167B53AAEE7E869F13E /* Pods_Channel_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Channel_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6844FBE5B7ED0FFB2817DD47 /* Pods-Channel Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Channel Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Channel Tests/Pods-Channel Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				0D86E8F92063197200A25946 /* WptcR Results.swift */,
 				0DA644B6205C482300715A70 /* Galaxie.swift */,
 				0D46B600204DDBFA0081C21C /* StatsBacktests.swift */,
+				0DC4B2C82064072200C97AE7 /* Optimised Backtest.swift */,
 				0D1E5CAC205AF7C100CE4049 /* Winners.swift */,
 				0D1EBAAB204CA3DC0092B351 /* Prices.swift */,
 			);
@@ -358,6 +361,7 @@
 				0DA644B7205C482300715A70 /* Galaxie.swift in Sources */,
 				0D46B606204E3D8C0081C21C /* Market Hours.swift in Sources */,
 				0D03A3BE20489EE200786C47 /* MainViewController.swift in Sources */,
+				0DC4B2C92064072200C97AE7 /* Optimised Backtest.swift in Sources */,
 				0D1EBAAC204CA3DC0092B351 /* Prices.swift in Sources */,
 				0D3568B2204BB422008654C2 /* StatsViewController.swift in Sources */,
 				0D12032E2048B17F00AA421B /* Firebase Link.swift in Sources */,

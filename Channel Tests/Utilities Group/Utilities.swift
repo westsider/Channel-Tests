@@ -121,4 +121,18 @@ class Utilities {
         let systemSoundId: SystemSoundID = 1052 // connect to power // 1052 tube bell //1016 tweet
         AudioServicesPlaySystemSound(systemSoundId)
     }
+    
+    func calcuateDaysBetweenTwoDates(start: Date, end: Date, debug:Bool) -> Int {
+        
+        let currentCalendar = Calendar.current
+        guard let startD = currentCalendar.ordinality(of: .day, in: .era, for: start) else {
+            return 0
+        }
+        guard let endD = currentCalendar.ordinality(of: .day, in: .era, for: end) else {
+            return 0
+        }
+        if debug {
+            print("Start Date \(Utilities().convertToStringNoTimeFrom(date: start)) End Date \(Utilities().convertToStringNoTimeFrom(date: end)) num Days \(endD - startD)") }
+        return endD - startD
+    }
 }

@@ -47,9 +47,7 @@ class WpctR {
             Alert.showBasic(title: "Warning", message: "No Api Key for Alpha.")
             return
         }
-        
-        // https://www.alphavantage.co/query?function=WILLR&symbol=MSFT&interval=15min&time_period=10&apikey=demo
-        
+
         guard let url = URL(string: "https://www.alphavantage.co/query?function=WILLR&symbol=\(ticker)&interval=daily&time_period=10&series_type=close&apikey=\(alphaApiKey)") else {
             print("Alpha URL did not un wrap!")
             return

@@ -6,29 +6,9 @@
 //  Copyright © 2018 Warren Hansen. All rights reserved.
 //
 
-// [X] make apikeys ui
-// [X] get spy only gets 100 after marker closed
-// [X] realm accessed from wrong thread in backtest opt
-// [X] send tickers that pass ticker to mail as comma separated txt
-// [X] share button disabled till backtest has run
-// [X] run new optimization
-// [X] share sits in outbox on ipad
-// [X] upgrade server to 2 cores from $15 - $30
-// [X] Stock market data and charting in swift
-// [X] show improvement of market condition
-
-// [ ] show distribution of profit relative to SPY wPctR
-// [ ] get Entry date wpcrR
-// [ ] Match entry date trade -> profit
-// [ ] Array (wpctR, profit)
-// [ ] plot Y: woctR, plot X: profit
-    /*
-    For each exit
-    Get entrydate
-    Get wpctr, profit-> Array (wpctR, profit)
-     */
-// [ ] largest drawdown, extra stats to main UI
+// [ ] longest drawdown, largest drawdown LW LL
 // [ ] add distribution stats -> realm -> main UI
+// [ ] auto scroll
 
 import Foundation
 import UIKit
@@ -62,24 +42,24 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
             self.textForUI += "\n\(MarketHours().currentTimeText())\t\(MarketHours().isMarketOpen())\t"
             self.textForUI += SpReturns().showProfitInUI()
         }
-//        activitIsNow(on: true)
-//        alphaLink.checkForNewPrices { (finished) in
-//            if finished {
-//                DispatchQueue.main.async {
-//                    self.mainText.text = self.textForUI
-//                    self.smaLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
-//                        if finished {
-//                            MarketCondition().addMCtoRealm()
-//                            self.wpctrLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false, completion: { (finished) in
-//                                if finished {
-//                                    self.activitIsNow(on: false)
-//                                }
-//                            })
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        activitIsNow(on: true)
+        alphaLink.checkForNewPrices { (finished) in
+            if finished {
+                DispatchQueue.main.async {
+                    self.mainText.text = self.textForUI
+                    self.smaLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
+                        if finished {
+                            MarketCondition().addMCtoRealm()
+                            self.wpctrLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false, completion: { (finished) in
+                                if finished {
+                                    self.activitIsNow(on: false)
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func getNewDataAction(_ sender: Any) {

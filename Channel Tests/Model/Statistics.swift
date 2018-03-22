@@ -135,6 +135,8 @@ class Statistics {
         var winningTrades:[Double] = []
         var losingTrades:[Double] = []
         var roi:[Double] = []
+        var largestWinner:Double = 0.0
+        var largestLoser:Double = 0.0
         var arraywpctRresults:[(wpctr:Double, profit:Double)] = []
         
         OptBacktest().deleteAll()
@@ -146,7 +148,9 @@ class Statistics {
                 if portfolio.count < 20 {
                     // if system is posative
                     if RealmUtil().systemPositive(eachEntry: eachEntry)
-                        && MarketCondition().mcValue(forToday: eachDay) >= 0  {
+                        && MarketCondition().mcValue(forToday: eachDay) >= 0
+                        //&& WpctR.wpctrValue(forToday: eachDay ) < -31
+                    {
                         portfolio.append(eachEntry.ticker)
                         todaysCost += eachEntry.cost
                         tradeCount += 1
@@ -180,6 +184,9 @@ class Statistics {
                         arraywpctRresults.append((wpctr:  wpcrValue, profit: profitLmt))
                         WpctrStats().addToRealm(profit: profitLmt, wpctR: wpcrValue)
                     }
+                    
+                    if eachExit.profit > largestWinner { largestWinner = eachExit.profit }
+                    if eachExit.profit < largestLoser { largestLoser = eachExit.profit }
                 }
             }
 
@@ -206,12 +213,12 @@ class Statistics {
         let profitFactor = ( winningTrades.sum() / losingTrades.sum() ) * -1
         let avgRoi = ( sum / sumCost ) * 100
         print("\n\t\t\t\t\t\t\t\tOptimized BackTest")
-        print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
+        print("---------------------------------------------------------------------------------------------\n   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost\n    LW \(largestWinner) \tLL \(largestLoser)")
         print("---------------------------------------------------------------------------------------------\n")
         StatsBacktests().saveDataPoints(group: "OPT", winPct: winPct, cumProfit: sum, pf: profitFactor, roi: avgRoi, totalTrades: Int(tradeCount), maxCost: sumCost)
         
-        let _ = WpctrStats().getAllStats(debug: true)
-       
+        let _ = WpctrStats().getAllStats(debug: false)
+        OptBacktest().findMaxDrawDown(debug: true)
         completion(true)
     }
     
