@@ -60,7 +60,7 @@ class OptBacktest: Object {
         return  zipped
     }
     
-    func findMaxDrawDown(debug:Bool) {
+    func findMaxDrawDown(debug:Bool)-> String {
         
         var lastprofitPeak = 0.0
         var drawDown = 0.0
@@ -84,11 +84,13 @@ class OptBacktest: Object {
                 maxDrawDownDate = each.date
             }
         }
-        findLongestDrawdown(profitPeakDates: profitPeakDates, debug: true)
-        print("Max DD \(Utilities().dollarStr(largeNumber: maxDrawDown))")
+        var message = findLongestDrawdown(profitPeakDates: profitPeakDates, debug: debug)
+        message += "Max DD $\(Utilities().dollarStr(largeNumber: maxDrawDown)) "
+        if debug { print(message) }
+        return message
     }
     
-    func findLongestDrawdown(profitPeakDates:[Date], debug:Bool) {
+    func findLongestDrawdown(profitPeakDates:[Date], debug:Bool)->String {
         
         var longestDD:Int = 0
         var dateOfDD:Date = Date()
@@ -103,7 +105,9 @@ class OptBacktest: Object {
                 }
             } 
         }
-        if debug {print("\nLongest period before new equity high was \(longestDD) days and ended on \(Utilities().convertToStringNoTimeFrom(date: dateOfDD))\n") }
+        let message = "\(longestDD) days before new high and ended on \(Utilities().convertToStringNoTimeFrom(date: dateOfDD)) "
+        if debug { print(message) }
+        return message
     }
 }
 

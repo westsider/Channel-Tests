@@ -6,7 +6,7 @@
 //  Copyright © 2018 Warren Hansen. All rights reserved.
 //
 
-// [ ] add  stats to main UI
+// [ ] add  largest DD, longestDD to main UI
 
 import Foundation
 import UIKit

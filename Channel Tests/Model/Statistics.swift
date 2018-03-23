@@ -187,7 +187,7 @@ class Statistics {
                         if profitLmt > 180 { profitLmt = 180 }
                         if profitLmt < -180 { profitLmt = -180 }
                         arraywpctRresults.append((wpctr:  wpcrValue, profit: profitLmt))
-    WpctrStats().addToRealm(profit: profitLmt, wpctR: wpcrValue)
+                        WpctrStats().addToRealm(profit: profitLmt, wpctR: wpcrValue)
                     }
                     
                     if eachExit.profit > largestWinner { largestWinner = eachExit.profit }
@@ -197,7 +197,7 @@ class Statistics {
 
             statsArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
             chartArray.append((date: eachDay, cost: todaysCost, profit: cumulativeProfit, pos: portfolio.count))
-    OptBacktest().saveDataPoints(date: eachDay, profit: cumulativeProfit, cost: todaysCost, pos: portfolio.count)
+            OptBacktest().saveDataPoints(date: eachDay, profit: cumulativeProfit, cost: todaysCost, pos: portfolio.count)
         }
         
         if debug {
@@ -217,7 +217,7 @@ class Statistics {
         let winPct = (winCount / tradeCount) * 100
         let profitFactor = ( winningTrades.sum() / losingTrades.sum() ) * -1
         let avgRoi = ( sum / sumCost ) * 100
-        let message = "\(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost\n    LW \(largestWinner) \tLL \(largestLoser)"
+        let message = "\(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost\nLW $\(Utilities().dollarStr(largeNumber: largestWinner)) \tLL $\(Utilities().dollarStr(largeNumber: largestLoser)) "
         
         //print("\n\t\t\t\t\t\t\t\tOptimized BackTest")
         self.delegate?.changeUImessage(message: "\nOptimized BackTest\n\n")
@@ -228,7 +228,8 @@ class Statistics {
         StatsBacktests().saveDataPoints(group: "OPT", winPct: winPct, cumProfit: sum, pf: profitFactor, roi: avgRoi, totalTrades: Int(tradeCount), maxCost: sumCost)
         
 let _ = WpctrStats().getAllStats(debug: false)
-        OptBacktest().findMaxDrawDown(debug: true)
+        let longDD = OptBacktest().findMaxDrawDown(debug: false)
+        self.delegate?.changeUImessage(message: longDD)
         completion(true)
     }
     
