@@ -19,35 +19,70 @@ class Calculations {
         print("\n\t\(type) \t\t \(String(format: "%.2f", (result.min * 100)))  ----  \(String(format: "%.3f", (result.avg - result.std) * 100)) <<< \(String(format: "%.3f", (result.avg * 100))) [\(String(format: "%.3f", (result.mode * 100)))] >>> \(String(format: "%.3f", (result.avg + result.std) * 100)) ---- \(String(format: "%.3f", (result.max * 100)))\n")
     }
     
-    func calcProfit(allTrades: Results<WklyStats> ) -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
-        
-        let profit: [Double] = allTrades.map { (profit: WklyStats) in
+    func calcProfit() -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
+        let allTradesSortedBtDate =  RealmUtil().getAllWklyStats(debug: false)
+        let profit: [Double] = allTradesSortedBtDate.map { (profit: WklyStats) in
             return profit.profit
         }
         
         return doMath(arrayToCheck: profit)
     }
     
-    func calcWinPct(allTrades: Results<WklyStats> ) -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
-        
-        let winPctA: [Double] = allTrades.map { (winPct: WklyStats) in
+    func calcProfit(ticker: String) -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
+
+        if let thisTicker = WklyStats().getOneTicker(ticker: ticker) {
+            let profit: [Double] = thisTicker.map { (profit: WklyStats) in
+                return profit.profit
+            }
+            return doMath(arrayToCheck: profit)
+        } else {
+            return (max:0.0, min:0.0, sum:0.0, avg:0.0, mode:0.0, std:0.0)
+        }
+    }
+    
+    func calcWinPct() -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
+        let allTradesSortedBtDate =  RealmUtil().getAllWklyStats(debug: false)
+        let winPctA: [Double] = allTradesSortedBtDate.map { (winPct: WklyStats) in
             return winPct.winPct
         }
         
         return doMath(arrayToCheck: winPctA)
     }
     
-    func calcPF(allTrades: Results<WklyStats> ) -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
-        
-        let pfA: [Double] = allTrades.map { (profitFactor: WklyStats) in
+    func calcWinPct(ticker: String) -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
+        if let thisTicker = WklyStats().getOneTicker(ticker: ticker) {
+            let winPctA: [Double] = thisTicker.map { (winPct: WklyStats) in
+                return winPct.winPct
+            }
+            return doMath(arrayToCheck: winPctA)
+        } else {
+            return (max:0.0, min:0.0, sum:0.0, avg:0.0, mode:0.0, std:0.0)
+        }
+
+    }
+    
+    func calcPF() -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
+        let allTradesSortedBtDate =  RealmUtil().getAllWklyStats(debug: false)
+        let pfA: [Double] = allTradesSortedBtDate.map { (profitFactor: WklyStats) in
             return profitFactor.profitFactor
         }
         return doMath(arrayToCheck: pfA)
     }
     
-    func calcROI(allTrades: Results<WklyStats> ) -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
-        
-        let roi: [Double] = allTrades.map { (roi: WklyStats) in
+    func calcPF(ticker: String) -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
+        if let thisTicker = WklyStats().getOneTicker(ticker: ticker) {
+            let pfA: [Double] = thisTicker.map { (profitFactor: WklyStats) in
+                return profitFactor.profitFactor
+            }
+            return doMath(arrayToCheck: pfA)
+        } else {
+            return (max:0.0, min:0.0, sum:0.0, avg:0.0, mode:0.0, std:0.0)
+        }
+    }
+    
+    func calcROI() -> (max:Double, min:Double, sum:Double, avg:Double, mode:Double, std:Double) {
+        let allTradesSortedBtDate =  RealmUtil().getAllWklyStats(debug: false)
+        let roi: [Double] = allTradesSortedBtDate.map { (roi: WklyStats) in
             return roi.roi
         }
         return doMath(arrayToCheck: roi)

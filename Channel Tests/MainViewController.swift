@@ -7,13 +7,12 @@
 //
 
 // [ ] add  stats to main UI
-// [ ] auto scroll
 
 import Foundation
 import UIKit
 import MessageUI
 
-class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMADelegate, WpctrDelegate, MFMailComposeViewControllerDelegate {
+class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMADelegate, WpctrDelegate, StatsDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var mainText: UITextView!
     @IBOutlet weak var activity: UIActivityIndicatorView!
@@ -23,6 +22,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
     var alphaLink = Alpha()
     var smaLink = SMA()
     var wpctrLink = WpctR()
+    var statsLink = Statistics()
     
     var stdBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
     var optBacktest:[(date:Date, cost:Double, profit:Double, pos: Int)] = []
@@ -34,6 +34,7 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
         alphaLink.delegate = self
         smaLink.delegate = self
         wpctrLink.delegate = self
+        statsLink.delegate = self
         
         checkPasswords()
         title = "Channel"
@@ -41,24 +42,24 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
             self.textForUI += "\n\(MarketHours().currentTimeText())\t\(MarketHours().isMarketOpen())\t"
             self.textForUI += SpReturns().showProfitInUI()
         }
-        activitIsNow(on: true)
-        alphaLink.checkForNewPrices { (finished) in
-            if finished {
-                DispatchQueue.main.async {
-                    self.mainText.text = self.textForUI
-                    self.smaLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
-                        if finished {
-                            MarketCondition().addMCtoRealm()
-                            self.wpctrLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false, completion: { (finished) in
-                                if finished {
-                                    self.activitIsNow(on: false)
-                                }
-                            })
-                        }
-                    }
-                }
-            }
-        }
+//        activitIsNow(on: true)
+//        alphaLink.checkForNewPrices { (finished) in
+//            if finished {
+//                DispatchQueue.main.async {
+//                    self.mainText.text = self.textForUI
+//                    self.smaLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false) { (finished) in
+//                        if finished {
+//                            MarketCondition().addMCtoRealm()
+//                            self.wpctrLink.standardNetworkCall(ticker: "SPY", compact: false, debug: false, completion: { (finished) in
+//                                if finished {
+//                                    self.activitIsNow(on: false)
+//                                }
+//                            })
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
     
     @IBAction func getNewDataAction(_ sender: Any) { newBacktest() }
@@ -139,19 +140,19 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
         // add activity
         //activitIsNow(on: true)
         DispatchQueue.global(qos: .background).async {
-            Statistics().getDistribution { (finished) in
+            self.statsLink.getDistribution { (finished) in
                 if finished {
                     print("----------------------------------------------------> Distribution Complete")
                     self.changeUImessage(message: "\nDistribution Complete")
-                    Statistics().standardBackTest(debug: true) { (finished) in
+                    self.statsLink.standardBackTest(debug: true) { (finished) in
                         if finished {
                             print("----------------------------------------------------> STD backtest Finished!")
                             self.changeUImessage(message: "\nStandard backtest finished")
-                            Statistics().optimizedBackTest(debug: true, completion: { (finished) in
+                            self.statsLink.optimizedBackTest(debug: true, completion: { (finished) in
                                 if finished {
                                     DispatchQueue.main.async {
                                         print("----------------------------------------------------> OPT backtest finished!")
-                                        self.changeUImessage(message: "\nOptimized backtest finished")
+                                        self.changeUImessage(message: "\n\nOptimized backtest finished")
                                         //self.getStatsFromRealm()
                                         self.activitIsNow(on: false)
                                         self.sharBttn.isEnabled = true
@@ -161,8 +162,8 @@ class MainViewController: UIViewController, FirebaseDelegate, AlphaDelegate, SMA
                             })
                         }
                     }
-                }
-            }
+                }//
+            }//
         }
         print("std count \(stdBacktest.count) opt coint \(optBacktest.count)")
     }

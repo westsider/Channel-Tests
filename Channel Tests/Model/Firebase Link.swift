@@ -16,7 +16,6 @@ protocol FirebaseDelegate: class {
 
 class FirebaseLink {
     
-    //MARK: step 2 Create a delegate property here, don't forget to make it weak!
     weak var delegate: FirebaseDelegate?
     
     var ref: DatabaseReference!
