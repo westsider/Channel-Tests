@@ -54,6 +54,8 @@ class Statistics {
         var winningTrades:[Double] = []
         var losingTrades:[Double] = []
         var roi:[Double] = []
+        var largestLoser:Double = 0.0
+        var largestWinner:Double = 0.0
         
         StdBacktest().deleteAll()
         
@@ -83,8 +85,11 @@ class Statistics {
                     }
                     roi.append(eachExit.profit / eachExit.cost)
                     cumulativeProfit += eachExit.profit
+                    if eachExit.profit > largestWinner { largestWinner = eachExit.profit }
+                    if eachExit.profit < largestLoser { largestLoser = eachExit.profit }
                 }
             }
+            
             statsArray.append((date: eachDay, cost: todaysCost, profit: todaysProfit, pos: portfolio.count))
             chartArray.append((date: eachDay, cost: todaysCost, profit: cumulativeProfit, pos: portfolio.count))
             StdBacktest().saveDataPoints(date: eachDay, profit: cumulativeProfit, cost: todaysCost, pos: portfolio.count)
@@ -111,11 +116,20 @@ class Statistics {
             let sum = arrayOfProfit.reduce(0, +)
             let profitFactor = (( winningTrades.sum() / losingTrades.sum() ) * -1)
             let avgRoi = ( sum / sumCost ) * 100
-            print("\n\t\t\t\t\t\t\t\tStandard BackTest")
-            print("---------------------------------------------------------------------------------------------")
-            print("   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
+//            print("\n\t\t\t\t\t\t\t\tStandard BackTest")
+//            print("---------------------------------------------------------------------------------------------")
+//            print("   \(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost")
+//            print("---------------------------------------------------------------------------------------------\n")
+//            print("")
+            let message = "\(String(format: "%.1f", winPct))% Win \tPF: \(String(format: "%.2f", profitFactor)) \tROI: \(String(format: "%.2f", avgRoi))%\tProfit $\(Utilities().dollarStr(largeNumber: sum)) \t\(Utilities().dollarStr(largeNumber: tradeCount)) Trades \t$\(Utilities().dollarStr(largeNumber: sumCost)) Cost\nLW $\(Utilities().dollarStr(largeNumber: largestWinner)) \tLL $\(Utilities().dollarStr(largeNumber: largestLoser)) "
+            
+            //print("\n\t\t\t\t\t\t\t\tOptimized BackTest")
+            self.delegate?.changeUImessage(message: "\nStandard BackTest\n\n")
             print("---------------------------------------------------------------------------------------------\n")
-            print("")
+            //print(message)
+            self.delegate?.changeUImessage(message: message)
+            print("---------------------------------------------------------------------------------------------\n")
+            
             StatsBacktests().saveDataPoints(group: "STD", winPct: winPct, cumProfit: sum, pf: profitFactor, roi: avgRoi, totalTrades: Int(tradeCount), maxCost: sumCost)
             
         } else {

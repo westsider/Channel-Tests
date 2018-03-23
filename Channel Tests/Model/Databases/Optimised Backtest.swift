@@ -65,8 +65,8 @@ class OptBacktest: Object {
         var lastprofitPeak = 0.0
         var drawDown = 0.0
         var maxDrawDown = 0.0
-        var profitPeakDate:Date?
-        var maxDrawDownDate:Date?
+//        var profitPeakDate:Date?
+//        var maxDrawDownDate:Date?
         var profitPeakDates:[Date] = []
         
         let realm = try! Realm()
@@ -74,14 +74,14 @@ class OptBacktest: Object {
         for each in portfolio {
             if each.profit > lastprofitPeak {
                 lastprofitPeak = each.profit
-                profitPeakDate = each.date
+               // profitPeakDate = each.date
                 profitPeakDates.append(each.date!)
             }
             
             drawDown = lastprofitPeak - each.profit
             if drawDown > maxDrawDown {
                 maxDrawDown = drawDown
-                maxDrawDownDate = each.date
+                //maxDrawDownDate = each.date
             }
         }
         var message = findLongestDrawdown(profitPeakDates: profitPeakDates, debug: debug)
